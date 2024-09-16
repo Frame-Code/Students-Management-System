@@ -242,7 +242,7 @@
         <Component class="javax.swing.JButton" name="btnEliminarMateria">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="64" green="48" red="3f" type="rgb"/>
+              <Color blue="50" green="50" red="a5" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Waree" size="12" style="1"/>

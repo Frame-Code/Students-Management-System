@@ -118,7 +118,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
             }
         });
 
-        btnEliminarMateria.setBackground(new java.awt.Color(63, 72, 100));
+        btnEliminarMateria.setBackground(new java.awt.Color(165, 80, 80));
         btnEliminarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnEliminarMateria.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarMateria.setText("Eliminar Materia");
