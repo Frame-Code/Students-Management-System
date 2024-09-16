@@ -1,18 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package com.mycompany.gestion_alumnos.GUI;
+
+import java.awt.Color;
 
 /**
  *
- * @author artist-code
+ * @author Frame-Code
  */
 public class RegistrarConsultarMaterias extends javax.swing.JPanel {
-
-    /**
-     * Creates new form RegistrarConsultarMaterias
-     */
     public RegistrarConsultarMaterias() {
         initComponents();
     }
@@ -27,34 +22,273 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblMaterias = new javax.swing.JTable();
+        lblMatricula3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btnRegistrarMateria = new javax.swing.JButton();
+        btnEditarMateria = new javax.swing.JButton();
+        btnEliminarMateria = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblNombreMateria = new javax.swing.JLabel();
+        txtNombreMateria = new javax.swing.JTextField();
+        btnRegistrarEditarMateria = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(196, 196, 196));
-        setPreferredSize(new java.awt.Dimension(716, 479));
+        setPreferredSize(new java.awt.Dimension(761, 657));
 
         jLabel1.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(23, 23, 23));
         jLabel1.setText("REGISTRAR - CONSULTAR MATERIAS");
+
+        jPanel4.setBackground(new java.awt.Color(180, 180, 180));
+
+        tblMaterias.setBackground(new java.awt.Color(180, 180, 180));
+        tblMaterias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(23, 23, 23), 1, true));
+        tblMaterias.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
+        tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblMaterias);
+
+        lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula3.setText("Selecciona una materia para editarla o eliminarla");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblMatricula3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMatricula3)
+                .addContainerGap())
+        );
+
+        jPanel2.setBackground(new java.awt.Color(180, 180, 180));
+
+        btnRegistrarMateria.setBackground(new java.awt.Color(63, 72, 100));
+        btnRegistrarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnRegistrarMateria.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarMateria.setText("Registrar nueva Materia");
+        btnRegistrarMateria.setBorder(null);
+        btnRegistrarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarMateriaActionPerformed(evt);
+            }
+        });
+
+        btnEditarMateria.setBackground(new java.awt.Color(63, 72, 100));
+        btnEditarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnEditarMateria.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarMateria.setText("Editar Materia");
+        btnEditarMateria.setBorder(null);
+        btnEditarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarMateriaActionPerformed(evt);
+            }
+        });
+
+        btnEliminarMateria.setBackground(new java.awt.Color(63, 72, 100));
+        btnEliminarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnEliminarMateria.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarMateria.setText("Eliminar Materia");
+        btnEliminarMateria.setBorder(null);
+        btnEliminarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarMateriaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnRegistrarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(btnEditarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(btnEliminarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel17.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel17.setText("_________________________________________________Materias registradas________________________________________________");
+
+        jPanel1.setBackground(new java.awt.Color(180, 180, 180));
+
+        lblNombreMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblNombreMateria.setForeground(new java.awt.Color(60, 63, 65));
+        lblNombreMateria.setText("Nombre de la materia:");
+
+        txtNombreMateria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
+        txtNombreMateria.setEnabled(false);
+        txtNombreMateria.setOpaque(false);
+
+        btnRegistrarEditarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnRegistrarEditarMateria.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarEditarMateria.setText("Registrar ");
+        btnRegistrarEditarMateria.setBorder(null);
+        btnRegistrarEditarMateria.setEnabled(false);
+        btnRegistrarEditarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarEditarMateriaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreMateria)
+                    .addComponent(txtNombreMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRegistrarEditarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegistrarEditarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(lblNombreMateria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreMateria)))
+                .addGap(22, 22, 22))
+        );
+
+        jLabel18.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel18.setText("_____________________________________________Registrar - Editar Materia ______________________________________________");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(190, 190, 190)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel17)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel18)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(207, 207, 207)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18)
+                .addGap(2, 2, 2)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRegistrarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaActionPerformed
+        
+    }//GEN-LAST:event_btnRegistrarMateriaActionPerformed
+
+    private void btnEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarMateriaActionPerformed
+
+    private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarMateriaActionPerformed
+
+    private void btnRegistrarEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEditarMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarEditarMateriaActionPerformed
+    
+    private void habilitarOpciones() {
+        lblNombreMateria.setForeground(new Color(23,23,23));
+        txtNombreMateria.setEnabled(true);
+        btnRegistrarEditarMateria.setBackground(new Color(63,72,100));
+        btnRegistrarEditarMateria.setEnabled(true);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditarMateria;
+    private javax.swing.JButton btnEliminarMateria;
+    private javax.swing.JButton btnRegistrarEditarMateria;
+    private javax.swing.JButton btnRegistrarMateria;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblMatricula2;
+    private javax.swing.JLabel lblMatricula3;
+    private javax.swing.JLabel lblNombreMateria;
+    private javax.swing.JTable tblEstudianteEncontrado;
+    private javax.swing.JTable tblMaterias;
+    private javax.swing.JTextField txtNombreMateria;
     // End of variables declaration//GEN-END:variables
 }
