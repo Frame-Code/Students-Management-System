@@ -1,6 +1,8 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import java.awt.BorderLayout;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -9,10 +11,20 @@ import javax.swing.JButton;
 public class Principal extends javax.swing.JFrame {
 
     private final JButton BOTONES[];
+    private MatricularNuevoEstudiante pnlMatricularNuevo;
+    private MatricularEstudianteExistente pnlMatricularExistente;
+    private ConsultarEstudiantes pnlConsultarEstudiantes;
+    private RegistrarConsultarCursos pnlRegistroConsultaCursos;
+    private RegistrarConsultarMaterias pnlRegistroConsultarMaterias;
 
     public Principal() {
         initComponents();
         this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias};
+        this.pnlMatricularNuevo = new MatricularNuevoEstudiante();
+        this.pnlMatricularExistente = new MatricularEstudianteExistente();
+        this.pnlConsultarEstudiantes = new ConsultarEstudiantes();
+        this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos();
+        this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias();
     }
 
     /**
@@ -163,8 +175,11 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(196, 196, 196));
+
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Waree", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(23, 23, 23));
         jLabel2.setText("SISTEMA DE GESTION DE ESTUDIANTES Y CURSOS");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -172,7 +187,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(110, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86))
         );
@@ -184,16 +199,9 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
-        pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
-        pnlPrincipalDataLayout.setHorizontalGroup(
-            pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 716, Short.MAX_VALUE)
-        );
-        pnlPrincipalDataLayout.setVerticalGroup(
-            pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
-        );
+        pnlPrincipalData.setBackground(new java.awt.Color(196, 196, 196));
+        pnlPrincipalData.setForeground(new java.awt.Color(0, 0, 0));
+        pnlPrincipalData.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -207,12 +215,12 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(pnlPrincipalData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlPrincipalData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlPrincipalData, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -230,24 +238,38 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMatricularNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularNuevoActionPerformed
-        pintarBtn(btnMatricularNuevo);
+        inicializarPanel(btnMatricularNuevo, pnlMatricularNuevo);
     }//GEN-LAST:event_btnMatricularNuevoActionPerformed
 
     private void btnMatricularExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularExistenteActionPerformed
-        pintarBtn(btnMatricularExistente);
+        inicializarPanel(btnMatricularExistente, pnlMatricularExistente);
     }//GEN-LAST:event_btnMatricularExistenteActionPerformed
 
     private void btnConsultaEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesActionPerformed
-        pintarBtn(btnConsultaEstudiantes);
+        inicializarPanel(btnConsultaEstudiantes, pnlConsultarEstudiantes);
     }//GEN-LAST:event_btnConsultaEstudiantesActionPerformed
 
     private void btnRegistrarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCursosActionPerformed
-        pintarBtn(btnRegistrarCursos);
+        inicializarPanel(btnRegistrarCursos, pnlRegistroConsultaCursos);
     }//GEN-LAST:event_btnRegistrarCursosActionPerformed
 
     private void btnRegistrarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMateriasActionPerformed
-        pintarBtn(btnRegistrarMaterias);
+        inicializarPanel(btnRegistrarMaterias, pnlRegistroConsultarMaterias);
     }//GEN-LAST:event_btnRegistrarMateriasActionPerformed
+
+    private void inicializarPanel(JButton btnParaPintar, JPanel pnlMostrar) {
+        this.pnlMatricularNuevo.setVisible(false);
+        this.pnlMatricularExistente.setVisible(false);
+        this.pnlConsultarEstudiantes.setVisible(false);
+        this.pnlRegistroConsultaCursos.setVisible(false);
+        this.pnlRegistroConsultarMaterias.setVisible(false);
+        pnlPrincipalData.removeAll();
+
+        pintarBtn(btnParaPintar);
+        pnlPrincipalData.add(pnlMostrar);
+        pnlMostrar.setVisible(true);
+        resetFrame();
+    }
 
     private void pintarBtn(JButton btnPintar) {
         for (JButton btn : BOTONES) {
@@ -259,6 +281,11 @@ public class Principal extends javax.swing.JFrame {
                 btn.setOpaque(false);
             }
         }
+    }
+
+    private void resetFrame() {
+        this.setSize(1023, 584);
+        this.setSize(1023, 586);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
