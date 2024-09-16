@@ -1,18 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.gestion_alumnos.GUI;
+
+import java.awt.Color;
 
 /**
  *
- * @author artist-code
+ * @author Frame-Code
  */
 public class MatricularEstudianteExistente extends javax.swing.JPanel {
 
-    /**
-     * Creates new form MatricularEstudianteExistente
-     */
     public MatricularEstudianteExistente() {
         initComponents();
     }
@@ -26,35 +21,485 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        txtCedulaBusqueda = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEstudianteEncontrado = new javax.swing.JTable();
+        lblMatricula2 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        lblCurso = new javax.swing.JLabel();
+        cmbCursos = new javax.swing.JComboBox<>();
+        lblAula = new javax.swing.JLabel();
+        cmbAulas = new javax.swing.JComboBox<>();
+        btnComprobarDisponibilidad = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        lblMatricula = new javax.swing.JLabel();
+        lblFechaVencimiento = new javax.swing.JLabel();
+        spnDiaMatricula = new javax.swing.JSpinner();
+        jLabel15 = new javax.swing.JLabel();
+        spnMesMatricula = new javax.swing.JSpinner();
+        jLabel16 = new javax.swing.JLabel();
+        spnAnioMatricula = new javax.swing.JSpinner();
+        jLabel19 = new javax.swing.JLabel();
+        lblColegiatura = new javax.swing.JLabel();
+        lblValorPagado = new javax.swing.JLabel();
+        spnCantidadPagado = new javax.swing.JSpinner();
+        lblMesPagado = new javax.swing.JLabel();
+        cmbMesPagado = new javax.swing.JComboBox<>();
+        btnGenerarMatricula = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(196, 196, 196));
-        setPreferredSize(new java.awt.Dimension(716, 479));
+        setPreferredSize(new java.awt.Dimension(761, 657));
+
+        jPanel1.setBackground(new java.awt.Color(196, 196, 196));
+        jPanel1.setPreferredSize(new java.awt.Dimension(755, 657));
 
         jLabel1.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(23, 23, 23));
         jLabel1.setText("MATRICULAR ESTUDIANTE EXISTENTE");
 
+        jLabel17.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel17.setText("________________________________________Buscar estudiante ya registrado__________________________________________");
+
+        jPanel2.setBackground(new java.awt.Color(180, 180, 180));
+
+        txtCedulaBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
+        txtCedulaBusqueda.setOpaque(false);
+
+        btnBuscar.setBackground(new java.awt.Color(63, 72, 100));
+        btnBuscar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar ");
+        btnBuscar.setBorder(null);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Waree", 1, 8)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel14.setText("Escribe la cedula del estudiante");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtCedulaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCedulaBusqueda)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addContainerGap())
+        );
+
+        jPanel3.setBackground(new java.awt.Color(180, 180, 180));
+
+        tblEstudianteEncontrado.setBackground(new java.awt.Color(180, 180, 180));
+        tblEstudianteEncontrado.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(23, 23, 23), 1, true));
+        tblEstudianteEncontrado.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
+        tblEstudianteEncontrado.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblEstudianteEncontrado);
+
+        lblMatricula2.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula2.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula2.setText("Busca un estudiante para comenzar...");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblMatricula2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMatricula2)
+                .addContainerGap())
+        );
+
+        jPanel5.setBackground(new java.awt.Color(180, 180, 180));
+
+        lblCurso.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblCurso.setForeground(new java.awt.Color(60, 63, 65));
+        lblCurso.setText("Curso: ");
+
+        cmbCursos.setBackground(new java.awt.Color(180, 180, 180));
+        cmbCursos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCursos.setBorder(null);
+        cmbCursos.setEnabled(false);
+        cmbCursos.setOpaque(false);
+
+        lblAula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblAula.setForeground(new java.awt.Color(60, 63, 65));
+        lblAula.setText("Aula:");
+
+        cmbAulas.setBackground(new java.awt.Color(180, 180, 180));
+        cmbAulas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbAulas.setBorder(null);
+        cmbAulas.setEnabled(false);
+        cmbAulas.setOpaque(false);
+
+        btnComprobarDisponibilidad.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnComprobarDisponibilidad.setForeground(new java.awt.Color(255, 255, 255));
+        btnComprobarDisponibilidad.setText("Comprobar disponibilidad");
+        btnComprobarDisponibilidad.setBorder(null);
+        btnComprobarDisponibilidad.setEnabled(false);
+        btnComprobarDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprobarDisponibilidadActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(lblCurso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblAula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(205, 205, 205)
+                .addComponent(btnComprobarDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCurso)
+                    .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAula)
+                    .addComponent(cmbAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnComprobarDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new java.awt.Color(180, 180, 180));
+
+        lblMatricula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula.setText("Matricula");
+
+        lblFechaVencimiento.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblFechaVencimiento.setForeground(new java.awt.Color(71, 71, 71));
+        lblFechaVencimiento.setText("Fecha de vencimiento:");
+
+        spnDiaMatricula.setBorder(null);
+        spnDiaMatricula.setEnabled(false);
+        spnDiaMatricula.setOpaque(false);
+
+        jLabel15.setFont(new java.awt.Font("Waree", 1, 8)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel15.setText("Día");
+
+        spnMesMatricula.setBorder(null);
+        spnMesMatricula.setEnabled(false);
+        spnMesMatricula.setOpaque(false);
+
+        jLabel16.setFont(new java.awt.Font("Waree", 1, 8)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel16.setText("Mes");
+
+        spnAnioMatricula.setBorder(null);
+        spnAnioMatricula.setEnabled(false);
+        spnAnioMatricula.setOpaque(false);
+
+        jLabel19.setFont(new java.awt.Font("Waree", 1, 8)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel19.setText("Año");
+
+        lblColegiatura.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblColegiatura.setForeground(new java.awt.Color(71, 71, 71));
+        lblColegiatura.setText("Colegiatura");
+
+        lblValorPagado.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblValorPagado.setForeground(new java.awt.Color(71, 71, 71));
+        lblValorPagado.setText("Valor pagado:");
+
+        spnCantidadPagado.setBorder(null);
+        spnCantidadPagado.setEnabled(false);
+        spnCantidadPagado.setOpaque(false);
+
+        lblMesPagado.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMesPagado.setForeground(new java.awt.Color(71, 71, 71));
+        lblMesPagado.setText("Mes:");
+
+        cmbMesPagado.setBackground(new java.awt.Color(180, 180, 180));
+        cmbMesPagado.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
+        cmbMesPagado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbMesPagado.setBorder(null);
+        cmbMesPagado.setEnabled(false);
+        cmbMesPagado.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(lblMatricula)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(spnDiaMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnMesMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spnAnioMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblFechaVencimiento)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel15)
+                                .addGap(70, 70, 70)
+                                .addComponent(jLabel16)
+                                .addGap(58, 58, 58)
+                                .addComponent(jLabel19)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblValorPagado)
+                            .addComponent(lblMesPagado))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spnCantidadPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbMesPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblColegiatura)
+                        .addGap(54, 54, 54)))
+                .addGap(50, 50, 50))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMatricula)
+                    .addComponent(lblColegiatura))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(spnCantidadPagado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValorPagado))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMesPagado)
+                            .addComponent(cmbMesPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(lblFechaVencimiento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(spnDiaMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spnMesMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spnAnioMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel19))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btnGenerarMatricula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnGenerarMatricula.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarMatricula.setText("Generar Matricula ");
+        btnGenerarMatricula.setBorder(null);
+        btnGenerarMatricula.setEnabled(false);
+
+        jLabel18.setForeground(new java.awt.Color(99, 99, 99));
+        jLabel18.setText("____________________________________________________Matriculación_________________________________________________");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(181, 181, 181))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel18)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(210, 210, 210)
+                            .addComponent(btnGenerarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel17)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(2, 2, 2)
+                .addComponent(jLabel17)
+                .addGap(12, 12, 12)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel18)
+                .addGap(4, 4, 4)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(btnGenerarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(151, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(179, 179, 179)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(443, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnComprobarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadActionPerformed
+
+    }//GEN-LAST:event_btnComprobarDisponibilidadActionPerformed
+    
+    private void habilitarUltimasOpciones() {
+        lblCurso.setForeground(new Color(23,23,23));
+        lblAula.setForeground(new Color(23,23,23));
+        lblMatricula.setForeground(new Color(23,23,23));
+        lblFechaVencimiento.setForeground(new Color(23,23,23));
+        lblColegiatura.setForeground(new Color(23,23,23));
+        lblMesPagado.setForeground(new Color(23,23,23));
+        lblValorPagado.setForeground(new Color(23,23,23));
+        
+        spnDiaMatricula.setEnabled(true);
+        spnMesMatricula.setEnabled(true);
+        spnAnioMatricula.setEnabled(true);
+        spnCantidadPagado.setEnabled(true);
+        
+        cmbCursos.setEnabled(true);
+        cmbAulas.setEnabled(true);
+        cmbMesPagado.setEnabled(true);
+        
+        btnComprobarDisponibilidad.setEnabled(true);
+        btnGenerarMatricula.setEnabled(true);
+        btnComprobarDisponibilidad.setBackground(new Color(63,72,100));
+        btnGenerarMatricula.setBackground(new Color(63,72,100));
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnComprobarDisponibilidad;
+    private javax.swing.JButton btnGenerarMatricula;
+    private javax.swing.JComboBox<String> cmbAulas;
+    private javax.swing.JComboBox<String> cmbCursos;
+    private javax.swing.JComboBox<String> cmbMesPagado;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAula;
+    private javax.swing.JLabel lblColegiatura;
+    private javax.swing.JLabel lblCurso;
+    private javax.swing.JLabel lblFechaVencimiento;
+    private javax.swing.JLabel lblMatricula;
+    private javax.swing.JLabel lblMatricula2;
+    private javax.swing.JLabel lblMesPagado;
+    private javax.swing.JLabel lblValorPagado;
+    private javax.swing.JSpinner spnAnioMatricula;
+    private javax.swing.JSpinner spnCantidadPagado;
+    private javax.swing.JSpinner spnDiaMatricula;
+    private javax.swing.JSpinner spnMesMatricula;
+    private javax.swing.JTable tblEstudianteEncontrado;
+    private javax.swing.JTextField txtCedulaBusqueda;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,6 +6,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         Principal principal = new Principal();
+        principal.setResizable(false);
+        principal.setSize(1080, 720);
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);
         
