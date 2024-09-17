@@ -1,9 +1,80 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
+import java.util.Objects;
+
 /**
  *
  * Created by Frame-Code, September 2024
  */
 public class PagoColegiatura {
+    private Integer monto;
+    private String mes;
+    private Boolean estado;
 
+    public PagoColegiatura() {
+    }
+    public PagoColegiatura(Integer monto, String mes, Boolean estado) {
+        this.monto = monto;
+        this.mes = mes;
+        this.estado = estado;
+    }
+
+    public Integer getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Integer monto) {
+        this.monto = monto;
+    }
+
+    public String getMes() {
+        return mes;
+    }
+
+    public void setMes(String mes) {
+        this.mes = mes;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.monto);
+        hash = 59 * hash + Objects.hashCode(this.mes);
+        hash = 59 * hash + Objects.hashCode(this.estado);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PagoColegiatura other = (PagoColegiatura) obj;
+        if (!Objects.equals(this.mes, other.mes)) {
+            return false;
+        }
+        if (!Objects.equals(this.monto, other.monto)) {
+            return false;
+        }
+        return Objects.equals(this.estado, other.estado);
+    }
+
+    @Override
+    public String toString() {
+        return "PagoColegiatura{" + "monto=" + monto + ", mes=" + mes + ", estado=" + estado + '}';
+    }
 }
