@@ -1,20 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package com.mycompany.gestion_alumnos.GUI;
+
+import javax.swing.JFrame;
 
 /**
  *
- * @author artist-code
+ * @author Frame-Code
  */
 public class RegistrarConsultarCursos extends javax.swing.JPanel {
-
-    /**
-     * Creates new form RegistrarConsultarCursos
-     */
+    private VerEditarCursos frameVerEditar;
+    private CrearCursos frameCrearCursos;
+    
     public RegistrarConsultarCursos() {
         initComponents();
+        frameVerEditar = new VerEditarCursos();
+        frameCrearCursos = new CrearCursos();
     }
 
     /**
@@ -29,12 +29,13 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblMaterias = new javax.swing.JTable();
+        tblCursos = new javax.swing.JTable();
         lblMatricula3 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnRegistrarMateria = new javax.swing.JButton();
-        btnEliminarMateria = new javax.swing.JButton();
+        btnVerEditarCurso = new javax.swing.JButton();
+        btnEliminarCurso = new javax.swing.JButton();
+        btnCrearCurso = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(196, 196, 196));
         setPreferredSize(new java.awt.Dimension(761, 657));
@@ -45,10 +46,10 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(180, 180, 180));
 
-        tblMaterias.setBackground(new java.awt.Color(180, 180, 180));
-        tblMaterias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(23, 23, 23), 1, true));
-        tblMaterias.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
-        tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
+        tblCursos.setBackground(new java.awt.Color(180, 180, 180));
+        tblCursos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(23, 23, 23), 1, true));
+        tblCursos.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
+        tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -64,7 +65,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblMaterias);
+        jScrollPane2.setViewportView(tblCursos);
 
         lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
@@ -77,7 +78,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lblMatricula3)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -98,25 +99,36 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(180, 180, 180));
 
-        btnRegistrarMateria.setBackground(new java.awt.Color(63, 72, 100));
-        btnRegistrarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        btnRegistrarMateria.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrarMateria.setText("Ver/Editar información detallada del curso");
-        btnRegistrarMateria.setBorder(null);
-        btnRegistrarMateria.addActionListener(new java.awt.event.ActionListener() {
+        btnVerEditarCurso.setBackground(new java.awt.Color(63, 72, 100));
+        btnVerEditarCurso.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnVerEditarCurso.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerEditarCurso.setText("Ver/Editar información detallada del curso");
+        btnVerEditarCurso.setBorder(null);
+        btnVerEditarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarMateriaActionPerformed(evt);
+                btnVerEditarCursoActionPerformed(evt);
             }
         });
 
-        btnEliminarMateria.setBackground(new java.awt.Color(165, 80, 80));
-        btnEliminarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        btnEliminarMateria.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarMateria.setText("Eliminar curso");
-        btnEliminarMateria.setBorder(null);
-        btnEliminarMateria.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarCurso.setBackground(new java.awt.Color(165, 80, 80));
+        btnEliminarCurso.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnEliminarCurso.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarCurso.setText("Eliminar curso");
+        btnEliminarCurso.setBorder(null);
+        btnEliminarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarMateriaActionPerformed(evt);
+                btnEliminarCursoActionPerformed(evt);
+            }
+        });
+
+        btnCrearCurso.setBackground(new java.awt.Color(63, 72, 100));
+        btnCrearCurso.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnCrearCurso.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrearCurso.setText("Crear Curso");
+        btnCrearCurso.setBorder(null);
+        btnCrearCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCursoActionPerformed(evt);
             }
         });
 
@@ -126,9 +138,11 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnRegistrarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVerEditarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEliminarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCrearCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -136,9 +150,10 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegistrarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerEditarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -154,7 +169,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel17)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 12, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -170,28 +185,37 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaActionPerformed
+    private void btnVerEditarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarCursoActionPerformed
+        frameVerEditar.setVisible(true);
+        frameVerEditar.setLocationRelativeTo(null);
+        frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnVerEditarCursoActionPerformed
 
-    }//GEN-LAST:event_btnRegistrarMateriaActionPerformed
-
-    private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
+    private void btnEliminarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCursoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarMateriaActionPerformed
+    }//GEN-LAST:event_btnEliminarCursoActionPerformed
+
+    private void btnCrearCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoActionPerformed
+        frameCrearCursos.setVisible(true);
+        frameCrearCursos.setLocationRelativeTo(null);
+        frameCrearCursos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnCrearCursoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminarMateria;
-    private javax.swing.JButton btnRegistrarMateria;
+    private javax.swing.JButton btnCrearCurso;
+    private javax.swing.JButton btnEliminarCurso;
+    private javax.swing.JButton btnVerEditarCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblMatricula3;
-    private javax.swing.JTable tblMaterias;
+    private javax.swing.JTable tblCursos;
     // End of variables declaration//GEN-END:variables
 }

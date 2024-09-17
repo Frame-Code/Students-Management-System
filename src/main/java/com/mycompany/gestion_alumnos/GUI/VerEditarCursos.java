@@ -1,20 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.gestion_alumnos.GUI;
+
+import javax.swing.JFrame;
 
 /**
  *
- * @author artist-code
+ * @author Frame-Code
  */
 public class VerEditarCursos extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VerEditarCursos
-     */
+    private AgregarMaterias frameAgregarMaterias;
     public VerEditarCursos() {
         initComponents();
+        frameAgregarMaterias = new AgregarMaterias();
     }
 
     /**
@@ -26,57 +22,346 @@ public class VerEditarCursos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlPrincipalData = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblMaterias = new javax.swing.JTable();
+        lblMatricula3 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblAulas = new javax.swing.JTable();
+        lblMatricula4 = new javax.swing.JLabel();
+        lblNombreCurso = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btnAgregarMaterias = new javax.swing.JButton();
+        btnEliminarMateria = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        btnCrearAula = new javax.swing.JButton();
+        btnEliminarAula = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        pnlPrincipalData.setBackground(new java.awt.Color(196, 196, 196));
+        pnlPrincipalData.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(23, 23, 23));
+        jLabel1.setText("CONSULTAR CURSO");
+
+        jPanel4.setBackground(new java.awt.Color(180, 180, 180));
+
+        tblMaterias.setBackground(new java.awt.Color(180, 180, 180));
+        tblMaterias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(23, 23, 23), 1, true));
+        tblMaterias.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
+        tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblMaterias);
+
+        lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula3.setText("Materias ");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(lblMatricula3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(lblMatricula3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(180, 180, 180));
+
+        tblAulas.setBackground(new java.awt.Color(180, 180, 180));
+        tblAulas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(23, 23, 23), 1, true));
+        tblAulas.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
+        tblAulas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblAulas);
+
+        lblMatricula4.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula4.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula4.setText("Aulas");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(lblMatricula4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(lblMatricula4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        lblNombreCurso.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        lblNombreCurso.setForeground(new java.awt.Color(23, 23, 23));
+        lblNombreCurso.setText("CURSO: ");
+
+        jPanel2.setBackground(new java.awt.Color(180, 180, 180));
+
+        btnAgregarMaterias.setBackground(new java.awt.Color(63, 72, 100));
+        btnAgregarMaterias.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnAgregarMaterias.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarMaterias.setText("Agregar materias");
+        btnAgregarMaterias.setBorder(null);
+        btnAgregarMaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarMateriasActionPerformed(evt);
+            }
+        });
+
+        btnEliminarMateria.setBackground(new java.awt.Color(165, 80, 80));
+        btnEliminarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnEliminarMateria.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarMateria.setText("Eliminar Materia");
+        btnEliminarMateria.setBorder(null);
+        btnEliminarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarMateriaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAgregarMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(180, 180, 180));
+
+        btnCrearAula.setBackground(new java.awt.Color(63, 72, 100));
+        btnCrearAula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnCrearAula.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrearAula.setText("Crear aula");
+        btnCrearAula.setBorder(null);
+        btnCrearAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearAulaActionPerformed(evt);
+            }
+        });
+
+        btnEliminarAula.setBackground(new java.awt.Color(165, 80, 80));
+        btnEliminarAula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnEliminarAula.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarAula.setText("Eliminar aula");
+        btnEliminarAula.setBorder(null);
+        btnEliminarAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAulaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEliminarAula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCrearAula, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCrearAula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btnRegresar.setBackground(new java.awt.Color(63, 72, 100));
+        btnRegresar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setText("Regresar");
+        btnRegresar.setBorder(null);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
+        pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
+        pnlPrincipalDataLayout.setHorizontalGroup(
+            pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89))
+            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(jLabel1))
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(lblNombreCurso))
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        pnlPrincipalDataLayout.setVerticalGroup(
+            pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addComponent(lblNombreCurso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlPrincipalData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlPrincipalData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VerEditarCursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VerEditarCursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VerEditarCursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VerEditarCursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMateriasActionPerformed
+        frameAgregarMaterias.setVisible(true);
+        frameAgregarMaterias.setLocationRelativeTo(null);
+        frameAgregarMaterias.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnAgregarMateriasActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VerEditarCursos().setVisible(true);
-            }
-        });
-    }
+    private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarMateriaActionPerformed
+
+    private void btnCrearAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearAulaActionPerformed
+
+    private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarAulaActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarMaterias;
+    private javax.swing.JButton btnCrearAula;
+    private javax.swing.JButton btnEliminarAula;
+    private javax.swing.JButton btnEliminarMateria;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblMatricula3;
+    private javax.swing.JLabel lblMatricula4;
+    private javax.swing.JLabel lblNombreCurso;
+    private javax.swing.JPanel pnlPrincipalData;
+    private javax.swing.JTable tblAulas;
+    private javax.swing.JTable tblMaterias;
     // End of variables declaration//GEN-END:variables
 }
