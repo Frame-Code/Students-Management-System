@@ -3,6 +3,7 @@ package com.mycompany.gestion_alumnos.LOGICA;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Entity;
 
 /**
  *
@@ -141,7 +142,4 @@ class Estudiante {
     public String toString() {
         return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", aula=" + aula + ", matricula=" + matricula + ", pago_colegiatura=" + pago_colegiatura + '}';
     }
-    
-    
-
 }
