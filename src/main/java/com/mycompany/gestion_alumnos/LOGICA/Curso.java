@@ -1,5 +1,6 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.OneToMany;
  * Created by Frame-Code, September 2024
  */
 @Entity(name = "CURSO")
-public class Curso {
+public class Curso implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

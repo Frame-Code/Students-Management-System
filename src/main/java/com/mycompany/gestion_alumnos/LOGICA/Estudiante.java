@@ -1,5 +1,6 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -18,14 +19,14 @@ import javax.persistence.OneToOne;
  * Created by Frame-Code, September 2024
  */
 @Entity(name = "ESTUDIANTE")
-class Estudiante {
+public class Estudiante implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NOMBRE", length = 15, nullable = false)
+    @Column(name = "NOMBRE", length = 30, nullable = false)
     private String nombre;
 
     @Column(name = "FECHA_NACIMIENTO", nullable = false)
@@ -35,10 +36,11 @@ class Estudiante {
     private Integer edad;
 
     @ManyToOne
-    @JoinColumn(name = "estudiantes")
+    @JoinColumn(name = "AULA")
     private Aula aula;
 
-    @OneToOne
+    @OneToOne 
+    @Column (name = "MATRICULA")
     private Matricula matricula;
 
     @OneToMany(mappedBy = "estudiante")

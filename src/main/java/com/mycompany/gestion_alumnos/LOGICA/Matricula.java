@@ -1,5 +1,6 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
  * Created by Frame-Code, September 2024
  */
 @Entity(name = "MATRICULA")
-public class Matricula {
+public class Matricula implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
