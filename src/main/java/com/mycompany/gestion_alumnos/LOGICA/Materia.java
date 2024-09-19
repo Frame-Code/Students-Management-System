@@ -1,41 +1,24 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
-import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 /**
  *
  * Created by Frame-Code, September 2024
  */
-@Entity (name = "MATERIA")
-public class Materia implements Serializable {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "ID")
+public class Materia {
     private Long id;
-    
-    @Column (name = "NOMBRE", length = 15, nullable = false)
     private String nombre;
-    /*
-    @OneToMany
-    @JoinColumn (name = "CURSO")
     private Curso curso;
-*/
+    
     public Materia() {
     }
-    /*
+    
     public Materia(Long id, String nombre, Curso curso) {
         this.id = id;
         this.nombre = nombre;
         this.curso = curso;
-    }*/
+    }
 
     public Materia(Long id, String nombre) {
         this.id = id;
@@ -57,7 +40,7 @@ public class Materia implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-/*
+
     public Curso getCurso() {
         return curso;
     }
@@ -98,5 +81,5 @@ public class Materia implements Serializable {
     @Override
     public String toString() {
         return "Materia{" + "id=" + id + ", nombre=" + nombre + ", curso=" + curso + '}';
-    }*/
+    }
 }

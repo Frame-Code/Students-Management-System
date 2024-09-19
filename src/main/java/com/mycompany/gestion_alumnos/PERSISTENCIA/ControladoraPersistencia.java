@@ -5,10 +5,10 @@ package com.mycompany.gestion_alumnos.PERSISTENCIA;
  * Created by Frame-Code, September 2024
  */
 public class ControladoraPersistencia {
-    private MateriaJpaController materiaJPA;
+    private static final JPAUtil util = new JPAUtil();
 
     public ControladoraPersistencia() {
-        this.materiaJPA = new MateriaJpaController();
+        
     }
     
     
