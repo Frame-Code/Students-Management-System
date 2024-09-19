@@ -2,20 +2,43 @@ package com.mycompany.gestion_alumnos.LOGICA;
 
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
  * Created by Frame-Code, September 2024
  */
+@Entity(name = "AULA")
 public class Aula {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+
+    @Column(name = "NOMBRE", length = 15, nullable = false)
     private String nombre;
+
+    @Column(name = "NUMERO_ASIENTOS")
     private Integer numeroAsientos;
+
+    @ManyToOne
+    @JoinColumn(name = "CURSO")
     private Curso curso;
+
+    @OneToMany(mappedBy = "aula")
     private List<Estudiante> estudiantes;
 
     public Aula() {
     }
+
     public Aula(Long id, String nombre, Integer numeroAsientos, Curso curso, List<Estudiante> estudiantes) {
         this.id = id;
         this.nombre = nombre;
@@ -27,6 +50,7 @@ public class Aula {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -34,6 +58,7 @@ public class Aula {
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -41,6 +66,7 @@ public class Aula {
     public Integer getNumeroAsientos() {
         return numeroAsientos;
     }
+
     public void setNumeroAsientos(Integer numeroAsientos) {
         this.numeroAsientos = numeroAsientos;
     }
@@ -48,6 +74,7 @@ public class Aula {
     public Curso getCurso() {
         return curso;
     }
+
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
@@ -55,6 +82,7 @@ public class Aula {
     public List<Estudiante> getEstudiantes() {
         return estudiantes;
     }
+
     public void setEstudiantes(List<Estudiante> estudiantes) {
         this.estudiantes = estudiantes;
     }

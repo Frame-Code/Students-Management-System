@@ -1,22 +1,48 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * Created by Frame-Code, September 2024
  */
+@Entity(name = "PAGO_COLEGIATURA")
 public class PagoColegiatura {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name = "MONTO")
     private Integer monto;
+
+    @Column(name = "MES", length = 15, nullable = false)
     private String mes;
+
+    @Column(name = "ESTADO", nullable = false)
     private Boolean estado;
+
+    @ManyToOne
+    @JoinColumn(name = "ESTUDIANTE")
+    private Estudiante estudiante;
 
     public PagoColegiatura() {
     }
-    public PagoColegiatura(Integer monto, String mes, Boolean estado) {
+
+    public PagoColegiatura(Long id, Integer monto, String mes, Boolean estado, Estudiante estudiante) {
+        this.id = id;
         this.monto = monto;
         this.mes = mes;
         this.estado = estado;
+        this.estudiante = estudiante;
     }
 
     public Integer getMonto() {
@@ -41,6 +67,22 @@ public class PagoColegiatura {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 
     @Override

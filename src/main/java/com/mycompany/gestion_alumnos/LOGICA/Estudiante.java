@@ -3,24 +3,50 @@ package com.mycompany.gestion_alumnos.LOGICA;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * Created by Frame-Code, September 2024
  */
+@Entity(name = "ESTUDIANTE")
 class Estudiante {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+
+    @Column(name = "NOMBRE", length = 15, nullable = false)
     private String nombre;
+
+    @Column(name = "FECHA_NACIMIENTO", nullable = false)
     private LocalDate fecha_nacimiento;
+
+    @Column(name = "EDAD")
     private Integer edad;
+
+    @ManyToOne
+    @JoinColumn(name = "estudiantes")
     private Aula aula;
+
+    @OneToOne
     private Matricula matricula;
+
+    @OneToMany(mappedBy = "estudiante")
     private List<PagoColegiatura> pago_colegiatura;
 
     public Estudiante() {
     }
+
     public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Aula aula, Matricula matricula, List<PagoColegiatura> pago_colegiatura) {
         this.id = id;
         this.nombre = nombre;
@@ -44,6 +70,7 @@ class Estudiante {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -51,6 +78,7 @@ class Estudiante {
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -62,11 +90,11 @@ class Estudiante {
     public void setEdad() {
         this.edad = this.agregarEdad();
     }
-    
-    
+
     public LocalDate getFecha_nacimiento() {
         return fecha_nacimiento;
     }
+
     public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
@@ -74,6 +102,7 @@ class Estudiante {
     public Aula getAula() {
         return aula;
     }
+
     public void setAula(Aula aula) {
         this.aula = aula;
     }
@@ -81,6 +110,7 @@ class Estudiante {
     public Matricula getMatricula() {
         return matricula;
     }
+
     public void setMatricula(Matricula matricula) {
         this.matricula = matricula;
     }
@@ -88,6 +118,7 @@ class Estudiante {
     public List<PagoColegiatura> getPago_colegiatura() {
         return pago_colegiatura;
     }
+
     public void setPago_colegiatura(List<PagoColegiatura> pago_colegiatura) {
         this.pago_colegiatura = pago_colegiatura;
     }

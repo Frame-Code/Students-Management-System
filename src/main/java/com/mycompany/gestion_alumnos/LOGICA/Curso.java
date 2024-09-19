@@ -2,19 +2,37 @@ package com.mycompany.gestion_alumnos.LOGICA;
 
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * Created by Frame-Code, September 2024
  */
+@Entity(name = "CURSO")
 public class Curso {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+
+    @Column(name = "NOMBRE", length = 15, nullable = false)
     private String nombre;
+
+    @OneToMany(mappedBy = "curso")
     private List<Aula> aulas;
+
+    @OneToMany(mappedBy = "curso")
     private List<Materia> materias;
 
     public Curso() {
     }
+
     public Curso(Long id, String nombre, List<Aula> aulas, List<Materia> materias) {
         this.id = id;
         this.nombre = nombre;
@@ -25,6 +43,7 @@ public class Curso {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -32,6 +51,7 @@ public class Curso {
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -39,6 +59,7 @@ public class Curso {
     public List<Aula> getAulas() {
         return aulas;
     }
+
     public void setAulas(List<Aula> aulas) {
         this.aulas = aulas;
     }
@@ -46,6 +67,7 @@ public class Curso {
     public List<Materia> getMaterias() {
         return materias;
     }
+
     public void setMaterias(List<Materia> materias) {
         this.materias = materias;
     }

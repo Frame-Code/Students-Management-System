@@ -2,22 +2,49 @@ package com.mycompany.gestion_alumnos.LOGICA;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * Created by Frame-Code, September 2024
  */
+@Entity(name = "MATRICULA")
 public class Matricula {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "FECHA_MATRICULACION", nullable = false)
     private LocalDate fecha_matriculacion;
+
+    @Column(name = "FECHA_VENCIMIENTO", nullable = false)
     private LocalDate fecha_vencimiento;
+
+    @Column(name = "ESTADO", nullable = false)
     private String estado;
 
     public Matricula() {
     }
-    public Matricula(LocalDate fecha_matriculacion, LocalDate fecha_vencimiento, String estado) {
+
+    public Matricula(Long id, LocalDate fecha_matriculacion, LocalDate fecha_vencimiento, String estado) {
+        this.id = id;
         this.fecha_matriculacion = fecha_matriculacion;
         this.fecha_vencimiento = fecha_vencimiento;
         this.estado = estado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getFecha_matriculacion() {
@@ -78,5 +105,5 @@ public class Matricula {
     public String toString() {
         return "Matricula{" + "fecha_matriculacion=" + fecha_matriculacion + ", fecha_vencimiento=" + fecha_vencimiento + ", estado=" + estado + '}';
     }
-    
+
 }
