@@ -10,14 +10,21 @@ public class Materia {
     private Long id;
     private String nombre;
     private Curso curso;
-
+    
     public Materia() {
     }
+    
     public Materia(Long id, String nombre, Curso curso) {
         this.id = id;
         this.nombre = nombre;
         this.curso = curso;
     }
+
+    public Materia(Long id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
 
     public Long getId() {
         return id;
