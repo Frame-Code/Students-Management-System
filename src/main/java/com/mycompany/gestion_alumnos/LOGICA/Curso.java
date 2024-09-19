@@ -25,19 +25,27 @@ public class Curso {
     private String nombre;
 
     @OneToMany(mappedBy = "curso")
-    private List<Aula> aulas;
+    private List<Aula> listAulas;
 
     @OneToMany(mappedBy = "curso")
-    private List<Materia> materias;
+    private List<Materia> listMaterias;
 
     public Curso() {
     }
 
-    public Curso(Long id, String nombre, List<Aula> aulas, List<Materia> materias) {
+    public Curso(Long id, String nombre, List<Aula> listAulas, List<Materia> listMaterias) {
         this.id = id;
         this.nombre = nombre;
-        this.aulas = aulas;
-        this.materias = materias;
+        this.listAulas = listAulas;
+        this.listMaterias = listMaterias;
+    }
+    
+    public void agregarAula(Aula aula) {
+        listAulas.add(aula);
+    }
+    
+    public void agregarMateria(Materia materia) {
+        listMaterias.add(materia);
     }
 
     public Long getId() {
@@ -56,20 +64,20 @@ public class Curso {
         this.nombre = nombre;
     }
 
-    public List<Aula> getAulas() {
-        return aulas;
+    public List<Aula> getListAulas() {
+        return listAulas;
     }
 
-    public void setAulas(List<Aula> aulas) {
-        this.aulas = aulas;
+    public void setListAulas(List<Aula> listAulas) {
+        this.listAulas = listAulas;
     }
 
-    public List<Materia> getMaterias() {
-        return materias;
+    public List<Materia> getListMaterias() {
+        return listMaterias;
     }
 
-    public void setMaterias(List<Materia> materias) {
-        this.materias = materias;
+    public void setListMaterias(List<Materia> listMaterias) {
+        this.listMaterias = listMaterias;
     }
 
     @Override
@@ -77,8 +85,8 @@ public class Curso {
         int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.id);
         hash = 53 * hash + Objects.hashCode(this.nombre);
-        hash = 53 * hash + Objects.hashCode(this.aulas);
-        hash = 53 * hash + Objects.hashCode(this.materias);
+        hash = 53 * hash + Objects.hashCode(this.listAulas);
+        hash = 53 * hash + Objects.hashCode(this.listMaterias);
         return hash;
     }
 
@@ -100,14 +108,14 @@ public class Curso {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.aulas, other.aulas)) {
+        if (!Objects.equals(this.listAulas, other.listAulas)) {
             return false;
         }
-        return Objects.equals(this.materias, other.materias);
+        return Objects.equals(this.listMaterias, other.listMaterias);
     }
 
     @Override
     public String toString() {
-        return "Curso{" + "id=" + id + ", nombre=" + nombre + ", aulas=" + aulas + ", materias=" + materias + '}';
+        return "Curso{" + "id=" + id + ", nombre=" + nombre + ", aulas=" + listAulas + ", materias=" + listMaterias + '}';
     }
 }

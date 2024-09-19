@@ -34,17 +34,21 @@ public class Aula {
     private Curso curso;
 
     @OneToMany(mappedBy = "aula")
-    private List<Estudiante> estudiantes;
+    private List<Estudiante> listEstudiantes;
 
     public Aula() {
     }
 
-    public Aula(Long id, String nombre, Integer numeroAsientos, Curso curso, List<Estudiante> estudiantes) {
+    public Aula(Long id, String nombre, Integer numeroAsientos, Curso curso, List<Estudiante> listEstudiantes) {
         this.id = id;
         this.nombre = nombre;
         this.numeroAsientos = numeroAsientos;
         this.curso = curso;
-        this.estudiantes = estudiantes;
+        this.listEstudiantes = listEstudiantes;
+    }
+    
+    public void agregarEstudiante(Estudiante estudiante) {
+        listEstudiantes.add(estudiante);
     }
 
     public Long getId() {
@@ -79,12 +83,12 @@ public class Aula {
         this.curso = curso;
     }
 
-    public List<Estudiante> getEstudiantes() {
-        return estudiantes;
+    public List<Estudiante> getListEstudiantes() {
+        return listEstudiantes;
     }
 
-    public void setEstudiantes(List<Estudiante> estudiantes) {
-        this.estudiantes = estudiantes;
+    public void setListEstudiantes(List<Estudiante> listEstudiantes) {
+        this.listEstudiantes = listEstudiantes;
     }
 
     @Override
@@ -94,7 +98,7 @@ public class Aula {
         hash = 97 * hash + Objects.hashCode(this.nombre);
         hash = 97 * hash + Objects.hashCode(this.numeroAsientos);
         hash = 97 * hash + Objects.hashCode(this.curso);
-        hash = 97 * hash + Objects.hashCode(this.estudiantes);
+        hash = 97 * hash + Objects.hashCode(this.listEstudiantes);
         return hash;
     }
 
@@ -122,11 +126,11 @@ public class Aula {
         if (!Objects.equals(this.curso, other.curso)) {
             return false;
         }
-        return Objects.equals(this.estudiantes, other.estudiantes);
+        return Objects.equals(this.listEstudiantes, other.listEstudiantes);
     }
 
     @Override
     public String toString() {
-        return "Aula{" + "id=" + id + ", nombre=" + nombre + ", numeroAsientos=" + numeroAsientos + ", curso=" + curso + ", estudiantes=" + estudiantes + '}';
+        return "Aula{" + "id=" + id + ", nombre=" + nombre + ", numeroAsientos=" + numeroAsientos + ", curso=" + curso + ", estudiantes=" + listEstudiantes + '}';
     }
 }

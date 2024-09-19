@@ -42,18 +42,18 @@ class Estudiante {
     private Matricula matricula;
 
     @OneToMany(mappedBy = "estudiante")
-    private List<PagoColegiatura> pago_colegiatura;
+    private List<PagoColegiatura> listPago_colegiaturas;
 
     public Estudiante() {
     }
 
-    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Aula aula, Matricula matricula, List<PagoColegiatura> pago_colegiatura) {
+    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Aula aula, Matricula matricula, List<PagoColegiatura> listPago_colegiaturas) {
         this.id = id;
         this.nombre = nombre;
         this.fecha_nacimiento = fecha_nacimiento;
         this.aula = aula;
         this.matricula = matricula;
-        this.pago_colegiatura = pago_colegiatura;
+        this.listPago_colegiaturas = listPago_colegiaturas;
         edad = agregarEdad();
     }
 
@@ -65,6 +65,10 @@ class Estudiante {
             }
         }
         return edadGeneral;
+    }
+    
+    public void agregarPagoColegiatura(PagoColegiatura pago) {
+        listPago_colegiaturas.add(pago);
     }
 
     public Long getId() {
@@ -115,12 +119,12 @@ class Estudiante {
         this.matricula = matricula;
     }
 
-    public List<PagoColegiatura> getPago_colegiatura() {
-        return pago_colegiatura;
+    public List<PagoColegiatura> getListPago_colegiaturas() {
+        return listPago_colegiaturas;
     }
 
-    public void setPago_colegiatura(List<PagoColegiatura> pago_colegiatura) {
-        this.pago_colegiatura = pago_colegiatura;
+    public void setListPago_colegiaturas(List<PagoColegiatura> listPago_colegiaturas) {
+        this.listPago_colegiaturas = listPago_colegiaturas;
     }
 
     @Override
@@ -132,7 +136,7 @@ class Estudiante {
         hash = 23 * hash + Objects.hashCode(this.edad);
         hash = 23 * hash + Objects.hashCode(this.aula);
         hash = 23 * hash + Objects.hashCode(this.matricula);
-        hash = 23 * hash + Objects.hashCode(this.pago_colegiatura);
+        hash = 23 * hash + Objects.hashCode(this.listPago_colegiaturas);
         return hash;
     }
 
@@ -166,11 +170,11 @@ class Estudiante {
         if (!Objects.equals(this.matricula, other.matricula)) {
             return false;
         }
-        return Objects.equals(this.pago_colegiatura, other.pago_colegiatura);
+        return Objects.equals(this.listPago_colegiaturas, other.listPago_colegiaturas);
     }
 
     @Override
     public String toString() {
-        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", aula=" + aula + ", matricula=" + matricula + ", pago_colegiatura=" + pago_colegiatura + '}';
+        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", aula=" + aula + ", matricula=" + matricula + ", pago_colegiatura=" + listPago_colegiaturas + '}';
     }
 }
