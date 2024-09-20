@@ -25,18 +25,9 @@ public class Materia implements Serializable {
     @Column(name = "NOMBRE", length = 15, nullable = false)
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "CURSO")
-    private Curso curso;
-
     public Materia() {
     }
 
-    public Materia(Long id, String nombre, Curso curso) {
-        this.id = id;
-        this.nombre = nombre;
-        this.curso = curso;
-    }
 
     public Materia(Long id, String nombre) {
         this.id = id;
@@ -60,46 +51,4 @@ public class Materia implements Serializable {
         this.nombre = nombre;
     }
 
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.nombre);
-        hash = 53 * hash + Objects.hashCode(this.curso);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Materia other = (Materia) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return Objects.equals(this.curso, other.curso);
-    }
-
-    @Override
-    public String toString() {
-        return "Materia{" + "id=" + id + ", nombre=" + nombre + ", curso=" + curso + '}';
-    }
 }

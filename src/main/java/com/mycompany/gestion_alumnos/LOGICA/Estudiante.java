@@ -35,28 +35,24 @@ public class Estudiante implements Serializable {
     @Column(name = "EDAD")
     private Integer edad;
 
-    @ManyToOne
-    @JoinColumn(name = "AULA")
-    private Aula aula;
-
     @OneToOne 
     @JoinColumn(name = "MATRICULA_ID")
     private Matricula matricula;
 
-    @OneToMany(mappedBy = "estudiante")
+    @OneToMany
+    @JoinColumn(name = "PAGOS_ID")
     private List<PagoColegiatura> listPago_colegiaturas;
 
     public Estudiante() {
     }
 
-    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Aula aula, Matricula matricula, List<PagoColegiatura> listPago_colegiaturas) {
+    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Integer edad, Matricula matricula, List<PagoColegiatura> listPago_colegiaturas) {
         this.id = id;
         this.nombre = nombre;
         this.fecha_nacimiento = fecha_nacimiento;
-        this.aula = aula;
+        this.edad = edad;
         this.matricula = matricula;
         this.listPago_colegiaturas = listPago_colegiaturas;
-        edad = agregarEdad();
     }
 
     private Integer agregarEdad() {
@@ -105,14 +101,6 @@ public class Estudiante implements Serializable {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public Aula getAula() {
-        return aula;
-    }
-
-    public void setAula(Aula aula) {
-        this.aula = aula;
-    }
-
     public Matricula getMatricula() {
         return matricula;
     }
@@ -132,13 +120,12 @@ public class Estudiante implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.nombre);
-        hash = 23 * hash + Objects.hashCode(this.fecha_nacimiento);
-        hash = 23 * hash + Objects.hashCode(this.edad);
-        hash = 23 * hash + Objects.hashCode(this.aula);
-        hash = 23 * hash + Objects.hashCode(this.matricula);
-        hash = 23 * hash + Objects.hashCode(this.listPago_colegiaturas);
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.nombre);
+        hash = 41 * hash + Objects.hashCode(this.fecha_nacimiento);
+        hash = 41 * hash + Objects.hashCode(this.edad);
+        hash = 41 * hash + Objects.hashCode(this.matricula);
+        hash = 41 * hash + Objects.hashCode(this.listPago_colegiaturas);
         return hash;
     }
 
@@ -166,9 +153,6 @@ public class Estudiante implements Serializable {
         if (!Objects.equals(this.edad, other.edad)) {
             return false;
         }
-        if (!Objects.equals(this.aula, other.aula)) {
-            return false;
-        }
         if (!Objects.equals(this.matricula, other.matricula)) {
             return false;
         }
@@ -177,6 +161,9 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", aula=" + aula + ", matricula=" + matricula + ", pago_colegiatura=" + listPago_colegiaturas + '}';
+        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", matricula=" + matricula + ", listPago_colegiaturas=" + listPago_colegiaturas + '}';
     }
+    
+    
+    
 }

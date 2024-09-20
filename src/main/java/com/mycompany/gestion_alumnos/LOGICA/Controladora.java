@@ -86,6 +86,12 @@ public class Controladora {
     public void crearMateria(Materia materia) {
         persistencia.crearMateria(materia);
     }
+    public void crearMateria(String nombre) {
+        Materia materia = new Materia(1l, nombre);
+        //materia.setNombre(nombre);
+        persistencia.crearMateria(materia);
+    }
+    
 
     public Materia leerMateria(Long id) {
         return persistencia.leerMateria(id);

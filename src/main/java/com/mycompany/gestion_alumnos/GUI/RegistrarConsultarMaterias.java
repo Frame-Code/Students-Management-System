@@ -1,15 +1,18 @@
-
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Frame-Code
  */
 public class RegistrarConsultarMaterias extends javax.swing.JPanel {
+    private Controladora control;
     public RegistrarConsultarMaterias() {
         initComponents();
+        control = new Controladora();
     }
 
     /**
@@ -247,7 +250,18 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaActionPerformed
-        
+        String nombreMateria = null;
+        while (nombreMateria == null) {
+            nombreMateria = JOptionPane.showInputDialog(this, "Escribe el nombre de la materia: ");
+            try {
+                Integer.valueOf(nombreMateria);
+                nombreMateria = null;
+                JOptionPane.showMessageDialog(this, "No se admiten numeros");
+            } catch (NumberFormatException e) {
+                control.crearMateria(nombreMateria);
+                JOptionPane.showMessageDialog(this, "Materia guardada correctamente");
+            }
+        }
     }//GEN-LAST:event_btnRegistrarMateriaActionPerformed
 
     private void btnEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarMateriaActionPerformed
@@ -261,14 +275,14 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
     private void btnRegistrarEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEditarMateriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarEditarMateriaActionPerformed
-    
+
     private void habilitarOpciones() {
-        lblNombreMateria.setForeground(new Color(23,23,23));
+        lblNombreMateria.setForeground(new Color(23, 23, 23));
         txtNombreMateria.setEnabled(true);
-        btnRegistrarEditarMateria.setBackground(new Color(63,72,100));
+        btnRegistrarEditarMateria.setBackground(new Color(63, 72, 100));
         btnRegistrarEditarMateria.setEnabled(true);
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarMateria;

@@ -1,16 +1,15 @@
 package com.mycompany.gestion_alumnos.PERSISTENCIA;
 
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.mycompany.gestion_alumnos.LOGICA.Curso;
-import com.mycompany.gestion_alumnos.LOGICA.Materia;
-import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -32,16 +31,7 @@ public class MateriaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Curso curso = materia.getCurso();
-            if (curso != null) {
-                curso = em.getReference(curso.getClass(), curso.getId());
-                materia.setCurso(curso);
-            }
             em.persist(materia);
-            if (curso != null) {
-                curso.getListMaterias().add(materia);
-                curso = em.merge(curso);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -55,22 +45,7 @@ public class MateriaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Materia persistentMateria = em.find(Materia.class, materia.getId());
-            Curso cursoOld = persistentMateria.getCurso();
-            Curso cursoNew = materia.getCurso();
-            if (cursoNew != null) {
-                cursoNew = em.getReference(cursoNew.getClass(), cursoNew.getId());
-                materia.setCurso(cursoNew);
-            }
             materia = em.merge(materia);
-            if (cursoOld != null && !cursoOld.equals(cursoNew)) {
-                cursoOld.getListMaterias().remove(materia);
-                cursoOld = em.merge(cursoOld);
-            }
-            if (cursoNew != null && !cursoNew.equals(cursoOld)) {
-                cursoNew.getListMaterias().add(materia);
-                cursoNew = em.merge(cursoNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -99,11 +74,6 @@ public class MateriaJpaController implements Serializable {
                 materia.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The materia with id " + id + " no longer exists.", enfe);
-            }
-            Curso curso = materia.getCurso();
-            if (curso != null) {
-                curso.getListMaterias().remove(materia);
-                curso = em.merge(curso);
             }
             em.remove(materia);
             em.getTransaction().commit();

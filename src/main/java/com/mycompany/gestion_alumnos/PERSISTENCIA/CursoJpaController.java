@@ -7,10 +7,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
+import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
-import com.mycompany.gestion_alumnos.LOGICA.Materia;
-import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -33,9 +32,6 @@ public class CursoJpaController implements Serializable {
         if (curso.getListAulas() == null) {
             curso.setListAulas(new ArrayList<Aula>());
         }
-        if (curso.getListMaterias() == null) {
-            curso.setListMaterias(new ArrayList<Materia>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -46,12 +42,6 @@ public class CursoJpaController implements Serializable {
                 attachedListAulas.add(listAulasAulaToAttach);
             }
             curso.setListAulas(attachedListAulas);
-            List<Materia> attachedListMaterias = new ArrayList<Materia>();
-            for (Materia listMateriasMateriaToAttach : curso.getListMaterias()) {
-                listMateriasMateriaToAttach = em.getReference(listMateriasMateriaToAttach.getClass(), listMateriasMateriaToAttach.getId());
-                attachedListMaterias.add(listMateriasMateriaToAttach);
-            }
-            curso.setListMaterias(attachedListMaterias);
             em.persist(curso);
             for (Aula listAulasAula : curso.getListAulas()) {
                 Curso oldCursoOfListAulasAula = listAulasAula.getCurso();
@@ -60,15 +50,6 @@ public class CursoJpaController implements Serializable {
                 if (oldCursoOfListAulasAula != null) {
                     oldCursoOfListAulasAula.getListAulas().remove(listAulasAula);
                     oldCursoOfListAulasAula = em.merge(oldCursoOfListAulasAula);
-                }
-            }
-            for (Materia listMateriasMateria : curso.getListMaterias()) {
-                Curso oldCursoOfListMateriasMateria = listMateriasMateria.getCurso();
-                listMateriasMateria.setCurso(curso);
-                listMateriasMateria = em.merge(listMateriasMateria);
-                if (oldCursoOfListMateriasMateria != null) {
-                    oldCursoOfListMateriasMateria.getListMaterias().remove(listMateriasMateria);
-                    oldCursoOfListMateriasMateria = em.merge(oldCursoOfListMateriasMateria);
                 }
             }
             em.getTransaction().commit();
@@ -87,8 +68,6 @@ public class CursoJpaController implements Serializable {
             Curso persistentCurso = em.find(Curso.class, curso.getId());
             List<Aula> listAulasOld = persistentCurso.getListAulas();
             List<Aula> listAulasNew = curso.getListAulas();
-            List<Materia> listMateriasOld = persistentCurso.getListMaterias();
-            List<Materia> listMateriasNew = curso.getListMaterias();
             List<Aula> attachedListAulasNew = new ArrayList<Aula>();
             for (Aula listAulasNewAulaToAttach : listAulasNew) {
                 listAulasNewAulaToAttach = em.getReference(listAulasNewAulaToAttach.getClass(), listAulasNewAulaToAttach.getId());
@@ -96,13 +75,6 @@ public class CursoJpaController implements Serializable {
             }
             listAulasNew = attachedListAulasNew;
             curso.setListAulas(listAulasNew);
-            List<Materia> attachedListMateriasNew = new ArrayList<Materia>();
-            for (Materia listMateriasNewMateriaToAttach : listMateriasNew) {
-                listMateriasNewMateriaToAttach = em.getReference(listMateriasNewMateriaToAttach.getClass(), listMateriasNewMateriaToAttach.getId());
-                attachedListMateriasNew.add(listMateriasNewMateriaToAttach);
-            }
-            listMateriasNew = attachedListMateriasNew;
-            curso.setListMaterias(listMateriasNew);
             curso = em.merge(curso);
             for (Aula listAulasOldAula : listAulasOld) {
                 if (!listAulasNew.contains(listAulasOldAula)) {
@@ -118,23 +90,6 @@ public class CursoJpaController implements Serializable {
                     if (oldCursoOfListAulasNewAula != null && !oldCursoOfListAulasNewAula.equals(curso)) {
                         oldCursoOfListAulasNewAula.getListAulas().remove(listAulasNewAula);
                         oldCursoOfListAulasNewAula = em.merge(oldCursoOfListAulasNewAula);
-                    }
-                }
-            }
-            for (Materia listMateriasOldMateria : listMateriasOld) {
-                if (!listMateriasNew.contains(listMateriasOldMateria)) {
-                    listMateriasOldMateria.setCurso(null);
-                    listMateriasOldMateria = em.merge(listMateriasOldMateria);
-                }
-            }
-            for (Materia listMateriasNewMateria : listMateriasNew) {
-                if (!listMateriasOld.contains(listMateriasNewMateria)) {
-                    Curso oldCursoOfListMateriasNewMateria = listMateriasNewMateria.getCurso();
-                    listMateriasNewMateria.setCurso(curso);
-                    listMateriasNewMateria = em.merge(listMateriasNewMateria);
-                    if (oldCursoOfListMateriasNewMateria != null && !oldCursoOfListMateriasNewMateria.equals(curso)) {
-                        oldCursoOfListMateriasNewMateria.getListMaterias().remove(listMateriasNewMateria);
-                        oldCursoOfListMateriasNewMateria = em.merge(oldCursoOfListMateriasNewMateria);
                     }
                 }
             }
@@ -171,11 +126,6 @@ public class CursoJpaController implements Serializable {
             for (Aula listAulasAula : listAulas) {
                 listAulasAula.setCurso(null);
                 listAulasAula = em.merge(listAulasAula);
-            }
-            List<Materia> listMaterias = curso.getListMaterias();
-            for (Materia listMateriasMateria : listMaterias) {
-                listMateriasMateria.setCurso(null);
-                listMateriasMateria = em.merge(listMateriasMateria);
             }
             em.remove(curso);
             em.getTransaction().commit();

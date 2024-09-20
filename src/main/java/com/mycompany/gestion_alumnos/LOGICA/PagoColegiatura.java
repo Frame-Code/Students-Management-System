@@ -31,19 +31,22 @@ public class PagoColegiatura implements Serializable {
     @Column(name = "ESTADO", nullable = false)
     private Boolean estado;
 
-    @ManyToOne
-    @JoinColumn(name = "ESTUDIANTE")
-    private Estudiante estudiante;
-
     public PagoColegiatura() {
     }
 
-    public PagoColegiatura(Long id, Integer monto, String mes, Boolean estado, Estudiante estudiante) {
+    public PagoColegiatura(Long id, Integer monto, String mes, Boolean estado) {
         this.id = id;
         this.monto = monto;
         this.mes = mes;
         this.estado = estado;
-        this.estudiante = estudiante;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getMonto() {
@@ -70,28 +73,13 @@ public class PagoColegiatura implements Serializable {
         this.estado = estado;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Estudiante getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.monto);
-        hash = 59 * hash + Objects.hashCode(this.mes);
-        hash = 59 * hash + Objects.hashCode(this.estado);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.monto);
+        hash = 79 * hash + Objects.hashCode(this.mes);
+        hash = 79 * hash + Objects.hashCode(this.estado);
         return hash;
     }
 
@@ -110,6 +98,9 @@ public class PagoColegiatura implements Serializable {
         if (!Objects.equals(this.mes, other.mes)) {
             return false;
         }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (!Objects.equals(this.monto, other.monto)) {
             return false;
         }
@@ -118,6 +109,6 @@ public class PagoColegiatura implements Serializable {
 
     @Override
     public String toString() {
-        return "PagoColegiatura{" + "monto=" + monto + ", mes=" + mes + ", estado=" + estado + '}';
+        return "PagoColegiatura{" + "id=" + id + ", monto=" + monto + ", mes=" + mes + ", estado=" + estado + '}';
     }
 }
