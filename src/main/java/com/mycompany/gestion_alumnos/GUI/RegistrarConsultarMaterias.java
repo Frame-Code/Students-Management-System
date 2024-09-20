@@ -2,23 +2,21 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class RegistrarConsultarMaterias extends javax.swing.JPanel {
+public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Mensajes {
 
     private Controladora control;
 
     public RegistrarConsultarMaterias() {
-        initComponents();
         control = new Controladora();
+        initComponents();
         cargarTabla();
     }
 
@@ -56,20 +54,12 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
         tblMaterias.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane2.setViewportView(tblMaterias);
 
         lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -194,39 +184,58 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaActionPerformed
-        String nombreMateria = null;
-        while (nombreMateria == null) {
-            nombreMateria = JOptionPane.showInputDialog(this, "Escribe el nombre de la materia: ");
-            try {
-                Integer.valueOf(nombreMateria);
-                nombreMateria = null;
-                JOptionPane.showMessageDialog(this, "No se admiten numeros");
-            } catch (NumberFormatException e) {
-                control.crearMateria(nombreMateria);
-                JOptionPane.showMessageDialog(this, "Materia guardada correctamente");
+        String nombreMateria;
+        do {
+            nombreMateria = obtenerInformacion(this, "Escribe el nombre de la materia", "Registar nueva materia");
+            if (!nombreMateria.equals(CANCELADO)) {
+                if (nombreMateria.equals("")) {
+                    mostrarInformacion(this, "No pueden haber campos vacios", "Error");
+                    nombreMateria = null;
+                } else {
+                    if (isString(nombreMateria)) {
+                        control.crearMateria(nombreMateria);
+                        mostrarInformacion(this, "Materia guardada correctamente", "Registro de materia exitoso");
+                    } else {
+                        nombreMateria = null;
+                    }
+                }
+            } else {
+                break;
             }
-        }
+        } while (nombreMateria == null);
         cargarTabla();
     }//GEN-LAST:event_btnRegistrarMateriaActionPerformed
 
     private void btnEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarMateriaActionPerformed
         // TODO add your handling code here:
-        String nuevoNombre = "0";
-        long idAntiguoNombre = (long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0);
-
+        String nuevoNombre;
         if (tblMaterias.getRowCount() > 0) {
             if (tblMaterias.getSelectedRow() != -1) {
                 do {
-                    nuevoNombre = JOptionPane.showInputDialog(this, "Escribe el nuevo nombre de la materia: ");
-                } while (!isString(nuevoNombre));
-                control.editarMateria(nuevoNombre, idAntiguoNombre);
-                JOptionPane.showMessageDialog(this, "Materia editada correctamente");
-                cargarTabla();
+                    nuevoNombre = obtenerInformacion(this, "Escribe el nuevo nombre de la materia", "Editar materia");
+                    if (!nuevoNombre.equals(CANCELADO)) {
+                        if (nuevoNombre.equals("")) {
+                            mostrarInformacion(this, "No pueden haber campos vacios", "Error");
+                            nuevoNombre = null;
+                        } else {
+                            if (isString(nuevoNombre)) {
+                                long idAntiguoNombre = (long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0);
+                                control.editarMateria(nuevoNombre, idAntiguoNombre);
+                                mostrarInformacion(this, "Materia editada correctamente", "Editar materia ");
+                                cargarTabla();
+                            } else {
+                                nuevoNombre = null;
+                            }
+                        }
+                    } else {
+                        break;
+                    }
+                } while (nuevoNombre == null);
             } else {
-                JOptionPane.showMessageDialog(this, "Selecciona una materia por favor");
+                mostrarInformacion(this, "Selecciona una materia por favor", "Error");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Tabla vacia");
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEditarMateriaActionPerformed
 
@@ -234,24 +243,25 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (tblMaterias.getRowCount() > 0) {
             if (tblMaterias.getSelectedRow() != -1) {
-                int respuesta = JOptionPane.showConfirmDialog(this, "¿Guardar elimnar la materia?");
-                if (respuesta == JOptionPane.YES_OPTION) {
-                    control.eliminarMateria((long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0));
-                    JOptionPane.showMessageDialog(this, "Materia eliminada correctamente");
+                int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar la materia?", "Eliminar materia");
+                if (respuesta == SI) {
+                    long idMateria = (long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0);
+                    control.eliminarMateria(idMateria);
+                    mostrarInformacion(this, "Materia eliminada correctamente", "Materia eliminada!");
                 }
                 cargarTabla();
             } else {
-                JOptionPane.showMessageDialog(this, "Selecciona una materia por favor");
+                mostrarInformacion(this, "Selecciona una materia por favor", "Error");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Tabla vacia");
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
 
     private boolean isString(String nombre) {
         try {
             Integer.valueOf(nombre);
-            JOptionPane.showMessageDialog(this, "No se admiten numeros");
+            mostrarInformacion(this, "No se admiten numeros", "Error");
             return false;
         } catch (NumberFormatException e) {
             return true;
@@ -277,7 +287,6 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
         tblMaterias.setModel(modeloTabla);
 
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarMateria;
