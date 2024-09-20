@@ -1,15 +1,16 @@
 package com.mycompany.gestion_alumnos.PERSISTENCIA;
 
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
-import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.mycompany.gestion_alumnos.LOGICA.Aula;
+import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -31,7 +32,16 @@ public class EstudianteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Aula aula = estudiante.getAula();
+            if (aula != null) {
+                aula = em.getReference(aula.getClass(), aula.getId());
+                estudiante.setAula(aula);
+            }
             em.persist(estudiante);
+            if (aula != null) {
+                aula.getListEstudiantes().add(estudiante);
+                aula = em.merge(aula);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,7 +55,22 @@ public class EstudianteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getId());
+            Aula aulaOld = persistentEstudiante.getAula();
+            Aula aulaNew = estudiante.getAula();
+            if (aulaNew != null) {
+                aulaNew = em.getReference(aulaNew.getClass(), aulaNew.getId());
+                estudiante.setAula(aulaNew);
+            }
             estudiante = em.merge(estudiante);
+            if (aulaOld != null && !aulaOld.equals(aulaNew)) {
+                aulaOld.getListEstudiantes().remove(estudiante);
+                aulaOld = em.merge(aulaOld);
+            }
+            if (aulaNew != null && !aulaNew.equals(aulaOld)) {
+                aulaNew.getListEstudiantes().add(estudiante);
+                aulaNew = em.merge(aulaNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -74,6 +99,11 @@ public class EstudianteJpaController implements Serializable {
                 estudiante.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The estudiante with id " + id + " no longer exists.", enfe);
+            }
+            Aula aula = estudiante.getAula();
+            if (aula != null) {
+                aula.getListEstudiantes().remove(estudiante);
+                aula = em.merge(aula);
             }
             em.remove(estudiante);
             em.getTransaction().commit();

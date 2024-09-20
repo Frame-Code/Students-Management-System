@@ -1,18 +1,25 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Frame-Code
  */
 public class RegistrarConsultarMaterias extends javax.swing.JPanel {
+
     private Controladora control;
+
     public RegistrarConsultarMaterias() {
         initComponents();
         control = new Controladora();
+        cargarTabla();
     }
 
     /**
@@ -34,11 +41,6 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
         btnEditarMateria = new javax.swing.JButton();
         btnEliminarMateria = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        lblNombreMateria = new javax.swing.JLabel();
-        txtNombreMateria = new javax.swing.JTextField();
-        btnRegistrarEditarMateria = new javax.swing.JButton();
-        jLabel18 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(196, 196, 196));
         setPreferredSize(new java.awt.Dimension(761, 657));
@@ -159,58 +161,6 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
         jLabel17.setForeground(new java.awt.Color(99, 99, 99));
         jLabel17.setText("_________________________________________________Materias registradas________________________________________________");
 
-        jPanel1.setBackground(new java.awt.Color(180, 180, 180));
-
-        lblNombreMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        lblNombreMateria.setForeground(new java.awt.Color(60, 63, 65));
-        lblNombreMateria.setText("Nombre de la materia:");
-
-        txtNombreMateria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
-        txtNombreMateria.setEnabled(false);
-        txtNombreMateria.setOpaque(false);
-
-        btnRegistrarEditarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        btnRegistrarEditarMateria.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrarEditarMateria.setText("Registrar ");
-        btnRegistrarEditarMateria.setBorder(null);
-        btnRegistrarEditarMateria.setEnabled(false);
-        btnRegistrarEditarMateria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarEditarMateriaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombreMateria)
-                    .addComponent(txtNombreMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRegistrarEditarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarEditarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(lblNombreMateria)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreMateria)))
-                .addGap(22, 22, 22))
-        );
-
-        jLabel18.setForeground(new java.awt.Color(99, 99, 99));
-        jLabel18.setText("_____________________________________________Registrar - Editar Materia ______________________________________________");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,9 +172,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel17)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel18)))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(207, 207, 207)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -241,11 +189,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel18)
-                .addGap(2, 2, 2)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -262,47 +206,89 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Materia guardada correctamente");
             }
         }
+        cargarTabla();
     }//GEN-LAST:event_btnRegistrarMateriaActionPerformed
 
     private void btnEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarMateriaActionPerformed
         // TODO add your handling code here:
+        String nuevoNombre = "0";
+        long idAntiguoNombre = (long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0);
+
+        if (tblMaterias.getRowCount() > 0) {
+            if (tblMaterias.getSelectedRow() != -1) {
+                do {
+                    nuevoNombre = JOptionPane.showInputDialog(this, "Escribe el nuevo nombre de la materia: ");
+                } while (!isString(nuevoNombre));
+                control.editarMateria(nuevoNombre, idAntiguoNombre);
+                JOptionPane.showMessageDialog(this, "Materia editada correctamente");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecciona una materia por favor");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Tabla vacia");
+        }
     }//GEN-LAST:event_btnEditarMateriaActionPerformed
 
     private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
         // TODO add your handling code here:
+        if (tblMaterias.getRowCount() > 0) {
+            if (tblMaterias.getSelectedRow() != -1) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Guardar elimnar la materia?");
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    control.eliminarMateria((long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0));
+                    JOptionPane.showMessageDialog(this, "Materia eliminada correctamente");
+                }
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecciona una materia por favor");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Tabla vacia");
+        }
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
 
-    private void btnRegistrarEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEditarMateriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegistrarEditarMateriaActionPerformed
+    private boolean isString(String nombre) {
+        try {
+            Integer.valueOf(nombre);
+            JOptionPane.showMessageDialog(this, "No se admiten numeros");
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
+    }
 
-    private void habilitarOpciones() {
-        lblNombreMateria.setForeground(new Color(23, 23, 23));
-        txtNombreMateria.setEnabled(true);
-        btnRegistrarEditarMateria.setBackground(new Color(63, 72, 100));
-        btnRegistrarEditarMateria.setEnabled(true);
+    private void cargarTabla() {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        String titulos[] = {"ID", "MATERIA"};
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        List<Materia> materias = new ArrayList<>(control.leerListMaterias());
+        for (Materia materia : materias) {
+            Object object[] = {materia.getId(), materia.getNombre()};
+            modeloTabla.addRow(object);
+        }
+        tblMaterias.setModel(modeloTabla);
+
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarMateria;
     private javax.swing.JButton btnEliminarMateria;
-    private javax.swing.JButton btnRegistrarEditarMateria;
     private javax.swing.JButton btnRegistrarMateria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblMatricula2;
     private javax.swing.JLabel lblMatricula3;
-    private javax.swing.JLabel lblNombreMateria;
-    private javax.swing.JTable tblEstudianteEncontrado;
     private javax.swing.JTable tblMaterias;
-    private javax.swing.JTextField txtNombreMateria;
     // End of variables declaration//GEN-END:variables
 }

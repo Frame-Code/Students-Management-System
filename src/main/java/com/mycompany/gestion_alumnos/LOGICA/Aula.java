@@ -31,7 +31,7 @@ public class Aula implements Serializable {
     private Integer numeroAsientos;
 
     @ManyToOne
-    @JoinColumn(name = "CURSO")
+    @JoinColumn(name = "CURSO_ID")
     private Curso curso;
 
     @OneToMany(mappedBy = "aula")

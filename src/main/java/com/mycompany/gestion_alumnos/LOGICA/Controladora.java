@@ -1,10 +1,7 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
 import com.mycompany.gestion_alumnos.PERSISTENCIA.ControladoraPersistencia;
-import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +16,7 @@ public class Controladora {
     }
 
     /*--------------------------METHODS CRUD-------------------------*/
-    /*--------------------------AULA-------------------------*/
+ /*--------------------------AULA-------------------------*/
     public void crearAula(Aula aula) {
         persistencia.crearAula(aula);
     }
@@ -86,12 +83,11 @@ public class Controladora {
     public void crearMateria(Materia materia) {
         persistencia.crearMateria(materia);
     }
+
     public void crearMateria(String nombre) {
         Materia materia = new Materia(1l, nombre);
-        //materia.setNombre(nombre);
         persistencia.crearMateria(materia);
     }
-    
 
     public Materia leerMateria(Long id) {
         return persistencia.leerMateria(id);
@@ -102,6 +98,12 @@ public class Controladora {
     }
 
     public void editarMateria(Materia materia) {
+        persistencia.editarMateria(materia);
+    }
+
+    public void editarMateria(String nombre, long id) {
+        Materia materia = this.leerMateria(id);
+        materia.setNombre(nombre);
         persistencia.editarMateria(materia);
     }
 
