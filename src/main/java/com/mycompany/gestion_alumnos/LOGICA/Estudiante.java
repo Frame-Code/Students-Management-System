@@ -40,7 +40,7 @@ public class Estudiante implements Serializable {
     private Aula aula;
 
     @OneToOne 
-    @Column (name = "MATRICULA")
+    @JoinColumn(name = "MATRICULA_ID")
     private Matricula matricula;
 
     @OneToMany(mappedBy = "estudiante")

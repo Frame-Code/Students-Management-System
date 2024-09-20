@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import com.mycompany.gestion_alumnos.LOGICA.Matricula;
 import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
 import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
@@ -42,6 +43,11 @@ public class EstudianteJpaController implements Serializable {
                 aula = em.getReference(aula.getClass(), aula.getId());
                 estudiante.setAula(aula);
             }
+            Matricula matricula = estudiante.getMatricula();
+            if (matricula != null) {
+                matricula = em.getReference(matricula.getClass(), matricula.getId());
+                estudiante.setMatricula(matricula);
+            }
             List<PagoColegiatura> attachedListPago_colegiaturas = new ArrayList<PagoColegiatura>();
             for (PagoColegiatura listPago_colegiaturasPagoColegiaturaToAttach : estudiante.getListPago_colegiaturas()) {
                 listPago_colegiaturasPagoColegiaturaToAttach = em.getReference(listPago_colegiaturasPagoColegiaturaToAttach.getClass(), listPago_colegiaturasPagoColegiaturaToAttach.getId());
@@ -52,6 +58,15 @@ public class EstudianteJpaController implements Serializable {
             if (aula != null) {
                 aula.getListEstudiantes().add(estudiante);
                 aula = em.merge(aula);
+            }
+            if (matricula != null) {
+                Estudiante oldEstudianteOfMatricula = matricula.getEstudiante();
+                if (oldEstudianteOfMatricula != null) {
+                    oldEstudianteOfMatricula.setMatricula(null);
+                    oldEstudianteOfMatricula = em.merge(oldEstudianteOfMatricula);
+                }
+                matricula.setEstudiante(estudiante);
+                matricula = em.merge(matricula);
             }
             for (PagoColegiatura listPago_colegiaturasPagoColegiatura : estudiante.getListPago_colegiaturas()) {
                 Estudiante oldEstudianteOfListPago_colegiaturasPagoColegiatura = listPago_colegiaturasPagoColegiatura.getEstudiante();
@@ -78,11 +93,17 @@ public class EstudianteJpaController implements Serializable {
             Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getId());
             Aula aulaOld = persistentEstudiante.getAula();
             Aula aulaNew = estudiante.getAula();
+            Matricula matriculaOld = persistentEstudiante.getMatricula();
+            Matricula matriculaNew = estudiante.getMatricula();
             List<PagoColegiatura> listPago_colegiaturasOld = persistentEstudiante.getListPago_colegiaturas();
             List<PagoColegiatura> listPago_colegiaturasNew = estudiante.getListPago_colegiaturas();
             if (aulaNew != null) {
                 aulaNew = em.getReference(aulaNew.getClass(), aulaNew.getId());
                 estudiante.setAula(aulaNew);
+            }
+            if (matriculaNew != null) {
+                matriculaNew = em.getReference(matriculaNew.getClass(), matriculaNew.getId());
+                estudiante.setMatricula(matriculaNew);
             }
             List<PagoColegiatura> attachedListPago_colegiaturasNew = new ArrayList<PagoColegiatura>();
             for (PagoColegiatura listPago_colegiaturasNewPagoColegiaturaToAttach : listPago_colegiaturasNew) {
@@ -99,6 +120,19 @@ public class EstudianteJpaController implements Serializable {
             if (aulaNew != null && !aulaNew.equals(aulaOld)) {
                 aulaNew.getListEstudiantes().add(estudiante);
                 aulaNew = em.merge(aulaNew);
+            }
+            if (matriculaOld != null && !matriculaOld.equals(matriculaNew)) {
+                matriculaOld.setEstudiante(null);
+                matriculaOld = em.merge(matriculaOld);
+            }
+            if (matriculaNew != null && !matriculaNew.equals(matriculaOld)) {
+                Estudiante oldEstudianteOfMatricula = matriculaNew.getEstudiante();
+                if (oldEstudianteOfMatricula != null) {
+                    oldEstudianteOfMatricula.setMatricula(null);
+                    oldEstudianteOfMatricula = em.merge(oldEstudianteOfMatricula);
+                }
+                matriculaNew.setEstudiante(estudiante);
+                matriculaNew = em.merge(matriculaNew);
             }
             for (PagoColegiatura listPago_colegiaturasOldPagoColegiatura : listPago_colegiaturasOld) {
                 if (!listPago_colegiaturasNew.contains(listPago_colegiaturasOldPagoColegiatura)) {
@@ -150,6 +184,11 @@ public class EstudianteJpaController implements Serializable {
             if (aula != null) {
                 aula.getListEstudiantes().remove(estudiante);
                 aula = em.merge(aula);
+            }
+            Matricula matricula = estudiante.getMatricula();
+            if (matricula != null) {
+                matricula.setEstudiante(null);
+                matricula = em.merge(matricula);
             }
             List<PagoColegiatura> listPago_colegiaturas = estudiante.getListPago_colegiaturas();
             for (PagoColegiatura listPago_colegiaturasPagoColegiatura : listPago_colegiaturas) {

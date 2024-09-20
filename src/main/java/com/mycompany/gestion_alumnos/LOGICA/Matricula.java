@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -29,15 +30,19 @@ public class Matricula implements Serializable {
 
     @Column(name = "ESTADO", nullable = false)
     private String estado;
+    
+    @OneToOne(mappedBy = "matricula")
+    private Estudiante estudiante;
 
     public Matricula() {
     }
 
-    public Matricula(Long id, LocalDate fecha_matriculacion, LocalDate fecha_vencimiento, String estado) {
+    public Matricula(Long id, LocalDate fecha_matriculacion, LocalDate fecha_vencimiento, String estado, Estudiante estudiante) {
         this.id = id;
         this.fecha_matriculacion = fecha_matriculacion;
         this.fecha_vencimiento = fecha_vencimiento;
         this.estado = estado;
+        this.estudiante = estudiante;
     }
 
     public Long getId() {
@@ -72,12 +77,22 @@ public class Matricula implements Serializable {
         this.estado = estado;
     }
 
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.fecha_matriculacion);
-        hash = 89 * hash + Objects.hashCode(this.fecha_vencimiento);
-        hash = 89 * hash + Objects.hashCode(this.estado);
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.fecha_matriculacion);
+        hash = 59 * hash + Objects.hashCode(this.fecha_vencimiento);
+        hash = 59 * hash + Objects.hashCode(this.estado);
+        hash = 59 * hash + Objects.hashCode(this.estudiante);
         return hash;
     }
 
@@ -96,15 +111,23 @@ public class Matricula implements Serializable {
         if (!Objects.equals(this.estado, other.estado)) {
             return false;
         }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (!Objects.equals(this.fecha_matriculacion, other.fecha_matriculacion)) {
             return false;
         }
-        return Objects.equals(this.fecha_vencimiento, other.fecha_vencimiento);
+        if (!Objects.equals(this.fecha_vencimiento, other.fecha_vencimiento)) {
+            return false;
+        }
+        return Objects.equals(this.estudiante, other.estudiante);
     }
 
     @Override
     public String toString() {
-        return "Matricula{" + "fecha_matriculacion=" + fecha_matriculacion + ", fecha_vencimiento=" + fecha_vencimiento + ", estado=" + estado + '}';
+        return "Matricula{" + "id=" + id + ", fecha_matriculacion=" + fecha_matriculacion + ", fecha_vencimiento=" + fecha_vencimiento + ", estado=" + estado + ", estudiante=" + estudiante + '}';
     }
-
+    
+    
+   
 }
