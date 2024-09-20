@@ -1,14 +1,28 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class CrearCursos extends javax.swing.JFrame {
+public class CrearCursos extends javax.swing.JFrame implements Mensajes{
+
+    private Controladora control;
+
     public CrearCursos() {
         initComponents();
+    }
+
+    public CrearCursos(Controladora control) {
+        this.control = control;
+        initComponents();
+        cargarTabla();
     }
 
     /**
@@ -246,12 +260,64 @@ public class CrearCursos extends javax.swing.JFrame {
 
     private void btnCrearCursoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoActionPerformed
         // TODO add your handling code here:
+        
+        List<Materia> materias = new ArrayList<>();
+        for(int i = 0; i < tblMaterias.getRowCount(); i++) {
+            boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
+            if (seleccionado) {
+                materias.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
+            } else {
+                mostrarInformacion(this, "Selecciona al menos una materia", "Error");
+                break;
+            }
+        }
+        
+        control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), materias);
+        
+        
+         /*if (tblMaterias.getRowCount() > 0) {
+            if (tblMaterias.getSelectedRow() != -1) {
+                
+            } else {
+                mostrarInformacion(this, "Selecciona una materia por favor", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
+        }*/
+           
+        
     }//GEN-LAST:event_btnCrearCursoNuevoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void cargarTabla() {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 0;
+            }
+            public Class<?> getColumnClass(int column) {
+                // La primera columna tendrá CheckBoxes, por lo tanto tipo Boolean
+                if (column == 0) {
+                    return Boolean.class;
+                }
+                return super.getColumnClass(column);
+            }
+        };
+
+        String titulos[] = {"SELECCIONAR", "ID", "MATERIA"};
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        List<Materia> materias = new ArrayList<>(control.leerListMaterias());
+        for (Materia materia : materias) {
+            Object object[] = {false, materia.getId(), materia.getNombre()};
+            modeloTabla.addRow(object);
+        }
+        tblMaterias.setModel(modeloTabla);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCursoNuevo;

@@ -1,5 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,8 +11,8 @@ import javax.swing.JPanel;
  * @author frame-code
  */
 public class Principal extends javax.swing.JFrame {
-
     private final JButton BOTONES[];
+    private Controladora control;
     private MatricularNuevoEstudiante pnlMatricularNuevo;
     private MatricularEstudianteExistente pnlMatricularExistente;
     private ConsultarEstudiantes pnlConsultarEstudiantes;
@@ -19,13 +20,14 @@ public class Principal extends javax.swing.JFrame {
     private RegistrarConsultarMaterias pnlRegistroConsultarMaterias;
 
     public Principal() {
+        control = new Controladora();
         initComponents();
         this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias};
         this.pnlMatricularNuevo = new MatricularNuevoEstudiante();
         this.pnlMatricularExistente = new MatricularEstudianteExistente();
         this.pnlConsultarEstudiantes = new ConsultarEstudiantes();
-        this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos();
-        this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias();
+        this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos(control);
+        this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias(control);
     }
 
     /**

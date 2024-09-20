@@ -1,6 +1,7 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
 import com.mycompany.gestion_alumnos.PERSISTENCIA.ControladoraPersistencia;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +41,17 @@ public class Controladora {
     /*--------------------------CURSO-------------------------*/
     public void crearCurso(Curso curso) {
         persistencia.crearCurso(curso);
+    }
+
+    public void crearCurso(String nombre, int n_aulas, List<Materia> materias) {
+        //persistencia.crearCurso(curso);
+        List<Aula> aulas = new ArrayList<>();
+        for (int i = 0; i < n_aulas; i++) {
+            Aula aula = new Aula();
+            aula.setId(1l);
+            aula.setNombre(nombre + "1");
+            
+        }
     }
 
     public Curso leerCurso(Long id) {

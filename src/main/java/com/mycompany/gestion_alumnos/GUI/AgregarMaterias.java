@@ -1,13 +1,23 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+
 /**
  *
  * @author Frame-Code
  */
 public class AgregarMaterias extends javax.swing.JFrame {
+    private Controladora control;
+    
     public AgregarMaterias() {
         initComponents();
     }
+
+    public AgregarMaterias(Controladora control) {
+        this.control = control;
+        initComponents();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

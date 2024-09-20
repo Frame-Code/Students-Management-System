@@ -1,20 +1,33 @@
-
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Curso;
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Frame-Code
  */
 public class RegistrarConsultarCursos extends javax.swing.JPanel {
+
+    private Controladora control;
     private VerEditarCursos frameVerEditar;
     private CrearCursos frameCrearCursos;
-    
+
     public RegistrarConsultarCursos() {
         initComponents();
         frameVerEditar = new VerEditarCursos();
         frameCrearCursos = new CrearCursos();
+    }
+
+    public RegistrarConsultarCursos(Controladora control) {
+        this.control = control;
+        initComponents();
+        cargarTabla();
     }
 
     /**
@@ -51,20 +64,12 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         tblCursos.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane2.setViewportView(tblCursos);
 
         lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -190,6 +195,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerEditarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarCursoActionPerformed
+        frameVerEditar = new VerEditarCursos(control);
         frameVerEditar.setVisible(true);
         frameVerEditar.setLocationRelativeTo(null);
         frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -200,11 +206,31 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarCursoActionPerformed
 
     private void btnCrearCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoActionPerformed
+        frameCrearCursos = new CrearCursos(control);
         frameCrearCursos.setVisible(true);
         frameCrearCursos.setLocationRelativeTo(null);
         frameCrearCursos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnCrearCursoActionPerformed
 
+    private void cargarTabla() {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        String titulos[] = {"ID", "NOMBRE_CURSO", "CANTIDAD_MATERIAS", "CANTIDAD_AULAS"};
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        List<Curso> cursos = new ArrayList<>(control.leerListCursos());
+        for (Curso curso : cursos) {
+            Object object[] = {curso.getId(), curso.getNombre(), curso.getListMaterias().size(), curso.getListAulas().size()};
+            modeloTabla.addRow(object);
+        }
+        tblCursos.setModel(modeloTabla);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCurso;

@@ -11,11 +11,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Frame-Code
  */
 public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Mensajes {
-
     private Controladora control;
 
     public RegistrarConsultarMaterias() {
-        control = new Controladora();
+        this.control = new Controladora();
+        initComponents();
+        cargarTabla();
+    }
+    public RegistrarConsultarMaterias(Controladora control) {
+        this.control = control;
         initComponents();
         cargarTabla();
     }

@@ -1,5 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import javax.swing.JFrame;
 
 /**
@@ -7,11 +8,21 @@ import javax.swing.JFrame;
  * @author Frame-Code
  */
 public class VerEditarCursos extends javax.swing.JFrame {
+
+    private Controladora control;
     private AgregarMaterias frameAgregarMaterias;
+
     public VerEditarCursos() {
         initComponents();
         frameAgregarMaterias = new AgregarMaterias();
     }
+
+    public VerEditarCursos(Controladora control) {
+        this.control = control;
+        initComponents();
+        frameAgregarMaterias = new AgregarMaterias(control);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
