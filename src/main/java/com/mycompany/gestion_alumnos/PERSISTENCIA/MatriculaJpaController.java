@@ -1,16 +1,15 @@
 package com.mycompany.gestion_alumnos.PERSISTENCIA;
 
+import com.mycompany.gestion_alumnos.LOGICA.Matricula;
+import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
-import com.mycompany.gestion_alumnos.LOGICA.Matricula;
-import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -32,21 +31,7 @@ public class MatriculaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Estudiante estudiante = matricula.getEstudiante();
-            if (estudiante != null) {
-                estudiante = em.getReference(estudiante.getClass(), estudiante.getId());
-                matricula.setEstudiante(estudiante);
-            }
             em.persist(matricula);
-            if (estudiante != null) {
-                Matricula oldMatriculaOfEstudiante = estudiante.getMatricula();
-                if (oldMatriculaOfEstudiante != null) {
-                    oldMatriculaOfEstudiante.setEstudiante(null);
-                    oldMatriculaOfEstudiante = em.merge(oldMatriculaOfEstudiante);
-                }
-                estudiante.setMatricula(matricula);
-                estudiante = em.merge(estudiante);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -60,27 +45,7 @@ public class MatriculaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Matricula persistentMatricula = em.find(Matricula.class, matricula.getId());
-            Estudiante estudianteOld = persistentMatricula.getEstudiante();
-            Estudiante estudianteNew = matricula.getEstudiante();
-            if (estudianteNew != null) {
-                estudianteNew = em.getReference(estudianteNew.getClass(), estudianteNew.getId());
-                matricula.setEstudiante(estudianteNew);
-            }
             matricula = em.merge(matricula);
-            if (estudianteOld != null && !estudianteOld.equals(estudianteNew)) {
-                estudianteOld.setMatricula(null);
-                estudianteOld = em.merge(estudianteOld);
-            }
-            if (estudianteNew != null && !estudianteNew.equals(estudianteOld)) {
-                Matricula oldMatriculaOfEstudiante = estudianteNew.getMatricula();
-                if (oldMatriculaOfEstudiante != null) {
-                    oldMatriculaOfEstudiante.setEstudiante(null);
-                    oldMatriculaOfEstudiante = em.merge(oldMatriculaOfEstudiante);
-                }
-                estudianteNew.setMatricula(matricula);
-                estudianteNew = em.merge(estudianteNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -109,11 +74,6 @@ public class MatriculaJpaController implements Serializable {
                 matricula.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The matricula with id " + id + " no longer exists.", enfe);
-            }
-            Estudiante estudiante = matricula.getEstudiante();
-            if (estudiante != null) {
-                estudiante.setMatricula(null);
-                estudiante = em.merge(estudiante);
             }
             em.remove(matricula);
             em.getTransaction().commit();

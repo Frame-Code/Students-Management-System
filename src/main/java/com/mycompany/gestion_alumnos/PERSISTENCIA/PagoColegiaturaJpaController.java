@@ -1,16 +1,15 @@
 package com.mycompany.gestion_alumnos.PERSISTENCIA;
 
+import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
+import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
-import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
-import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -32,16 +31,7 @@ public class PagoColegiaturaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Estudiante estudiante = pagoColegiatura.getEstudiante();
-            if (estudiante != null) {
-                estudiante = em.getReference(estudiante.getClass(), estudiante.getId());
-                pagoColegiatura.setEstudiante(estudiante);
-            }
             em.persist(pagoColegiatura);
-            if (estudiante != null) {
-                estudiante.getListPago_colegiaturas().add(pagoColegiatura);
-                estudiante = em.merge(estudiante);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -55,22 +45,7 @@ public class PagoColegiaturaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            PagoColegiatura persistentPagoColegiatura = em.find(PagoColegiatura.class, pagoColegiatura.getId());
-            Estudiante estudianteOld = persistentPagoColegiatura.getEstudiante();
-            Estudiante estudianteNew = pagoColegiatura.getEstudiante();
-            if (estudianteNew != null) {
-                estudianteNew = em.getReference(estudianteNew.getClass(), estudianteNew.getId());
-                pagoColegiatura.setEstudiante(estudianteNew);
-            }
             pagoColegiatura = em.merge(pagoColegiatura);
-            if (estudianteOld != null && !estudianteOld.equals(estudianteNew)) {
-                estudianteOld.getListPago_colegiaturas().remove(pagoColegiatura);
-                estudianteOld = em.merge(estudianteOld);
-            }
-            if (estudianteNew != null && !estudianteNew.equals(estudianteOld)) {
-                estudianteNew.getListPago_colegiaturas().add(pagoColegiatura);
-                estudianteNew = em.merge(estudianteNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -99,11 +74,6 @@ public class PagoColegiaturaJpaController implements Serializable {
                 pagoColegiatura.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The pagoColegiatura with id " + id + " no longer exists.", enfe);
-            }
-            Estudiante estudiante = pagoColegiatura.getEstudiante();
-            if (estudiante != null) {
-                estudiante.getListPago_colegiaturas().remove(pagoColegiatura);
-                estudiante = em.merge(estudiante);
             }
             em.remove(pagoColegiatura);
             em.getTransaction().commit();

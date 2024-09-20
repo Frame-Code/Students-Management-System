@@ -7,9 +7,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,9 +28,6 @@ public class AulaJpaController implements Serializable {
     }
 
     public void create(Aula aula) {
-        if (aula.getListEstudiantes() == null) {
-            aula.setListEstudiantes(new ArrayList<Estudiante>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -42,25 +37,10 @@ public class AulaJpaController implements Serializable {
                 curso = em.getReference(curso.getClass(), curso.getId());
                 aula.setCurso(curso);
             }
-            List<Estudiante> attachedListEstudiantes = new ArrayList<Estudiante>();
-            for (Estudiante listEstudiantesEstudianteToAttach : aula.getListEstudiantes()) {
-                listEstudiantesEstudianteToAttach = em.getReference(listEstudiantesEstudianteToAttach.getClass(), listEstudiantesEstudianteToAttach.getId());
-                attachedListEstudiantes.add(listEstudiantesEstudianteToAttach);
-            }
-            aula.setListEstudiantes(attachedListEstudiantes);
             em.persist(aula);
             if (curso != null) {
                 curso.getListAulas().add(aula);
                 curso = em.merge(curso);
-            }
-            for (Estudiante listEstudiantesEstudiante : aula.getListEstudiantes()) {
-                Aula oldAulaOfListEstudiantesEstudiante = listEstudiantesEstudiante.getAula();
-                listEstudiantesEstudiante.setAula(aula);
-                listEstudiantesEstudiante = em.merge(listEstudiantesEstudiante);
-                if (oldAulaOfListEstudiantesEstudiante != null) {
-                    oldAulaOfListEstudiantesEstudiante.getListEstudiantes().remove(listEstudiantesEstudiante);
-                    oldAulaOfListEstudiantesEstudiante = em.merge(oldAulaOfListEstudiantesEstudiante);
-                }
             }
             em.getTransaction().commit();
         } finally {
@@ -78,19 +58,10 @@ public class AulaJpaController implements Serializable {
             Aula persistentAula = em.find(Aula.class, aula.getId());
             Curso cursoOld = persistentAula.getCurso();
             Curso cursoNew = aula.getCurso();
-            List<Estudiante> listEstudiantesOld = persistentAula.getListEstudiantes();
-            List<Estudiante> listEstudiantesNew = aula.getListEstudiantes();
             if (cursoNew != null) {
                 cursoNew = em.getReference(cursoNew.getClass(), cursoNew.getId());
                 aula.setCurso(cursoNew);
             }
-            List<Estudiante> attachedListEstudiantesNew = new ArrayList<Estudiante>();
-            for (Estudiante listEstudiantesNewEstudianteToAttach : listEstudiantesNew) {
-                listEstudiantesNewEstudianteToAttach = em.getReference(listEstudiantesNewEstudianteToAttach.getClass(), listEstudiantesNewEstudianteToAttach.getId());
-                attachedListEstudiantesNew.add(listEstudiantesNewEstudianteToAttach);
-            }
-            listEstudiantesNew = attachedListEstudiantesNew;
-            aula.setListEstudiantes(listEstudiantesNew);
             aula = em.merge(aula);
             if (cursoOld != null && !cursoOld.equals(cursoNew)) {
                 cursoOld.getListAulas().remove(aula);
@@ -99,23 +70,6 @@ public class AulaJpaController implements Serializable {
             if (cursoNew != null && !cursoNew.equals(cursoOld)) {
                 cursoNew.getListAulas().add(aula);
                 cursoNew = em.merge(cursoNew);
-            }
-            for (Estudiante listEstudiantesOldEstudiante : listEstudiantesOld) {
-                if (!listEstudiantesNew.contains(listEstudiantesOldEstudiante)) {
-                    listEstudiantesOldEstudiante.setAula(null);
-                    listEstudiantesOldEstudiante = em.merge(listEstudiantesOldEstudiante);
-                }
-            }
-            for (Estudiante listEstudiantesNewEstudiante : listEstudiantesNew) {
-                if (!listEstudiantesOld.contains(listEstudiantesNewEstudiante)) {
-                    Aula oldAulaOfListEstudiantesNewEstudiante = listEstudiantesNewEstudiante.getAula();
-                    listEstudiantesNewEstudiante.setAula(aula);
-                    listEstudiantesNewEstudiante = em.merge(listEstudiantesNewEstudiante);
-                    if (oldAulaOfListEstudiantesNewEstudiante != null && !oldAulaOfListEstudiantesNewEstudiante.equals(aula)) {
-                        oldAulaOfListEstudiantesNewEstudiante.getListEstudiantes().remove(listEstudiantesNewEstudiante);
-                        oldAulaOfListEstudiantesNewEstudiante = em.merge(oldAulaOfListEstudiantesNewEstudiante);
-                    }
-                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -150,11 +104,6 @@ public class AulaJpaController implements Serializable {
             if (curso != null) {
                 curso.getListAulas().remove(aula);
                 curso = em.merge(curso);
-            }
-            List<Estudiante> listEstudiantes = aula.getListEstudiantes();
-            for (Estudiante listEstudiantesEstudiante : listEstudiantes) {
-                listEstudiantesEstudiante.setAula(null);
-                listEstudiantesEstudiante = em.merge(listEstudiantesEstudiante);
             }
             em.remove(aula);
             em.getTransaction().commit();
