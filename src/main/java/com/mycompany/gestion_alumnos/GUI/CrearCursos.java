@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Frame-Code
  */
-public class CrearCursos extends javax.swing.JFrame implements Mensajes{
+public class CrearCursos extends javax.swing.JFrame implements Mensajes {
 
     private Controladora control;
 
@@ -40,6 +40,8 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
         txtNombreCurso = new javax.swing.JTextField();
         spnNumeroAulas = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        spnNumerosAsientos = new javax.swing.JSpinner();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblMaterias = new javax.swing.JTable();
@@ -71,6 +73,13 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
         jLabel5.setForeground(new java.awt.Color(23, 23, 23));
         jLabel5.setText("Numero de Aulas que tiene:");
 
+        jLabel6.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(23, 23, 23));
+        jLabel6.setText("Asientos disponibles: ");
+
+        spnNumerosAsientos.setBorder(null);
+        spnNumerosAsientos.setOpaque(false);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -79,25 +88,40 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(txtNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90))
+                    .addComponent(txtNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79)
+                        .addComponent(spnNumerosAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel6)
+                        .addGap(28, 28, 28))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombreCurso)
-                    .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(spnNumerosAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombreCurso)
+                            .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))))
         );
 
         jPanel5.setBackground(new java.awt.Color(180, 180, 180));
@@ -199,7 +223,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
         );
 
         jLabel17.setForeground(new java.awt.Color(99, 99, 99));
-        jLabel17.setText("____________________________________________Informacion del curso________________________________________");
+        jLabel17.setText("_________________________________________Informacion del curso________________________________________");
 
         javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
         pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
@@ -220,7 +244,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
                                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         pnlPrincipalDataLayout.setVerticalGroup(
             pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,22 +284,24 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
 
     private void btnCrearCursoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoActionPerformed
         // TODO add your handling code here:
-        
         List<Materia> materias = new ArrayList<>();
-        for(int i = 0; i < tblMaterias.getRowCount(); i++) {
+
+        for (int i = 0; i < tblMaterias.getRowCount(); i++) {
             boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
             if (seleccionado) {
                 materias.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
-            } else {
-                mostrarInformacion(this, "Selecciona al menos una materia", "Error");
-                break;
             }
         }
+        if (materias.size() == -1) {
+            mostrarInformacion(this, "Selecciona al menos una materia", "Error");
+        } else {
+            control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), (int) spnNumerosAsientos.getValue(), materias);
+            mostrarInformacion(this, "Curso creado correctamente", "Crear curso");
+            cargarTabla();
         
-        control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), materias);
-        
-        
-         /*if (tblMaterias.getRowCount() > 0) {
+        }
+
+        /*if (tblMaterias.getRowCount() > 0) {
             if (tblMaterias.getSelectedRow() != -1) {
                 
             } else {
@@ -284,8 +310,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
         } else {
             mostrarInformacion(this, "Tabla vacia", "Error");
         }*/
-           
-        
+
     }//GEN-LAST:event_btnCrearCursoNuevoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -298,6 +323,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
             public boolean isCellEditable(int row, int column) {
                 return column == 0;
             }
+
             public Class<?> getColumnClass(int column) {
                 // La primera columna tendrá CheckBoxes, por lo tanto tipo Boolean
                 if (column == 0) {
@@ -326,6 +352,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -333,6 +360,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes{
     private javax.swing.JLabel lblMatricula4;
     private javax.swing.JPanel pnlPrincipalData;
     private javax.swing.JSpinner spnNumeroAulas;
+    private javax.swing.JSpinner spnNumerosAsientos;
     private javax.swing.JTable tblMaterias;
     private javax.swing.JTextField txtNombreCurso;
     // End of variables declaration//GEN-END:variables

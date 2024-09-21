@@ -43,15 +43,29 @@ public class Controladora {
         persistencia.crearCurso(curso);
     }
 
-    public void crearCurso(String nombre, int n_aulas, List<Materia> materias) {
-        //persistencia.crearCurso(curso);
+    public void crearCurso(String nombre, int n_aulas, int n_asientos, List<Materia> materias) {
+        List<Estudiante> listEstudiantes = new ArrayList<>();
         List<Aula> aulas = new ArrayList<>();
+        
         for (int i = 0; i < n_aulas; i++) {
             Aula aula = new Aula();
-            aula.setId(1l);
-            aula.setNombre(nombre + "1");
-            
+            aula.setId((long) i);
+            aula.setNombre(nombre + (i + 1));
+            aula.setNumeroAsientos(n_asientos);
+            aula.setListEstudiantes(listEstudiantes);
+            aulas.add(aula);
         }
+        Curso curso = new Curso(1l, nombre, aulas, materias);
+        for (Aula aula : aulas) {
+            aula.setCurso(curso);
+            //System.out.println(aula.getId() + " " + aula.getNombre());
+            //System.out.println(aula.getId() + " " + aula.getNombre() + " " + aula.getNumeroAsientos() + " " + aula.getCurso().getNombre() + " " + aula.getListEstudiantes());
+            //crearAula(aula);
+        }
+        //System.out.println(curso.toString());
+        //System.out.println(curso.getId() + " " + curso.getNombre());
+        crearCurso(curso);
+        
     }
 
     public Curso leerCurso(Long id) {
