@@ -4,7 +4,6 @@ import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class CrearCursos extends javax.swing.JFrame implements Mensajes {
 
     private Controladora control;
+    private int asientosPorAula[];
 
     public CrearCursos() {
         initComponents();
@@ -41,7 +41,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         spnNumeroAulas = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        spnNumerosAsientos = new javax.swing.JSpinner();
+        rellenarAsientos = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblMaterias = new javax.swing.JTable();
@@ -77,8 +77,16 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         jLabel6.setForeground(new java.awt.Color(23, 23, 23));
         jLabel6.setText("Asientos disponibles: ");
 
-        spnNumerosAsientos.setBorder(null);
-        spnNumerosAsientos.setOpaque(false);
+        rellenarAsientos.setBackground(new java.awt.Color(63, 72, 100));
+        rellenarAsientos.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        rellenarAsientos.setForeground(new java.awt.Color(255, 255, 255));
+        rellenarAsientos.setText("Rellenar");
+        rellenarAsientos.setBorder(null);
+        rellenarAsientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rellenarAsientosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -91,37 +99,33 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
                     .addComponent(txtNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)
-                        .addComponent(spnNumerosAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addGap(38, 38, 38)
                         .addComponent(jLabel6)
-                        .addGap(28, 28, 28))))
+                        .addGap(28, 28, 28))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(rellenarAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(spnNumerosAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreCurso)
-                            .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20))))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreCurso)
+                    .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rellenarAsientos))
+                .addGap(17, 17, 17))
         );
 
         jPanel5.setBackground(new java.awt.Color(180, 180, 180));
@@ -219,7 +223,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
                 .addComponent(btnCrearCursoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel17.setForeground(new java.awt.Color(99, 99, 99));
@@ -256,10 +260,10 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -295,27 +299,36 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         if (materias.size() == -1) {
             mostrarInformacion(this, "Selecciona al menos una materia", "Error");
         } else {
-            control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), (int) spnNumerosAsientos.getValue(), materias);
+            control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), asientosPorAula, materias);
             mostrarInformacion(this, "Curso creado correctamente", "Crear curso");
             cargarTabla();
         
         }
 
-        /*if (tblMaterias.getRowCount() > 0) {
-            if (tblMaterias.getSelectedRow() != -1) {
-                
-            } else {
-                mostrarInformacion(this, "Selecciona una materia por favor", "Error");
-            }
-        } else {
-            mostrarInformacion(this, "Tabla vacia", "Error");
-        }*/
-
     }//GEN-LAST:event_btnCrearCursoNuevoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        RegistrarConsultarCursos consultarCursos = new RegistrarConsultarCursos(control);
+        consultarCursos.cargarTabla();
+        
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void rellenarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rellenarAsientosActionPerformed
+        // TODO add your handling code here:
+        asientosPorAula = new int[(int) spnNumeroAulas.getValue()];
+        char letraAula = 'A';
+        for (int i = 0; i < asientosPorAula.length; i++) {
+            try {
+                asientosPorAula[i] = Integer.parseInt(obtenerInformacion(this, "Escribe la cantidad de asientos que tiene el aula" + letraAula, "Registrar cantidad de asientos por aula"));
+                letraAula++;
+            } catch(NumberFormatException e) {
+                mostrarInformacion(this, "Solo se admiten numeros", "Error");
+                i--;
+            }
+        }
+        mostrarInformacion(this, "Valores obtenidos correctamente, seleccione las materias y cree un nuevo curso", "Exito");
+    }//GEN-LAST:event_rellenarAsientosActionPerformed
 
     private void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
@@ -359,8 +372,8 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblMatricula4;
     private javax.swing.JPanel pnlPrincipalData;
+    private javax.swing.JButton rellenarAsientos;
     private javax.swing.JSpinner spnNumeroAulas;
-    private javax.swing.JSpinner spnNumerosAsientos;
     private javax.swing.JTable tblMaterias;
     private javax.swing.JTextField txtNombreCurso;
     // End of variables declaration//GEN-END:variables

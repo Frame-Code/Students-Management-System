@@ -211,8 +211,8 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         frameCrearCursos.setLocationRelativeTo(null);
         frameCrearCursos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnCrearCursoActionPerformed
-
-    private void cargarTabla() {
+    
+    public void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {

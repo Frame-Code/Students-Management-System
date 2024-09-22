@@ -1,14 +1,14 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -24,13 +24,22 @@ public class Materia implements Serializable {
 
     @Column(name = "NOMBRE", length = 15, nullable = false)
     private String nombre;
-
+    
+    @ManyToMany(mappedBy = "listMaterias")
+    private List<Curso> listCursos;
+    
     public Materia() {
     }
     public Materia(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
+    public Materia(Long id, String nombre, List<Curso> listCursos) {
+        this.id = id;
+        this.nombre = nombre;
+        this.listCursos = listCursos;
+    }
+    
 
     public Long getId() {
         return id;
@@ -42,18 +51,26 @@ public class Materia implements Serializable {
 
     public String getNombre() {
         return nombre;
-
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    public List<Curso> getListCursos() {
+        return listCursos;
+    }
+
+    public void setListCursos(List<Curso> listCursos) {
+        this.listCursos = listCursos;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.nombre);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.nombre);
+        hash = 89 * hash + Objects.hashCode(this.listCursos);
         return hash;
     }
 
@@ -72,12 +89,15 @@ public class Materia implements Serializable {
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
-        return Objects.equals(this.id, other.id);
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return Objects.equals(this.listCursos, other.listCursos);
     }
 
     @Override
     public String toString() {
-        return "Materia{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "Materia{" + "id=" + id + ", nombre=" + nombre + ", listCursos=" + listCursos + '}';
     }
 
 }

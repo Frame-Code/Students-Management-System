@@ -43,29 +43,31 @@ public class Controladora {
         persistencia.crearCurso(curso);
     }
 
-    public void crearCurso(String nombre, int n_aulas, int n_asientos, List<Materia> materias) {
-        List<Estudiante> listEstudiantes = new ArrayList<>();
-        List<Aula> aulas = new ArrayList<>();
+    public void crearCurso(String nombre, int n_aulas, int[] n_asientos, List<Materia> materias) {
+        List<Estudiante> listEstudiante = new ArrayList<>();
+        List<Aula> listAulas = new ArrayList<>();
+
+        //Primero creamos un curso con aulas vacias
+        Curso nuevoCurso = new Curso();
+        nuevoCurso.setId(1l);
+        nuevoCurso.setNombre(nombre);
+        nuevoCurso.setListMaterias(materias);
+        nuevoCurso.setListAulas(listAulas);
+        crearCurso(nuevoCurso);
+        
+        Aula nuevaAula;
+        char letraAula = 'A';
         
         for (int i = 0; i < n_aulas; i++) {
-            Aula aula = new Aula();
-            aula.setId((long) i);
-            aula.setNombre(nombre + (i + 1));
-            aula.setNumeroAsientos(n_asientos);
-            aula.setListEstudiantes(listEstudiantes);
-            aulas.add(aula);
+            nuevaAula = new Aula(1l, (nombre + " " + letraAula), n_asientos[i], nuevoCurso, listEstudiante);
+            crearAula(nuevaAula);
+            letraAula++;
         }
-        Curso curso = new Curso(1l, nombre, aulas, materias);
-        for (Aula aula : aulas) {
-            aula.setCurso(curso);
-            //System.out.println(aula.getId() + " " + aula.getNombre());
-            //System.out.println(aula.getId() + " " + aula.getNombre() + " " + aula.getNumeroAsientos() + " " + aula.getCurso().getNombre() + " " + aula.getListEstudiantes());
-            //crearAula(aula);
-        }
-        //System.out.println(curso.toString());
-        //System.out.println(curso.getId() + " " + curso.getNombre());
-        crearCurso(curso);
         
+        for (Aula listAula : listAulas) {
+            System.out.println(listAula.getNombre() + " " + listAula.getNumeroAsientos());
+        }
+
     }
 
     public Curso leerCurso(Long id) {

@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -27,11 +29,14 @@ public class Curso implements Serializable {
     private String nombre;
 
     @OneToMany(mappedBy = "curso")
-    @JoinColumn (name = "AULA_ID")
     private List<Aula> listAulas;
 
-    @OneToMany
-    @JoinColumn (name = "MATERIA_ID")
+    @ManyToMany
+    @JoinTable(
+            name = "CURSO_MATERIA",
+            joinColumns = @JoinColumn(name="CURSO_ID"),
+            inverseJoinColumns = @JoinColumn(name="MATERIA_ID")
+    )
     private List<Materia> listMaterias;
 
     public Curso() {

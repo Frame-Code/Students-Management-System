@@ -1,15 +1,17 @@
 package com.mycompany.gestion_alumnos.PERSISTENCIA;
 
-import com.mycompany.gestion_alumnos.LOGICA.Materia;
-import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.mycompany.gestion_alumnos.LOGICA.Curso;
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -27,11 +29,24 @@ public class MateriaJpaController implements Serializable {
     }
 
     public void create(Materia materia) {
+        if (materia.getListCursos() == null) {
+            materia.setListCursos(new ArrayList<Curso>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Curso> attachedListCursos = new ArrayList<Curso>();
+            for (Curso listCursosCursoToAttach : materia.getListCursos()) {
+                listCursosCursoToAttach = em.getReference(listCursosCursoToAttach.getClass(), listCursosCursoToAttach.getId());
+                attachedListCursos.add(listCursosCursoToAttach);
+            }
+            materia.setListCursos(attachedListCursos);
             em.persist(materia);
+            for (Curso listCursosCurso : materia.getListCursos()) {
+                listCursosCurso.getListMaterias().add(materia);
+                listCursosCurso = em.merge(listCursosCurso);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,7 +60,29 @@ public class MateriaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Materia persistentMateria = em.find(Materia.class, materia.getId());
+            List<Curso> listCursosOld = persistentMateria.getListCursos();
+            List<Curso> listCursosNew = materia.getListCursos();
+            List<Curso> attachedListCursosNew = new ArrayList<Curso>();
+            for (Curso listCursosNewCursoToAttach : listCursosNew) {
+                listCursosNewCursoToAttach = em.getReference(listCursosNewCursoToAttach.getClass(), listCursosNewCursoToAttach.getId());
+                attachedListCursosNew.add(listCursosNewCursoToAttach);
+            }
+            listCursosNew = attachedListCursosNew;
+            materia.setListCursos(listCursosNew);
             materia = em.merge(materia);
+            for (Curso listCursosOldCurso : listCursosOld) {
+                if (!listCursosNew.contains(listCursosOldCurso)) {
+                    listCursosOldCurso.getListMaterias().remove(materia);
+                    listCursosOldCurso = em.merge(listCursosOldCurso);
+                }
+            }
+            for (Curso listCursosNewCurso : listCursosNew) {
+                if (!listCursosOld.contains(listCursosNewCurso)) {
+                    listCursosNewCurso.getListMaterias().add(materia);
+                    listCursosNewCurso = em.merge(listCursosNewCurso);
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -74,6 +111,11 @@ public class MateriaJpaController implements Serializable {
                 materia.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The materia with id " + id + " no longer exists.", enfe);
+            }
+            List<Curso> listCursos = materia.getListCursos();
+            for (Curso listCursosCurso : listCursos) {
+                listCursosCurso.getListMaterias().remove(materia);
+                listCursosCurso = em.merge(listCursosCurso);
             }
             em.remove(materia);
             em.getTransaction().commit();
