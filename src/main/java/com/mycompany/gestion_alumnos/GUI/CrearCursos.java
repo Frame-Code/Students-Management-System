@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -86,7 +87,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
 
         jLabel6.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(23, 23, 23));
-        jLabel6.setText("Asientos disponibles: ");
+        jLabel6.setText("Asientos por Aula");
 
         btnRellenarAsientos.setBackground(new java.awt.Color(63, 72, 100));
         btnRellenarAsientos.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -154,20 +155,12 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         tblMaterias.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane3.setViewportView(tblMaterias);
 
         lblMatricula4.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -262,35 +255,35 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         );
 
         jLabel17.setForeground(new java.awt.Color(99, 99, 99));
-        jLabel17.setText("_________________________________________Informacion del curso________________________________________");
+        jLabel17.setText("_____________________________________Informacion del curso________________________________________");
 
         javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
         pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
         pnlPrincipalDataLayout.setHorizontalGroup(
             pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel17)
-                    .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                            .addGap(248, 248, 248)
-                            .addComponent(jLabel2))
-                        .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                            .addGap(18, 18, 18)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addComponent(jLabel2))
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel17)
                             .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
                                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         pnlPrincipalDataLayout.setVerticalGroup(
             pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(9, 9, 9)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -481,6 +474,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
             modeloTabla.addRow(object);
         }
         tblMaterias.setModel(modeloTabla);
+        tblMaterias.setRowHeight(20);
 
     }
 

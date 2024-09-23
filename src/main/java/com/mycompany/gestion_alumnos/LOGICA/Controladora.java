@@ -3,6 +3,7 @@ package com.mycompany.gestion_alumnos.LOGICA;
 import com.mycompany.gestion_alumnos.PERSISTENCIA.ControladoraPersistencia;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  *
@@ -50,7 +51,7 @@ public class Controladora {
         //Creamos un curso con aulas vacias
         Curso nuevoCurso = new Curso(1l, nombre, listAulas, materias);
         crearCurso(nuevoCurso);
-        
+
         //Recorremos la lista de aulas para persistir cada aula
         char letraAula = 'A';
         for (int i = 0; i < n_aulas; i++) {
@@ -61,11 +62,20 @@ public class Controladora {
         }
 
     }
-    
+    //Mi first use of generics and some of functional programming 
+    public <T> boolean verificarNombreDisponible(String nombre, List<T> lista, Function<T, String> obtenerNombre) {
+        for (T elemento : lista) {
+            if (obtenerNombre.apply(elemento).equals(nombre)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean verificarNombreDisponible(String nombre) {
         List<Curso> listCursos = leerListCursos();
         for (Curso curso : listCursos) {
-            if(curso.getNombre().equals(nombre)) {
+            if (curso.getNombre().equals(nombre)) {
                 return false;
             }
         }
@@ -90,18 +100,18 @@ public class Controladora {
         //Eliminar relacion logica para eliminar registro en tabla intermedia
         curso.setListAulas(new ArrayList<>());
         curso.setListMaterias(new ArrayList<>());
-        
+
         //Se mergea el curso
         this.editarCurso(curso);
-        
+
         //Se eliminan las aulas
         List<Aula> listAulas = this.leerListAulas();
         for (Aula aula : listAulas) {
-            if(aula.getCurso() == null) {
+            if (aula.getCurso() == null) {
                 this.eliminarAula(aula.getId());
             }
         }
-        
+
         //Se elimina el curso
         persistencia.eliminarCurso(id);
     }

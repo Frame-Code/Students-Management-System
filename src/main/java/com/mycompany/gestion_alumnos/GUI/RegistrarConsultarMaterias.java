@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -11,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Frame-Code
  */
 public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Mensajes {
+
     private Controladora control;
 
     public RegistrarConsultarMaterias() {
@@ -18,6 +20,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         initComponents();
         cargarTabla();
     }
+
     public RegistrarConsultarMaterias(Controladora control) {
         this.control = control;
         initComponents();
@@ -38,6 +41,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMaterias = new javax.swing.JTable();
         lblMatricula3 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnRegistrarMateria = new javax.swing.JButton();
         btnEditarMateria = new javax.swing.JButton();
@@ -70,6 +74,25 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
         lblMatricula3.setText("Selecciona una materia para editarla o eliminarla");
 
+        btnActualizar.setBackground(new java.awt.Color(63, 72, 100));
+        btnActualizar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setBorder(null);
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseExited(evt);
+            }
+        });
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -77,11 +100,14 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lblMatricula3)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +115,9 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblMatricula3)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMatricula3)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -100,6 +128,14 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         btnRegistrarMateria.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarMateria.setText("Registrar nueva Materia");
         btnRegistrarMateria.setBorder(null);
+        btnRegistrarMateria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegistrarMateriaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegistrarMateriaMouseExited(evt);
+            }
+        });
         btnRegistrarMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarMateriaActionPerformed(evt);
@@ -111,6 +147,14 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         btnEditarMateria.setForeground(new java.awt.Color(255, 255, 255));
         btnEditarMateria.setText("Editar Materia");
         btnEditarMateria.setBorder(null);
+        btnEditarMateria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarMateriaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditarMateriaMouseExited(evt);
+            }
+        });
         btnEditarMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarMateriaActionPerformed(evt);
@@ -122,6 +166,14 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         btnEliminarMateria.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarMateria.setText("Eliminar Materia");
         btnEliminarMateria.setBorder(null);
+        btnEliminarMateria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarMateriaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarMateriaMouseExited(evt);
+            }
+        });
         btnEliminarMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarMateriaActionPerformed(evt);
@@ -149,7 +201,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                     .addComponent(btnEditarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jLabel17.setForeground(new java.awt.Color(99, 99, 99));
@@ -183,7 +235,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -196,10 +248,13 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                     mostrarInformacion(this, "No pueden haber campos vacios", "Error");
                     nombreMateria = null;
                 } else {
-                    if (isString(nombreMateria)) {
+                    if (isString(nombreMateria) && control.verificarNombreDisponible(nombreMateria, control.leerListMaterias(), Materia::getNombre)) {
                         control.crearMateria(nombreMateria);
                         mostrarInformacion(this, "Materia guardada correctamente", "Registro de materia exitoso");
                     } else {
+                        if (!control.verificarNombreDisponible(nombreMateria, control.leerListMaterias(), Materia::getNombre)) {
+                            mostrarInformacion(this, "La materia " + nombreMateria + " ya existe", "Error");
+                        }
                         nombreMateria = null;
                     }
                 }
@@ -262,6 +317,51 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         }
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
 
+    private void btnRegistrarMateriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaMouseEntered
+        // TODO add your handling code here:
+        btnRegistrarMateria.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegistrarMateriaMouseEntered
+
+    private void btnRegistrarMateriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaMouseExited
+        // TODO add your handling code here:
+        btnRegistrarMateria.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegistrarMateriaMouseExited
+
+    private void btnEditarMateriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMateriaMouseEntered
+        // TODO add your handling code here:
+        btnEditarMateria.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnEditarMateriaMouseEntered
+
+    private void btnEditarMateriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMateriaMouseExited
+        // TODO add your handling code here:
+        btnEditarMateria.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnEditarMateriaMouseExited
+
+    private void btnEliminarMateriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMateriaMouseEntered
+        // TODO add your handling code here:
+        btnEliminarMateria.setBackground(new Color(201, 119, 119));
+    }//GEN-LAST:event_btnEliminarMateriaMouseEntered
+
+    private void btnEliminarMateriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMateriaMouseExited
+        // TODO add your handling code here:
+        btnEliminarMateria.setBackground(new Color(165, 80, 80));
+    }//GEN-LAST:event_btnEliminarMateriaMouseExited
+
+    private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
+        // TODO add your handling code here:
+        btnEditarMateria.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnActualizarMouseEntered
+
+    private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
+        // TODO add your handling code here:
+        btnEditarMateria.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnActualizarMouseExited
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        cargarTabla();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
     private boolean isString(String nombre) {
         try {
             Integer.valueOf(nombre);
@@ -289,10 +389,12 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
             modeloTabla.addRow(object);
         }
         tblMaterias.setModel(modeloTabla);
+        tblMaterias.setRowHeight(20);
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEditarMateria;
     private javax.swing.JButton btnEliminarMateria;
     private javax.swing.JButton btnRegistrarMateria;

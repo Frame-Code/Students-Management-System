@@ -13,6 +13,5 @@ public class Main {
         principal.setSize(1080, 720);
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);
-        
     }
 }

@@ -22,7 +22,7 @@ public class Materia implements Serializable {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NOMBRE", length = 15, nullable = false)
+    @Column(name = "NOMBRE", length = 50, nullable = false)
     private String nombre;
     
     @ManyToMany(mappedBy = "listMaterias")

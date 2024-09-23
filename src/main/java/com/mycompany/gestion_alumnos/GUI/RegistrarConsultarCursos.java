@@ -2,8 +2,6 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
-import com.mycompany.gestion_alumnos.LOGICA.Materia;
-import com.sun.source.tree.BreakTree;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,8 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Frame-Code
  */
-public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mensajes{
+public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mensajes {
+
     public String nombre = "dsd";
     private Controladora control;
     private VerEditarCursos frameVerEditar;
@@ -258,15 +257,19 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1) {
                 Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
-                int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: " +
-                        String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1)) + 
-                        " y sus aulas asignadas. Los estudiantes de cada aula tendran matricula CANCELADA, " , "Advertencia");
+                int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: "
+                        + String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1))
+                        + " y sus aulas asignadas. Los estudiantes de cada aula tendran matricula CANCELADA, ", "Advertencia");
                 if (respuesta == optionSi.hashCode()) {
                     control.eliminarCurso(idCurso);
                     mostrarInformacion(this, "Cuso eliminado", "Advertencia");
                 }
                 recargarDatos();
-            }    
+            } else {
+                mostrarInformacion(this, "Selecciona una materia por favor", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarCursoActionPerformed
 
@@ -284,12 +287,12 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
 
     private void btnVerEditarCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarCursoMouseEntered
         // TODO add your handling code here:
-        btnVerEditarCurso.setBackground(new Color(78,90,126));
+        btnVerEditarCurso.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnVerEditarCursoMouseEntered
 
     private void btnVerEditarCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarCursoMouseExited
         // TODO add your handling code here:
-        btnVerEditarCurso.setBackground(new Color(63,72,100));
+        btnVerEditarCurso.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnVerEditarCursoMouseExited
 
     private void btnCrearCursoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMousePressed
@@ -298,39 +301,38 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
 
     private void btnCrearCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMouseEntered
         // TODO add your handling code here:
-        btnCrearCurso.setBackground(new Color(78,90,126));
+        btnCrearCurso.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnCrearCursoMouseEntered
 
     private void btnCrearCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMouseExited
         // TODO add your handling code here:
-        btnCrearCurso.setBackground(new Color(63,72,100));
+        btnCrearCurso.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnCrearCursoMouseExited
 
     private void btnActualizarDatosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarDatosMouseEntered
         // TODO add your handling code here:
-        btnActualizarDatos.setBackground(new Color(78,90,126));
+        btnActualizarDatos.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnActualizarDatosMouseEntered
 
     private void btnActualizarDatosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarDatosMouseExited
         // TODO add your handling code here:
-        btnActualizarDatos.setBackground(new Color(63,72,100));
+        btnActualizarDatos.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnActualizarDatosMouseExited
 
     private void btnEliminarCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCursoMouseEntered
         // TODO add your handling code here:
-        btnEliminarCurso.setBackground(new Color(201,119,119));
+        btnEliminarCurso.setBackground(new Color(201, 119, 119));
     }//GEN-LAST:event_btnEliminarCursoMouseEntered
 
     private void btnEliminarCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCursoMouseExited
         // TODO add your handling code here:
-        btnEliminarCurso.setBackground(new Color(165,80,80));
+        btnEliminarCurso.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnEliminarCursoMouseExited
-    
+
     public void recargarDatos() {
         cargarTabla();
     }
-    
-    
+
     private void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
