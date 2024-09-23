@@ -3,6 +3,7 @@ package com.mycompany.gestion_alumnos.GUI;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import com.sun.source.tree.BreakTree;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Frame-Code
  */
-public class RegistrarConsultarCursos extends javax.swing.JPanel {
+public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mensajes{
     public String nombre = "dsd";
     private Controladora control;
     private VerEditarCursos frameVerEditar;
@@ -254,6 +255,19 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
 
     private void btnEliminarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCursoActionPerformed
         // TODO add your handling code here:
+        if (tblCursos.getRowCount() > 0) {
+            if (tblCursos.getSelectedRow() != -1) {
+                Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
+                int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: " +
+                        String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1)) + 
+                        " y sus aulas asignadas. Los estudiantes de cada aula tendran matricula CANCELADA, " , "Advertencia");
+                if (respuesta == optionSi.hashCode()) {
+                    control.eliminarCurso(idCurso);
+                    mostrarInformacion(this, "Cuso eliminado", "Advertencia");
+                }
+                recargarDatos();
+            }    
+        }
     }//GEN-LAST:event_btnEliminarCursoActionPerformed
 
     private void btnCrearCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoActionPerformed
@@ -334,6 +348,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
             modeloTabla.addRow(object);
         }
         tblCursos.setModel(modeloTabla);
+        tblCursos.setRowHeight(20);
 
     }
 

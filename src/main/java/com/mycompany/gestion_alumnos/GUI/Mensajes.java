@@ -3,7 +3,6 @@ package com.mycompany.gestion_alumnos.GUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 

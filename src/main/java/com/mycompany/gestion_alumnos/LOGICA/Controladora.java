@@ -47,27 +47,29 @@ public class Controladora {
         List<Estudiante> listEstudiante = new ArrayList<>();
         List<Aula> listAulas = new ArrayList<>();
 
-        //Primero creamos un curso con aulas vacias
-        Curso nuevoCurso = new Curso();
-        nuevoCurso.setId(1l);
-        nuevoCurso.setNombre(nombre);
-        nuevoCurso.setListMaterias(materias);
-        nuevoCurso.setListAulas(listAulas);
+        //Creamos un curso con aulas vacias
+        Curso nuevoCurso = new Curso(1l, nombre, listAulas, materias);
         crearCurso(nuevoCurso);
         
-        Aula nuevaAula;
+        //Recorremos la lista de aulas para persistir cada aula
         char letraAula = 'A';
-        
         for (int i = 0; i < n_aulas; i++) {
-            nuevaAula = new Aula(1l, (nombre + " " + letraAula), n_asientos[i], nuevoCurso, listEstudiante);
+            Aula nuevaAula = new Aula(1l, (nombre + " " + letraAula), n_asientos[i], nuevoCurso, listEstudiante);
+            nuevoCurso.agregarAula(nuevaAula);
             crearAula(nuevaAula);
             letraAula++;
         }
-        
-        for (Aula listAula : listAulas) {
-            System.out.println(listAula.getNombre() + " " + listAula.getNumeroAsientos());
-        }
 
+    }
+    
+    public boolean verificarNombreDisponible(String nombre) {
+        List<Curso> listCursos = leerListCursos();
+        for (Curso curso : listCursos) {
+            if(curso.getNombre().equals(nombre)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Curso leerCurso(Long id) {
@@ -78,11 +80,29 @@ public class Controladora {
         return persistencia.leerListCursos();
     }
 
-    public void editarCursos(Curso curso) {
+    public void editarCurso(Curso curso) {
         persistencia.editarCurso(curso);
     }
 
     public void eliminarCurso(Long id) {
+        //Obtener curso
+        Curso curso = this.leerCurso(id);
+        //Eliminar relacion logica para eliminar registro en tabla intermedia
+        curso.setListAulas(new ArrayList<>());
+        curso.setListMaterias(new ArrayList<>());
+        
+        //Se mergea el curso
+        this.editarCurso(curso);
+        
+        //Se eliminan las aulas
+        List<Aula> listAulas = this.leerListAulas();
+        for (Aula aula : listAulas) {
+            if(aula.getCurso() == null) {
+                this.eliminarAula(aula.getId());
+            }
+        }
+        
+        //Se elimina el curso
         persistencia.eliminarCurso(id);
     }
 
@@ -113,7 +133,8 @@ public class Controladora {
     }
 
     public void crearMateria(String nombre) {
-        Materia materia = new Materia(1l, nombre);
+        List<Curso> listCurso = new ArrayList<>();
+        Materia materia = new Materia(1l, nombre, listCurso);
         persistencia.crearMateria(materia);
     }
 

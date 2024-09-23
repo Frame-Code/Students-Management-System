@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -46,7 +47,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         spnNumeroAulas = new javax.swing.JSpinner(modelo);
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        rellenarAsientos = new javax.swing.JButton();
+        btnRellenarAsientos = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblMaterias = new javax.swing.JTable();
@@ -87,14 +88,22 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         jLabel6.setForeground(new java.awt.Color(23, 23, 23));
         jLabel6.setText("Asientos disponibles: ");
 
-        rellenarAsientos.setBackground(new java.awt.Color(63, 72, 100));
-        rellenarAsientos.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        rellenarAsientos.setForeground(new java.awt.Color(255, 255, 255));
-        rellenarAsientos.setText("Rellenar");
-        rellenarAsientos.setBorder(null);
-        rellenarAsientos.addActionListener(new java.awt.event.ActionListener() {
+        btnRellenarAsientos.setBackground(new java.awt.Color(63, 72, 100));
+        btnRellenarAsientos.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnRellenarAsientos.setForeground(new java.awt.Color(255, 255, 255));
+        btnRellenarAsientos.setText("Rellenar");
+        btnRellenarAsientos.setBorder(null);
+        btnRellenarAsientos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRellenarAsientosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRellenarAsientosMouseExited(evt);
+            }
+        });
+        btnRellenarAsientos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rellenarAsientosActionPerformed(evt);
+                btnRellenarAsientosActionPerformed(evt);
             }
         });
 
@@ -118,7 +127,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
                         .addGap(70, 70, 70)
                         .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rellenarAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRellenarAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -134,7 +143,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombreCurso)
                     .addComponent(spnNumeroAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rellenarAsientos))
+                    .addComponent(btnRellenarAsientos))
                 .addGap(17, 17, 17))
         );
 
@@ -198,6 +207,14 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         btnCrearCursoNuevo.setForeground(new java.awt.Color(255, 255, 255));
         btnCrearCursoNuevo.setText("Crear curso nuevo");
         btnCrearCursoNuevo.setBorder(null);
+        btnCrearCursoNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCrearCursoNuevoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCrearCursoNuevoMouseExited(evt);
+            }
+        });
         btnCrearCursoNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearCursoNuevoActionPerformed(evt);
@@ -209,6 +226,14 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("Regresar");
         btnRegresar.setBorder(null);
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseExited(evt);
+            }
+        });
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -309,7 +334,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         if (materias.isEmpty()) {
             mostrarInformacion(this, "Selecciona al menos una materia", "Error");
         } else {
-            if (verificarCantidadAsientos(asientosPorAula)) {
+            if (verificarCantidadAsientos(asientosPorAula) && control.verificarNombreDisponible(txtNombreCurso.getText())) {
                 control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), asientosPorAula, materias);
                 mostrarInformacion(this, "Curso creado correctamente", "Crear curso");
                 reiniciarDatos();
@@ -325,49 +350,90 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void rellenarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rellenarAsientosActionPerformed
+    @Override
+    public void dispose() {
+        super.dispose();
+        panelInicial.recargarDatos();
+    }
+
+    private void btnRellenarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRellenarAsientosActionPerformed
         // TODO add your handling code here:
         if (txtNombreCurso.getText().equals("")) {
             mostrarInformacion(this, "Escribe el nombre del curso", "Error");
         } else {
-            String respuestaString;
-            asientosPorAula = new int[(int) spnNumeroAulas.getValue()];
-            char letraAula = 'A';
-            for (int i = 0; i < asientosPorAula.length; i++) {
-                respuestaString = obtenerInformacion(this,
-                        "Escribe la cantidad de asientos que tiene el aula '" + txtNombreCurso.getText() + " " + letraAula + "'", "Registrar cantidad de asientos por aula");
-                if (respuestaString.equals(CANCELADO)) {
-                    break;
-                } else {
-                    if (!respuestaString.equals("")) {
-                        try {
-                            Integer.valueOf(respuestaString);
-                            if (Integer.parseInt(respuestaString) != 0) {
-                                asientosPorAula[i] = Integer.parseInt(respuestaString);
-                                letraAula++;
-                            } else {
-                                mostrarInformacion(this, "No pueden haber aulas sin asientos", "Error");
+            if (control.verificarNombreDisponible(txtNombreCurso.getText())) {
+                String respuestaString;
+                asientosPorAula = new int[(int) spnNumeroAulas.getValue()];
+                char letraAula = 'A';
+                for (int i = 0; i < asientosPorAula.length; i++) {
+                    respuestaString = obtenerInformacion(this,
+                            "Escribe la cantidad de asientos que tiene el aula '" + txtNombreCurso.getText() + " " + letraAula + "'", "Registrar cantidad de asientos por aula");
+                    if (respuestaString.equals(CANCELADO)) {
+                        break;
+                    } else {
+                        if (!respuestaString.equals("")) {
+                            try {
+                                Integer.valueOf(respuestaString);
+                                if (Integer.parseInt(respuestaString) != 0) {
+                                    asientosPorAula[i] = Integer.parseInt(respuestaString);
+                                    letraAula++;
+                                } else {
+                                    mostrarInformacion(this, "No pueden haber aulas sin asientos", "Error");
+                                    i--;
+                                }
+                            } catch (NumberFormatException e) {
+                                mostrarInformacion(this, "Solo se admiten numeros", "Error");
                                 i--;
                             }
-                        } catch (NumberFormatException e) {
-                            mostrarInformacion(this, "Solo se admiten numeros", "Error");
+                        } else {
+                            mostrarInformacion(this, "No pueden haber nombres vacios", "error");
                             i--;
                         }
-                    } else {
-                        mostrarInformacion(this, "No pueden haber nombres vacios", "error");
-                        i--;
+                    }
+                    if (verificarCantidadAsientos(asientosPorAula)) {
+                        mostrarInformacion(this, "Valores obtenidos correctamente, escoga las materias y cree un nuevo curso!", "Exito");
                     }
                 }
-                if (verificarCantidadAsientos(asientosPorAula)) {
-                    mostrarInformacion(this, "Valores obtenidos correctamente, escoga las materias y cree un nuevo curso!", "Exito");
-                }
+            } else {
+                mostrarInformacion(this, "El nombre de curso ya existe", "Error");
             }
+
         }
-    }//GEN-LAST:event_rellenarAsientosActionPerformed
+    }//GEN-LAST:event_btnRellenarAsientosActionPerformed
 
     private void txtNombreCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreCursoActionPerformed
+
+    private void btnRellenarAsientosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRellenarAsientosMouseEntered
+        // TODO add your handling code here:
+        btnRellenarAsientos.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRellenarAsientosMouseEntered
+
+    private void btnRellenarAsientosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRellenarAsientosMouseExited
+        // TODO add your handling code here:
+        btnRellenarAsientos.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRellenarAsientosMouseExited
+
+    private void btnCrearCursoNuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoMouseEntered
+        // TODO add your handling code here:
+        btnCrearCursoNuevo.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnCrearCursoNuevoMouseEntered
+
+    private void btnCrearCursoNuevoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoMouseExited
+        // TODO add your handling code here:
+        btnCrearCursoNuevo.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnCrearCursoNuevoMouseExited
+
+    private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
+        // TODO add your handling code here:
+        btnRegresar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegresarMouseEntered
+
+    private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
+        // TODO add your handling code here:
+        btnRegresar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegresarMouseExited
 
     private boolean verificarCantidadAsientos(int cantidadAsientos[]) {
         //Verificar si la cantidad de asientos por cada aula es distinta de 0 para mostrar mensaje de que se obtuvieron valores correctamente
@@ -380,7 +446,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         //Si el contador es igual al largo del vector significa que cada elemento del vector es distinto de cero lo cual es correcto
         return contador == cantidadAsientos.length;
     }
-    
+
     private void reiniciarDatos() {
         cargarTabla();
         txtNombreCurso.setText("");
@@ -421,6 +487,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCursoNuevo;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnRellenarAsientos;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -432,7 +499,6 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblMatricula4;
     private javax.swing.JPanel pnlPrincipalData;
-    private javax.swing.JButton rellenarAsientos;
     private javax.swing.JSpinner spnNumeroAulas;
     private javax.swing.JTable tblMaterias;
     private javax.swing.JTextField txtNombreCurso;
