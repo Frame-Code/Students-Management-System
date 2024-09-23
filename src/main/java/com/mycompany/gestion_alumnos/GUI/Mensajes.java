@@ -3,6 +3,7 @@ package com.mycompany.gestion_alumnos.GUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -46,10 +47,10 @@ public interface Mensajes {
     default void mostrarInformacion(Component component, String mensaje, String titulo) {
         JOptionPane.showMessageDialog(component, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     default String obtenerInformacion(Component componente, String mensaje, String titulo) {
         String respuesta = JOptionPane.showInputDialog(componente, mensaje, titulo, JOptionPane.QUESTION_MESSAGE);
-        if(respuesta == optionCancelar) {
+        if (respuesta == optionCancelar) {
             respuesta = "Cancelado";
         }
         return respuesta;

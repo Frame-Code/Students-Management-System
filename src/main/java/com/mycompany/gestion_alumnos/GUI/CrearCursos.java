@@ -4,6 +4,8 @@ import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,14 +15,16 @@ import javax.swing.table.DefaultTableModel;
 public class CrearCursos extends javax.swing.JFrame implements Mensajes {
 
     private Controladora control;
+    private RegistrarConsultarCursos panelInicial;
     private int asientosPorAula[];
 
     public CrearCursos() {
         initComponents();
     }
 
-    public CrearCursos(Controladora control) {
+    public CrearCursos(Controladora control, RegistrarConsultarCursos panelInicial) {
         this.control = control;
+        this.panelInicial = panelInicial;
         initComponents();
         cargarTabla();
     }
@@ -38,7 +42,8 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtNombreCurso = new javax.swing.JTextField();
-        spnNumeroAulas = new javax.swing.JSpinner();
+        SpinnerNumberModel modelo = new SpinnerNumberModel(1,1,8,1);
+        spnNumeroAulas = new javax.swing.JSpinner(modelo);
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         rellenarAsientos = new javax.swing.JButton();
@@ -65,6 +70,11 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
 
         txtNombreCurso.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
         txtNombreCurso.setOpaque(false);
+        txtNombreCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreCursoActionPerformed(evt);
+            }
+        });
 
         spnNumeroAulas.setBorder(null);
         spnNumeroAulas.setOpaque(false);
@@ -296,39 +306,89 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
                 materias.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
             }
         }
-        if (materias.size() == -1) {
+        if (materias.isEmpty()) {
             mostrarInformacion(this, "Selecciona al menos una materia", "Error");
         } else {
-            control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), asientosPorAula, materias);
-            mostrarInformacion(this, "Curso creado correctamente", "Crear curso");
-            cargarTabla();
-        
+            if (verificarCantidadAsientos(asientosPorAula)) {
+                control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), asientosPorAula, materias);
+                mostrarInformacion(this, "Curso creado correctamente", "Crear curso");
+                reiniciarDatos();
+            } else {
+                mostrarInformacion(this, "Registre la cantidad de asientos por Aula", "Error");
+            }
         }
-
     }//GEN-LAST:event_btnCrearCursoNuevoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
-        RegistrarConsultarCursos consultarCursos = new RegistrarConsultarCursos(control);
-        consultarCursos.cargarTabla();
-        
+        panelInicial.recargarDatos();
+
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void rellenarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rellenarAsientosActionPerformed
         // TODO add your handling code here:
-        asientosPorAula = new int[(int) spnNumeroAulas.getValue()];
-        char letraAula = 'A';
-        for (int i = 0; i < asientosPorAula.length; i++) {
-            try {
-                asientosPorAula[i] = Integer.parseInt(obtenerInformacion(this, "Escribe la cantidad de asientos que tiene el aula" + letraAula, "Registrar cantidad de asientos por aula"));
-                letraAula++;
-            } catch(NumberFormatException e) {
-                mostrarInformacion(this, "Solo se admiten numeros", "Error");
-                i--;
+        if (txtNombreCurso.getText().equals("")) {
+            mostrarInformacion(this, "Escribe el nombre del curso", "Error");
+        } else {
+            String respuestaString;
+            asientosPorAula = new int[(int) spnNumeroAulas.getValue()];
+            char letraAula = 'A';
+            for (int i = 0; i < asientosPorAula.length; i++) {
+                respuestaString = obtenerInformacion(this,
+                        "Escribe la cantidad de asientos que tiene el aula '" + txtNombreCurso.getText() + " " + letraAula + "'", "Registrar cantidad de asientos por aula");
+                if (respuestaString.equals(CANCELADO)) {
+                    break;
+                } else {
+                    if (!respuestaString.equals("")) {
+                        try {
+                            Integer.valueOf(respuestaString);
+                            if (Integer.parseInt(respuestaString) != 0) {
+                                asientosPorAula[i] = Integer.parseInt(respuestaString);
+                                letraAula++;
+                            } else {
+                                mostrarInformacion(this, "No pueden haber aulas sin asientos", "Error");
+                                i--;
+                            }
+                        } catch (NumberFormatException e) {
+                            mostrarInformacion(this, "Solo se admiten numeros", "Error");
+                            i--;
+                        }
+                    } else {
+                        mostrarInformacion(this, "No pueden haber nombres vacios", "error");
+                        i--;
+                    }
+                }
+                if (verificarCantidadAsientos(asientosPorAula)) {
+                    mostrarInformacion(this, "Valores obtenidos correctamente, escoga las materias y cree un nuevo curso!", "Exito");
+                }
             }
         }
-        mostrarInformacion(this, "Valores obtenidos correctamente, seleccione las materias y cree un nuevo curso", "Exito");
     }//GEN-LAST:event_rellenarAsientosActionPerformed
+
+    private void txtNombreCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreCursoActionPerformed
+
+    private boolean verificarCantidadAsientos(int cantidadAsientos[]) {
+        //Verificar si la cantidad de asientos por cada aula es distinta de 0 para mostrar mensaje de que se obtuvieron valores correctamente
+        int contador;
+        for (contador = 0; contador < cantidadAsientos.length; contador++) {
+            if (cantidadAsientos[contador] == 0) {
+                break;
+            }
+        }
+        //Si el contador es igual al largo del vector significa que cada elemento del vector es distinto de cero lo cual es correcto
+        return contador == cantidadAsientos.length;
+    }
+    
+    private void reiniciarDatos() {
+        cargarTabla();
+        txtNombreCurso.setText("");
+        spnNumeroAulas.setValue(0);
+        for (int i = 0; i < asientosPorAula.length; i++) {
+            asientosPorAula[i] = 0;
+        }
+    }
 
     private void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {

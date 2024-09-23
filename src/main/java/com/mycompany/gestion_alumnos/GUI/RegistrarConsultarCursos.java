@@ -3,6 +3,7 @@ package com.mycompany.gestion_alumnos.GUI;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -13,15 +14,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Frame-Code
  */
 public class RegistrarConsultarCursos extends javax.swing.JPanel {
-
+    public String nombre = "dsd";
     private Controladora control;
     private VerEditarCursos frameVerEditar;
     private CrearCursos frameCrearCursos;
 
     public RegistrarConsultarCursos() {
         initComponents();
-        frameVerEditar = new VerEditarCursos();
-        frameCrearCursos = new CrearCursos();
     }
 
     public RegistrarConsultarCursos(Controladora control) {
@@ -44,6 +43,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCursos = new javax.swing.JTable();
         lblMatricula3 = new javax.swing.JLabel();
+        btnActualizarDatos = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnVerEditarCurso = new javax.swing.JButton();
@@ -76,6 +76,25 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
         lblMatricula3.setText("Selecciona un curso para editarlo, eliminarlo o ver mas información");
 
+        btnActualizarDatos.setBackground(new java.awt.Color(63, 72, 100));
+        btnActualizarDatos.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnActualizarDatos.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizarDatos.setText("Actualizar Datos");
+        btnActualizarDatos.setBorder(null);
+        btnActualizarDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnActualizarDatosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnActualizarDatosMouseExited(evt);
+            }
+        });
+        btnActualizarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarDatosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -83,11 +102,14 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lblMatricula3)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +117,9 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblMatricula3)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMatricula3)
+                    .addComponent(btnActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -109,6 +133,14 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         btnVerEditarCurso.setForeground(new java.awt.Color(255, 255, 255));
         btnVerEditarCurso.setText("Ver/Editar información detallada del curso");
         btnVerEditarCurso.setBorder(null);
+        btnVerEditarCurso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnVerEditarCursoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnVerEditarCursoMouseExited(evt);
+            }
+        });
         btnVerEditarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerEditarCursoActionPerformed(evt);
@@ -120,6 +152,14 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         btnEliminarCurso.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarCurso.setText("Eliminar curso");
         btnEliminarCurso.setBorder(null);
+        btnEliminarCurso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarCursoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarCursoMouseExited(evt);
+            }
+        });
         btnEliminarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarCursoActionPerformed(evt);
@@ -131,6 +171,17 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
         btnCrearCurso.setForeground(new java.awt.Color(255, 255, 255));
         btnCrearCurso.setText("Crear Curso");
         btnCrearCurso.setBorder(null);
+        btnCrearCurso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCrearCursoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCrearCursoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnCrearCursoMousePressed(evt);
+            }
+        });
         btnCrearCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearCursoActionPerformed(evt);
@@ -144,7 +195,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnVerEditarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnCrearCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,7 +241,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -206,13 +257,67 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarCursoActionPerformed
 
     private void btnCrearCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoActionPerformed
-        frameCrearCursos = new CrearCursos(control);
+        frameCrearCursos = new CrearCursos(control, RegistrarConsultarCursos.this);
         frameCrearCursos.setVisible(true);
         frameCrearCursos.setLocationRelativeTo(null);
         frameCrearCursos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnCrearCursoActionPerformed
+
+    private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
+        // TODO add your handling code here:
+        recargarDatos();
+    }//GEN-LAST:event_btnActualizarDatosActionPerformed
+
+    private void btnVerEditarCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarCursoMouseEntered
+        // TODO add your handling code here:
+        btnVerEditarCurso.setBackground(new Color(78,90,126));
+    }//GEN-LAST:event_btnVerEditarCursoMouseEntered
+
+    private void btnVerEditarCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarCursoMouseExited
+        // TODO add your handling code here:
+        btnVerEditarCurso.setBackground(new Color(63,72,100));
+    }//GEN-LAST:event_btnVerEditarCursoMouseExited
+
+    private void btnCrearCursoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearCursoMousePressed
+
+    private void btnCrearCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMouseEntered
+        // TODO add your handling code here:
+        btnCrearCurso.setBackground(new Color(78,90,126));
+    }//GEN-LAST:event_btnCrearCursoMouseEntered
+
+    private void btnCrearCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMouseExited
+        // TODO add your handling code here:
+        btnCrearCurso.setBackground(new Color(63,72,100));
+    }//GEN-LAST:event_btnCrearCursoMouseExited
+
+    private void btnActualizarDatosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarDatosMouseEntered
+        // TODO add your handling code here:
+        btnActualizarDatos.setBackground(new Color(78,90,126));
+    }//GEN-LAST:event_btnActualizarDatosMouseEntered
+
+    private void btnActualizarDatosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarDatosMouseExited
+        // TODO add your handling code here:
+        btnActualizarDatos.setBackground(new Color(63,72,100));
+    }//GEN-LAST:event_btnActualizarDatosMouseExited
+
+    private void btnEliminarCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCursoMouseEntered
+        // TODO add your handling code here:
+        btnEliminarCurso.setBackground(new Color(201,119,119));
+    }//GEN-LAST:event_btnEliminarCursoMouseEntered
+
+    private void btnEliminarCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCursoMouseExited
+        // TODO add your handling code here:
+        btnEliminarCurso.setBackground(new Color(165,80,80));
+    }//GEN-LAST:event_btnEliminarCursoMouseExited
     
-    public void cargarTabla() {
+    public void recargarDatos() {
+        cargarTabla();
+    }
+    
+    
+    private void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -233,6 +338,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarDatos;
     private javax.swing.JButton btnCrearCurso;
     private javax.swing.JButton btnEliminarCurso;
     private javax.swing.JButton btnVerEditarCurso;
