@@ -246,10 +246,20 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerEditarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarCursoActionPerformed
-        frameVerEditar = new VerEditarCursos(control);
-        frameVerEditar.setVisible(true);
-        frameVerEditar.setLocationRelativeTo(null);
-        frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        if (tblCursos.getRowCount() > 0) {
+            if (tblCursos.getSelectedRow() != -1) {
+                Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
+                frameVerEditar = new VerEditarCursos(control, idCurso);
+                frameVerEditar.setVisible(true);
+                frameVerEditar.setLocationRelativeTo(null);
+                frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            } else {
+                mostrarInformacion(this, "Selecciona una materia por favor", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
+        }
+
     }//GEN-LAST:event_btnVerEditarCursoActionPerformed
 
     private void btnEliminarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCursoActionPerformed

@@ -1,14 +1,19 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class VerEditarCursos extends javax.swing.JFrame {
+public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas {
 
+    private Long idCurso;
     private Controladora control;
     private AgregarMaterias frameAgregarMaterias;
 
@@ -17,12 +22,15 @@ public class VerEditarCursos extends javax.swing.JFrame {
         frameAgregarMaterias = new AgregarMaterias();
     }
 
-    public VerEditarCursos(Controladora control) {
+    public VerEditarCursos(Controladora control, Long idCurso) {
         this.control = control;
+        this.idCurso = idCurso;
         initComponents();
         frameAgregarMaterias = new AgregarMaterias(control);
+        cargarNombre();
+        cargarTablaMaterias();
+        //cargarTablaAulas();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +51,7 @@ public class VerEditarCursos extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblAulas = new javax.swing.JTable();
         lblMatricula4 = new javax.swing.JLabel();
-        lblNombreCurso = new javax.swing.JLabel();
+        lblCurso = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnAgregarMaterias = new javax.swing.JButton();
         btnEliminarMateria = new javax.swing.JButton();
@@ -51,6 +59,7 @@ public class VerEditarCursos extends javax.swing.JFrame {
         btnCrearAula = new javax.swing.JButton();
         btnEliminarAula = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        lblNombreCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,9 +168,9 @@ public class VerEditarCursos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblNombreCurso.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
-        lblNombreCurso.setForeground(new java.awt.Color(23, 23, 23));
-        lblNombreCurso.setText("CURSO: ");
+        lblCurso.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        lblCurso.setForeground(new java.awt.Color(23, 23, 23));
+        lblCurso.setText("CURSO: ");
 
         jPanel2.setBackground(new java.awt.Color(180, 180, 180));
 
@@ -264,6 +273,10 @@ public class VerEditarCursos extends javax.swing.JFrame {
             }
         });
 
+        lblNombreCurso.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        lblNombreCurso.setForeground(new java.awt.Color(23, 23, 23));
+        lblNombreCurso.setText("CURSO: ");
+
         javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
         pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
         pnlPrincipalDataLayout.setHorizontalGroup(
@@ -281,6 +294,8 @@ public class VerEditarCursos extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
                         .addGap(265, 265, 265)
+                        .addComponent(lblCurso)
+                        .addGap(18, 18, 18)
                         .addComponent(lblNombreCurso))
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
@@ -298,7 +313,9 @@ public class VerEditarCursos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(26, 26, 26)
-                .addComponent(lblNombreCurso)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCurso)
+                    .addComponent(lblNombreCurso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -354,6 +371,35 @@ public class VerEditarCursos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void cargarNombre() {
+        lblCurso.setText(control.leerCurso(idCurso).getNombre());
+    }
+
+    private void cargarTablaMaterias() {
+        DefaultTableModel modeloTabla = cargarTabla(new String[]{"ID", "MATERIA"});
+        
+        System.out.println(idCurso);
+        System.out.println(control.leerCurso(idCurso).getListMaterias());
+        
+        List<Materia> materias = new ArrayList<>(control.obtenerListMateriasDeCurso(idCurso));
+        for (Materia materia : materias) {
+            System.out.println(materia);
+            Object object[] = {materia.getId(), materia.getNombre()};
+            modeloTabla.addRow(object);
+        }
+        tblMaterias.setModel(modeloTabla);
+    }
+/*
+    private void cargarTablaAulas() {
+        DefaultTableModel modeloTabla = cargarTabla(new String[]{"ID", "MATERIA"});
+        List<Materia> materias = new ArrayList<>(control.leerListMaterias());
+        for (Materia materia : materias) {
+            Object object[] = {materia.getId(), materia.getNombre()};
+            modeloTabla.addRow(object);
+        }
+        tblMaterias.setModel(modeloTabla);
+    }
+*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMaterias;
@@ -368,6 +414,7 @@ public class VerEditarCursos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblCurso;
     private javax.swing.JLabel lblMatricula3;
     private javax.swing.JLabel lblMatricula4;
     private javax.swing.JLabel lblNombreCurso;
@@ -375,4 +422,5 @@ public class VerEditarCursos extends javax.swing.JFrame {
     private javax.swing.JTable tblAulas;
     private javax.swing.JTable tblMaterias;
     // End of variables declaration//GEN-END:variables
+
 }
