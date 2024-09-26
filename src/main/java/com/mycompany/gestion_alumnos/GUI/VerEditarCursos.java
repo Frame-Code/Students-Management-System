@@ -1,5 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
         frameAgregarMaterias = new AgregarMaterias(control);
         cargarNombre();
         cargarTablaMaterias();
-        //cargarTablaAulas();
+        cargarTablaAulas();
     }
 
     /**
@@ -377,29 +378,24 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
 
     private void cargarTablaMaterias() {
         DefaultTableModel modeloTabla = cargarTabla(new String[]{"ID", "MATERIA"});
-        
-        System.out.println(idCurso);
-        System.out.println(control.leerCurso(idCurso).getListMaterias());
-        
         List<Materia> materias = new ArrayList<>(control.obtenerListMateriasDeCurso(idCurso));
         for (Materia materia : materias) {
-            System.out.println(materia);
             Object object[] = {materia.getId(), materia.getNombre()};
             modeloTabla.addRow(object);
         }
         tblMaterias.setModel(modeloTabla);
     }
-/*
+
     private void cargarTablaAulas() {
-        DefaultTableModel modeloTabla = cargarTabla(new String[]{"ID", "MATERIA"});
-        List<Materia> materias = new ArrayList<>(control.leerListMaterias());
-        for (Materia materia : materias) {
-            Object object[] = {materia.getId(), materia.getNombre()};
+        DefaultTableModel modeloTabla = cargarTabla(new String[]{"ID", "AULA"});
+        List<Aula> aulas = new ArrayList<>(control.obtenerListAulasDeCurso(idCurso));
+        for (Aula aula : aulas) {
+            Object object[] = {aula.getId(), aula.getNombre()};
             modeloTabla.addRow(object);
         }
-        tblMaterias.setModel(modeloTabla);
+        tblAulas.setModel(modeloTabla);
     }
-*/
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMaterias;

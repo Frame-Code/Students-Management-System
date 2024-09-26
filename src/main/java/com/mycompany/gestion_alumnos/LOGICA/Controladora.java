@@ -86,11 +86,21 @@ public class Controladora {
         Curso curso = leerCurso(id);
         List<Materia> listMaterias = new ArrayList<>();
         
-        for (Materia materia : curso.getListMaterias()) { //funciona
+        for (Materia materia : curso.getListMaterias()) {
             listMaterias.add(materia);
         }
         return listMaterias;
     }
+    
+    public List<Aula> obtenerListAulasDeCurso(Long id) {
+        Curso curso = leerCurso(id);
+        List<Aula> listAulas = new ArrayList<>();
+        
+        for (Aula aula : curso.getListAulas()) {
+            listAulas.add(aula);
+        }
+        return listAulas;
+    }    
 
     public Curso leerCurso(Long id) {
         return persistencia.leerCurso(id);
