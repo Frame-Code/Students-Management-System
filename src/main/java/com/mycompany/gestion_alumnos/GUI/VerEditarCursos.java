@@ -17,15 +17,17 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     private Long idCurso;
     private Controladora control;
     private AgregarMaterias frameAgregarMaterias;
+    private RegistrarConsultarCursos consultarCursos;
 
     public VerEditarCursos() {
         initComponents();
         frameAgregarMaterias = new AgregarMaterias();
     }
 
-    public VerEditarCursos(Controladora control, Long idCurso) {
+    public VerEditarCursos(Controladora control, Long idCurso, RegistrarConsultarCursos consultarCursos) {
         this.control = control;
         this.idCurso = idCurso;
+        this.consultarCursos = consultarCursos;
         initComponents();
         cargarNombre();
         cargarTablaMaterias();
@@ -375,6 +377,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
                 if (respuesta == SI) {
                     control.eliminarMateriasDeCurso(listMateria, idCurso, control.obtenerListMateriasDeCurso(idCurso));
                     mostrarInformacion(this, "Materia/s eliminada/s correctamente", "Materia/s eliminada/s!");
+                    cargarTablaMaterias();
                 }
             }
         } else {
@@ -392,26 +395,20 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
+        consultarCursos.recargarDatos();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void cargarNombre() {
         lblNombreCurso.setText(control.leerCurso(idCurso).getNombre());
     }
 
-    //Note: Try factorizar this method 
-    public void cargarTablaMaterias() {
+    public final void cargarTablaMaterias() {
         tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.obtenerListMateriasDeCurso(idCurso)));
         tblMaterias.setRowHeight(20);
     }
 
-    //Note: Try factorizar this method 
-    public void cargarTablaAulas() {
-        DefaultTableModel modeloTabla = obtenerModeloTablaBasico(new String[]{"ID", "AULA"});
-        for (Aula aula : control.obtenerListAulasDeCurso(idCurso)) {
-            Object object[] = {aula.getId(), aula.getNombre()};
-            modeloTabla.addRow(object);
-        }
-        tblAulas.setModel(modeloTabla);
+    public final void cargarTablaAulas() {
+        tblAulas.setModel(obtenerModeloTablaAulasSeleccion(new String[]{"SELECCIONAR", "ID", "aula"}, control.obtenerListAulasDeCurso(idCurso)));
         tblAulas.setRowHeight(20);
     }
 

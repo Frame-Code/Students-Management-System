@@ -1,5 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +19,8 @@ public interface ModeloTabla {
             }
         };
     }
-    default  DefaultTableModel modeloTablaSeleccion() {
+
+    default DefaultTableModel modeloTablaSeleccion() {
         return new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -40,7 +42,7 @@ public interface ModeloTabla {
         modeloTabla.setColumnIdentifiers(titulos);
         return modeloTabla;
     }
-    
+
     default DefaultTableModel obtenerModeloTablaMateriasSeleccion(String titulos[], List<Materia> listMaterias) {
         DefaultTableModel modeloTabla = modeloTablaSeleccion();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -50,25 +52,36 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-    
+
     //Retorna un modelo de tabla donde las filas que se muestran son de las materias que no son parte del curso
     //Solo muestra las materias que no son parte del curso para poder seleccionarlas
-    default  DefaultTableModel obtenerModeloTablaMateriasSeleccion (String titulos[], List<Materia> listCompletaMaterias, List<Materia> listSeleccionadasMaterias) {
+    default DefaultTableModel obtenerModeloTablaMateriasSeleccion(String titulos[], List<Materia> listCompletaMaterias, List<Materia> listSeleccionadasMaterias) {
         DefaultTableModel modeloTabla = modeloTablaSeleccion();
         modeloTabla.setColumnIdentifiers(titulos);
         int contador = 0;
         for (Materia materia : listCompletaMaterias) {
             for (Materia materiaSeleccionada : listSeleccionadasMaterias) {
-                if(!materia.getId().equals(materiaSeleccionada.getId())) {
+                if (!materia.getId().equals(materiaSeleccionada.getId())) {
                     contador++;
                 }
             }
-            if(contador == listSeleccionadasMaterias.size()) {
+            if (contador == listSeleccionadasMaterias.size()) {
                 Object object[] = {false, materia.getId(), materia.getNombre()};
                 modeloTabla.addRow(object);
-            } 
+            }
             contador = 0;
         }
         return modeloTabla;
     }
+
+    default DefaultTableModel obtenerModeloTablaAulasSeleccion(String titulos[], List<Aula> listAulas) {
+        DefaultTableModel modeloTabla = modeloTablaSeleccion();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (Aula aula : listAulas) {
+            Object object[] = {false, aula.getId(), aula.getNombre()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
+
 }

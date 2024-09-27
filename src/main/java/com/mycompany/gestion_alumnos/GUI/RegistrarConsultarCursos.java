@@ -249,7 +249,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1) {
                 Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
-                frameVerEditar = new VerEditarCursos(control, idCurso);
+                frameVerEditar = new VerEditarCursos(control, idCurso, this);
                 frameVerEditar.setVisible(true);
                 frameVerEditar.setLocationRelativeTo(null);
                 frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -342,7 +342,8 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
     public void recargarDatos() {
         cargarTabla();
     }
-
+    
+    //Factorizar este metodo
     private void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override

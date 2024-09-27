@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.LOGICA;
 
 import com.mycompany.gestion_alumnos.PERSISTENCIA.ControladoraPersistencia;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
@@ -82,6 +83,7 @@ public class Controladora {
         return true;
     }
     
+    //Metodo que retorna una lista de Aulas o Materias de cierto curso
     public <T> List<T> obtenerListasDelCurso(List<T> objeto, List<T> listRetornar) {
         for (T obj : objeto) {
             listRetornar.add(obj);
@@ -112,18 +114,24 @@ public class Controladora {
     
     public void eliminarMateriasDeCurso(List<Materia> listMateriasEliminar, Long idCurso, List<Materia> listMateriasDeCurso) {
         //Eliminar la relacion entre curso-materia
-        //Obtenemos la lista de materias que no se eliman del curso
+        //De la lista de materias del curso, eliminamos las seleccionadas
+        List<Materia> listMateriasNoEliminadas = new ArrayList<>(listMateriasDeCurso);
         
-        for (Materia materia : this.leerListMaterias()) {
+        Iterator<Materia> iterator = listMateriasNoEliminadas.iterator();
+        
+        while (iterator.hasNext()) {
+            Materia materia = iterator.next();
             for (Materia materiaEliminar : listMateriasEliminar) {
-                if(!materia.getId().equals(materiaEliminar.getId())) {
-                    listMateriasDeCurso.remove(materiaEliminar);
+                if(materia.getId().equals(materiaEliminar.getId())) {
+                    iterator.remove();
                 }
             }
+            
         }
+        
         //Agregamos al curso la lista de materias que se quedan y se mergea
         Curso curso = leerCurso(idCurso);
-        curso.setListMaterias(listMateriasDeCurso);
+        curso.setListMaterias(listMateriasNoEliminadas);
         this.editarCurso(curso);
         
     }
