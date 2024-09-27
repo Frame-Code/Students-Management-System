@@ -82,25 +82,51 @@ public class Controladora {
         return true;
     }
     
+    public <T> List<T> obtenerListasDelCurso(List<T> objeto, List<T> listRetornar) {
+        for (T obj : objeto) {
+            listRetornar.add(obj);
+        }
+        return listRetornar;    
+    }
+    
     public List<Materia> obtenerListMateriasDeCurso(Long id) {
         Curso curso = leerCurso(id);
-        List<Materia> listMaterias = new ArrayList<>();
-        
-        for (Materia materia : curso.getListMaterias()) {
-            listMaterias.add(materia);
-        }
-        return listMaterias;
+        return obtenerListasDelCurso(curso.getListMaterias(), new ArrayList<>());
     }
     
     public List<Aula> obtenerListAulasDeCurso(Long id) {
         Curso curso = leerCurso(id);
-        List<Aula> listAulas = new ArrayList<>();
+        return obtenerListasDelCurso(curso.getListAulas(), new ArrayList<>());
+    }  
+    
+    public void asignarMateriasAlCurso(List<Materia> listMateriasAgregar, Long idCurso) {
+        Curso curso = leerCurso(idCurso);
         
-        for (Aula aula : curso.getListAulas()) {
-            listAulas.add(aula);
+        for (Materia materia : curso.getListMaterias()) {
+            listMateriasAgregar.add(materia);
         }
-        return listAulas;
-    }    
+        curso.setListMaterias(listMateriasAgregar);
+        this.editarCurso(curso);
+        
+    }
+    
+    public void eliminarMateriasDeCurso(List<Materia> listMateriasEliminar, Long idCurso, List<Materia> listMateriasDeCurso) {
+        //Eliminar la relacion entre curso-materia
+        //Obtenemos la lista de materias que no se eliman del curso
+        
+        for (Materia materia : this.leerListMaterias()) {
+            for (Materia materiaEliminar : listMateriasEliminar) {
+                if(!materia.getId().equals(materiaEliminar.getId())) {
+                    listMateriasDeCurso.remove(materiaEliminar);
+                }
+            }
+        }
+        //Agregamos al curso la lista de materias que se quedan y se mergea
+        Curso curso = leerCurso(idCurso);
+        curso.setListMaterias(listMateriasDeCurso);
+        this.editarCurso(curso);
+        
+    }
 
     public Curso leerCurso(Long id) {
         return persistencia.leerCurso(id);

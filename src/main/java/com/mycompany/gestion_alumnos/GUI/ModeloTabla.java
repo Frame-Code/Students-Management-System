@@ -1,0 +1,74 @@
+package com.mycompany.gestion_alumnos.GUI;
+
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author artist-code
+ */
+public interface ModeloTabla {
+
+    default DefaultTableModel modeloTablaBasico() {
+        return new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+    }
+    default  DefaultTableModel modeloTablaSeleccion() {
+        return new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 0;
+            }
+
+            public Class<?> getColumnClass(int column) {
+                // La primera columna tendrá CheckBoxes, por lo tanto tipo Boolean
+                if (column == 0) {
+                    return Boolean.class;
+                }
+                return super.getColumnClass(column);
+            }
+        };
+    }
+
+    default DefaultTableModel obtenerModeloTablaBasico(String titulos[]) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        return modeloTabla;
+    }
+    
+    default DefaultTableModel obtenerModeloTablaMateriasSeleccion(String titulos[], List<Materia> listMaterias) {
+        DefaultTableModel modeloTabla = modeloTablaSeleccion();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (Materia materia : listMaterias) {
+            Object object[] = {false, materia.getId(), materia.getNombre()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
+    
+    //Retorna un modelo de tabla donde las filas que se muestran son de las materias que no son parte del curso
+    //Solo muestra las materias que no son parte del curso para poder seleccionarlas
+    default  DefaultTableModel obtenerModeloTablaMateriasSeleccion (String titulos[], List<Materia> listCompletaMaterias, List<Materia> listSeleccionadasMaterias) {
+        DefaultTableModel modeloTabla = modeloTablaSeleccion();
+        modeloTabla.setColumnIdentifiers(titulos);
+        int contador = 0;
+        for (Materia materia : listCompletaMaterias) {
+            for (Materia materiaSeleccionada : listSeleccionadasMaterias) {
+                if(!materia.getId().equals(materiaSeleccionada.getId())) {
+                    contador++;
+                }
+            }
+            if(contador == listSeleccionadasMaterias.size()) {
+                Object object[] = {false, materia.getId(), materia.getNombre()};
+                modeloTabla.addRow(object);
+            } 
+            contador = 0;
+        }
+        return modeloTabla;
+    }
+}

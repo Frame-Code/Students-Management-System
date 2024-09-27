@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Frame-Code
  */
-public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas {
+public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, Mensajes {
 
     private Long idCurso;
     private Controladora control;
@@ -27,7 +27,6 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
         this.control = control;
         this.idCurso = idCurso;
         initComponents();
-        frameAgregarMaterias = new AgregarMaterias(control);
         cargarNombre();
         cargarTablaMaterias();
         cargarTablaAulas();
@@ -274,9 +273,9 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
             }
         });
 
-        lblNombreCurso.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        lblNombreCurso.setFont(new java.awt.Font("Waree", 0, 15)); // NOI18N
         lblNombreCurso.setForeground(new java.awt.Color(23, 23, 23));
-        lblNombreCurso.setText("CURSO: ");
+        lblNombreCurso.setText("CURSO");
 
         javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
         pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
@@ -297,7 +296,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
                         .addGap(265, 265, 265)
                         .addComponent(lblCurso)
                         .addGap(18, 18, 18)
-                        .addComponent(lblNombreCurso))
+                        .addComponent(lblNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,6 +350,8 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMateriasActionPerformed
+       
+        frameAgregarMaterias = new AgregarMaterias(control, idCurso, control.obtenerListMateriasDeCurso(idCurso), this);
         frameAgregarMaterias.setVisible(true);
         frameAgregarMaterias.setLocationRelativeTo(null);
         frameAgregarMaterias.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -358,6 +359,27 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
 
     private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
         // TODO add your handling code here:
+        List<Materia> listMateria = new ArrayList<>();
+
+        if(tblMaterias.getRowCount() > 0) {
+            for (int i = 0; i < tblMaterias.getRowCount(); i++) {
+                boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
+                if (seleccionado) {
+                    listMateria.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
+                }
+            }
+            if (listMateria.isEmpty()) {
+                mostrarInformacion(this, "Selecciona al menos una materia", "Error");
+            } else {
+                int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la o las materias seleccionadas del curso?", "Confirmar");
+                if (respuesta == SI) {
+                    control.eliminarMateriasDeCurso(listMateria, idCurso, control.obtenerListMateriasDeCurso(idCurso));
+                    mostrarInformacion(this, "Materia/s eliminada/s correctamente", "Materia/s eliminada/s!");
+                }
+            }
+        } else {
+            mostrarInformacion(this, "No existen materias para agregar", "Error");
+        }
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
 
     private void btnCrearAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAulaActionPerformed
@@ -369,31 +391,28 @@ public class VerEditarCursos extends javax.swing.JFrame implements CargarTablas 
     }//GEN-LAST:event_btnEliminarAulaActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void cargarNombre() {
-        lblCurso.setText(control.leerCurso(idCurso).getNombre());
+        lblNombreCurso.setText(control.leerCurso(idCurso).getNombre());
     }
 
-    private void cargarTablaMaterias() {
-        DefaultTableModel modeloTabla = cargarTabla(new String[]{"ID", "MATERIA"});
-        List<Materia> materias = new ArrayList<>(control.obtenerListMateriasDeCurso(idCurso));
-        for (Materia materia : materias) {
-            Object object[] = {materia.getId(), materia.getNombre()};
-            modeloTabla.addRow(object);
-        }
-        tblMaterias.setModel(modeloTabla);
+    //Note: Try factorizar this method 
+    public void cargarTablaMaterias() {
+        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.obtenerListMateriasDeCurso(idCurso)));
+        tblMaterias.setRowHeight(20);
     }
 
-    private void cargarTablaAulas() {
-        DefaultTableModel modeloTabla = cargarTabla(new String[]{"ID", "AULA"});
-        List<Aula> aulas = new ArrayList<>(control.obtenerListAulasDeCurso(idCurso));
-        for (Aula aula : aulas) {
+    //Note: Try factorizar this method 
+    public void cargarTablaAulas() {
+        DefaultTableModel modeloTabla = obtenerModeloTablaBasico(new String[]{"ID", "AULA"});
+        for (Aula aula : control.obtenerListAulasDeCurso(idCurso)) {
             Object object[] = {aula.getId(), aula.getNombre()};
             modeloTabla.addRow(object);
         }
         tblAulas.setModel(modeloTabla);
+        tblAulas.setRowHeight(20);
     }
 
 

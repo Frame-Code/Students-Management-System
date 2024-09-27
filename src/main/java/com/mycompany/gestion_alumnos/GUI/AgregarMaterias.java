@@ -1,23 +1,36 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Frame-Code
  */
-public class AgregarMaterias extends javax.swing.JFrame {
+public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, Mensajes {
+
     private Controladora control;
-    
+    private Long idCurso;
+    private List<Materia> listMateriasDelCurso;
+    private VerEditarCursos verEditarCurso;
+
     public AgregarMaterias() {
         initComponents();
     }
 
-    public AgregarMaterias(Controladora control) {
+    public AgregarMaterias(Controladora control, Long idCurso, List<Materia> listMateriasDelCurso, VerEditarCursos verEditarCurso) {
         this.control = control;
+        this.idCurso = idCurso;
+        this.listMateriasDelCurso = listMateriasDelCurso;
+        this.verEditarCurso = verEditarCurso;
         initComponents();
+        cargarNombre();
+        cargarTablaMaterias();
+        setResizable(false);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,10 +47,12 @@ public class AgregarMaterias extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMaterias = new javax.swing.JTable();
         lblMatricula3 = new javax.swing.JLabel();
+        lblMatricula4 = new javax.swing.JLabel();
         lblCurso = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnAgregarMaterias = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        lblCursoNombre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,7 +61,7 @@ public class AgregarMaterias extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(23, 23, 23));
-        jLabel1.setText("CONSULTAR CURSO");
+        jLabel1.setText("AGREGAR MATERIA");
 
         jPanel4.setBackground(new java.awt.Color(180, 180, 180));
 
@@ -73,27 +88,33 @@ public class AgregarMaterias extends javax.swing.JFrame {
 
         lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
-        lblMatricula3.setText("Selecciona las materias creadas previamente para agregar al curso ");
+        lblMatricula3.setText("Selecciona las materias creadas previamente");
+
+        lblMatricula4.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula4.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula4.setText("para agregar al curso");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 87, Short.MAX_VALUE)
-                .addComponent(lblMatricula3)
-                .addGap(68, 68, 68))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMatricula4)
+                    .addComponent(lblMatricula3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(lblMatricula3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMatricula4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         lblCurso.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
@@ -141,44 +162,53 @@ public class AgregarMaterias extends javax.swing.JFrame {
             }
         });
 
+        lblCursoNombre.setFont(new java.awt.Font("Waree", 0, 15)); // NOI18N
+        lblCursoNombre.setForeground(new java.awt.Color(23, 23, 23));
+        lblCursoNombre.setText("CURSO");
+
         javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
         pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
         pnlPrincipalDataLayout.setHorizontalGroup(
             pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
+                .addGap(0, 30, Short.MAX_VALUE)
                 .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(lblCurso))
-                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                                .addGap(233, 233, 233)
-                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(232, 232, 232)
-                        .addComponent(jLabel1)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(126, 126, 126))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
+                        .addComponent(lblCurso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCursoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPrincipalDataLayout.setVerticalGroup(
             pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
-                .addComponent(lblCurso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCurso)
+                    .addComponent(lblCursoNombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,13 +232,43 @@ public class AgregarMaterias extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMateriasActionPerformed
+        List<Materia> materias = new ArrayList<>();
+
+        if(tblMaterias.getRowCount() > 0) {
+            for (int i = 0; i < tblMaterias.getRowCount(); i++) {
+                boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
+                if (seleccionado) {
+                    materias.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
+                }
+            }
+            if (materias.isEmpty()) {
+                mostrarInformacion(this, "Selecciona al menos una materia", "Error");
+            } else {
+                control.asignarMateriasAlCurso(materias, idCurso);
+                mostrarInformacion(this, "Materias agregadas al curso '" + control.leerCurso(idCurso).getNombre() + "' correctamente", "Agregar Materias");
+                this.dispose();
+                verEditarCurso.cargarTablaMaterias();
+            }
+        } else {
+            mostrarInformacion(this, "No existen materias para agregar", "Error");
+        }
+
 
     }//GEN-LAST:event_btnAgregarMateriasActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void cargarNombre() {
+        lblCursoNombre.setText(control.leerCurso(idCurso).getNombre());
+    }
+
+    private void cargarTablaMaterias() {
+        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.leerListMaterias(), listMateriasDelCurso));
+        tblMaterias.setRowHeight(20);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMaterias;
@@ -218,8 +278,11 @@ public class AgregarMaterias extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCurso;
+    private javax.swing.JLabel lblCursoNombre;
     private javax.swing.JLabel lblMatricula3;
+    private javax.swing.JLabel lblMatricula4;
     private javax.swing.JPanel pnlPrincipalData;
     private javax.swing.JTable tblMaterias;
     // End of variables declaration//GEN-END:variables
+
 }

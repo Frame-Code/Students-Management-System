@@ -5,16 +5,13 @@ import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class CrearCursos extends javax.swing.JFrame implements Mensajes {
+public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloTabla {
 
     private Controladora control;
     private RegistrarConsultarCursos panelInicial;
@@ -450,30 +447,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes {
     }
 
     private void cargarTabla() {
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 0;
-            }
-
-            public Class<?> getColumnClass(int column) {
-                // La primera columna tendrá CheckBoxes, por lo tanto tipo Boolean
-                if (column == 0) {
-                    return Boolean.class;
-                }
-                return super.getColumnClass(column);
-            }
-        };
-
-        String titulos[] = {"SELECCIONAR", "ID", "MATERIA"};
-        modeloTabla.setColumnIdentifiers(titulos);
-
-        List<Materia> materias = new ArrayList<>(control.leerListMaterias());
-        for (Materia materia : materias) {
-            Object object[] = {false, materia.getId(), materia.getNombre()};
-            modeloTabla.addRow(object);
-        }
-        tblMaterias.setModel(modeloTabla);
+        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.leerListMaterias()));
         tblMaterias.setRowHeight(20);
 
     }
