@@ -142,6 +142,14 @@ public class Controladora {
         this.editarCurso(curso);
         
     }
+    
+    public void eliminarAulasDeCurso(List<Aula> listAulasEliminar) {
+        for (Aula aula : listAulasEliminar) {
+            this.eliminarAula(aula.getId());
+        }
+        
+        
+    }
 
     public Curso leerCurso(Long id) {
         return persistencia.leerCurso(id);

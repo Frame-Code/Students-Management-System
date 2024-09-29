@@ -2,8 +2,14 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import com.mycompany.gestion_alumnos.LOGICA.Matricula;
+import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
+import com.mysql.cj.result.LocalDateTimeValueFactory;
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -461,7 +467,33 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }//GEN-LAST:event_btnCrearAulaActionPerformed
 
     private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
-        // TODO add your handling code here:
+        List<Aula> listAulas = new ArrayList<>();
+
+        if (tblAulas.getRowCount() > 0) {
+            for (int i = 0; i < tblAulas.getRowCount(); i++) {
+                boolean seleccionado = (boolean) tblAulas.getValueAt(i, 0);
+                if (seleccionado) {
+                    listAulas.add(control.leerAula((long) tblAulas.getValueAt(i, 1)));
+                }
+            }
+            if (listAulas.isEmpty()) {
+                mostrarInformacion(this, "Selecciona al menos una materia", "Error");
+            } else {
+                //Este condicional puede cambiar
+                if(control.leerAula(idCurso).getListEstudiantes().isEmpty()) {
+                    int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la/s Aulas del curso?", "Confirmar");
+                    if (respuesta == SI) {
+                        control.eliminarAulasDeCurso(listAulas);
+                        mostrarInformacion(this, "Aula/s eliminada/s correctamente", "Aula/s eliminada/s!");
+                        cargarTablaAulas();
+                    }
+                } else {
+                    mostrarInformacion(this, "No se pueden borrar aulas con estudiantes registrados", "Error");
+                }
+            }
+        } else {
+            mostrarInformacion(this, "No existen materias para agregar", "Error");
+        }
     }//GEN-LAST:event_btnEliminarAulaActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
