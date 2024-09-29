@@ -253,6 +253,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
                 frameVerEditar.setVisible(true);
                 frameVerEditar.setLocationRelativeTo(null);
                 frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frameVerEditar.setResizable(false);
             } else {
                 mostrarInformacion(this, "Selecciona una materia por favor", "Error");
             }

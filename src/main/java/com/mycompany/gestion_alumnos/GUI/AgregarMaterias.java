@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -128,6 +129,14 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
         btnAgregarMaterias.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarMaterias.setText("Agregar materias al curso");
         btnAgregarMaterias.setBorder(null);
+        btnAgregarMaterias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarMateriasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgregarMateriasMouseExited(evt);
+            }
+        });
         btnAgregarMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarMateriasActionPerformed(evt);
@@ -154,8 +163,16 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
         btnRegresar.setBackground(new java.awt.Color(63, 72, 100));
         btnRegresar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegresar.setText("Regresar");
+        btnRegresar.setText("<-- Regresar");
         btnRegresar.setBorder(null);
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseExited(evt);
+            }
+        });
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -234,7 +251,7 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
     private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMateriasActionPerformed
         List<Materia> materias = new ArrayList<>();
 
-        if(tblMaterias.getRowCount() > 0) {
+        if (tblMaterias.getRowCount() > 0) {
             for (int i = 0; i < tblMaterias.getRowCount(); i++) {
                 boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
                 if (seleccionado) {
@@ -259,6 +276,22 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAgregarMateriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMateriasMouseEntered
+        btnAgregarMaterias.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnAgregarMateriasMouseEntered
+
+    private void btnAgregarMateriasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMateriasMouseExited
+        btnAgregarMaterias.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnAgregarMateriasMouseExited
+
+    private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
+        btnRegresar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegresarMouseEntered
+
+    private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
+        btnRegresar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegresarMouseExited
 
     private void cargarNombre() {
         lblCursoNombre.setText(control.leerCurso(idCurso).getNombre());

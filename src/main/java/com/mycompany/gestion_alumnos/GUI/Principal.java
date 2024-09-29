@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
  * @author frame-code
  */
 public class Principal extends javax.swing.JFrame {
+
     private final JButton BOTONES[];
     private Controladora control;
     private MatricularNuevoEstudiante pnlMatricularNuevo;
@@ -69,6 +71,14 @@ public class Principal extends javax.swing.JFrame {
         btnMatricularNuevo.setBorder(null);
         btnMatricularNuevo.setBorderPainted(false);
         btnMatricularNuevo.setOpaque(false);
+        btnMatricularNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMatricularNuevoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMatricularNuevoMouseExited(evt);
+            }
+        });
         btnMatricularNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMatricularNuevoActionPerformed(evt);
@@ -86,6 +96,14 @@ public class Principal extends javax.swing.JFrame {
         btnMatricularExistente.setBorder(null);
         btnMatricularExistente.setBorderPainted(false);
         btnMatricularExistente.setOpaque(false);
+        btnMatricularExistente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMatricularExistenteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMatricularExistenteMouseExited(evt);
+            }
+        });
         btnMatricularExistente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMatricularExistenteActionPerformed(evt);
@@ -99,6 +117,14 @@ public class Principal extends javax.swing.JFrame {
         btnConsultaEstudiantes.setBorder(null);
         btnConsultaEstudiantes.setBorderPainted(false);
         btnConsultaEstudiantes.setOpaque(false);
+        btnConsultaEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnConsultaEstudiantesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnConsultaEstudiantesMouseExited(evt);
+            }
+        });
         btnConsultaEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultaEstudiantesActionPerformed(evt);
@@ -112,6 +138,14 @@ public class Principal extends javax.swing.JFrame {
         btnRegistrarCursos.setBorder(null);
         btnRegistrarCursos.setBorderPainted(false);
         btnRegistrarCursos.setOpaque(false);
+        btnRegistrarCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegistrarCursosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegistrarCursosMouseExited(evt);
+            }
+        });
         btnRegistrarCursos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarCursosActionPerformed(evt);
@@ -125,6 +159,14 @@ public class Principal extends javax.swing.JFrame {
         btnRegistrarMaterias.setBorder(null);
         btnRegistrarMaterias.setBorderPainted(false);
         btnRegistrarMaterias.setOpaque(false);
+        btnRegistrarMaterias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegistrarMateriasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegistrarMateriasMouseExited(evt);
+            }
+        });
         btnRegistrarMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarMateriasActionPerformed(evt);
@@ -269,6 +311,46 @@ public class Principal extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         pnlPrincipalData.add(new JLabel("Selecciona una opción"), BorderLayout.NORTH);
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnMatricularNuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularNuevoMouseEntered
+        btnMatricularNuevo.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnMatricularNuevoMouseEntered
+
+    private void btnMatricularNuevoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularNuevoMouseExited
+        btnMatricularNuevo.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnMatricularNuevoMouseExited
+
+    private void btnMatricularExistenteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularExistenteMouseEntered
+        btnMatricularExistente.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnMatricularExistenteMouseEntered
+
+    private void btnMatricularExistenteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularExistenteMouseExited
+        btnMatricularExistente.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnMatricularExistenteMouseExited
+
+    private void btnConsultaEstudiantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesMouseEntered
+        btnConsultaEstudiantes.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnConsultaEstudiantesMouseEntered
+
+    private void btnConsultaEstudiantesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesMouseExited
+        btnConsultaEstudiantes.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnConsultaEstudiantesMouseExited
+
+    private void btnRegistrarCursosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarCursosMouseEntered
+        btnRegistrarCursos.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegistrarCursosMouseEntered
+
+    private void btnRegistrarCursosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarCursosMouseExited
+        btnRegistrarCursos.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegistrarCursosMouseExited
+
+    private void btnRegistrarMateriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriasMouseEntered
+        btnRegistrarMaterias.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegistrarMateriasMouseEntered
+
+    private void btnRegistrarMateriasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriasMouseExited
+        btnRegistrarMaterias.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegistrarMateriasMouseExited
 
     private void inicializarPanel(JButton btnParaPintar, JPanel pnlMostrar) {
         this.pnlMatricularNuevo.setVisible(false);

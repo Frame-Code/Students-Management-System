@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import java.awt.Color;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -112,6 +113,14 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         btnAgregarAula.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarAula.setText("Agregar Aula al curso");
         btnAgregarAula.setBorder(null);
+        btnAgregarAula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarAulaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgregarAulaMouseExited(evt);
+            }
+        });
         btnAgregarAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarAulaActionPerformed(evt);
@@ -138,8 +147,16 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         btnRegresar.setBackground(new java.awt.Color(63, 72, 100));
         btnRegresar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegresar.setText("Regresar");
+        btnRegresar.setText("<-- Regresar");
         btnRegresar.setBorder(null);
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseExited(evt);
+            }
+        });
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -214,9 +231,9 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAulaActionPerformed
-        if(!txtNombreAula.getText().equals("")) {
-            if(isString(txtNombreAula.getText(), this)) {
-                if(control.verificarNombreDisponible(txtNombreAula.getText(), control.leerListAulas(), Aula::getNombre)) {
+        if (!txtNombreAula.getText().equals("")) {
+            if (isString(txtNombreAula.getText(), this)) {
+                if (control.verificarNombreDisponible(txtNombreAula.getText(), control.leerListAulas(), Aula::getNombre)) {
                     int cantidadAsientos;
                     try {
                         cantidadAsientos = (int) spnCantidadAulas.getValue();
@@ -240,6 +257,22 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         this.dispose();
         verEditarCurso.cargarTablaAulas();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAgregarAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAulaMouseEntered
+        btnAgregarAula.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnAgregarAulaMouseEntered
+
+    private void btnAgregarAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAulaMouseExited
+        btnAgregarAula.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnAgregarAulaMouseExited
+
+    private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
+        btnRegresar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegresarMouseEntered
+
+    private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
+        btnRegresar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegresarMouseExited
 
     private void cargarNombre() {
         lblCursoNombre.setText(control.leerCurso(idCurso).getNombre());

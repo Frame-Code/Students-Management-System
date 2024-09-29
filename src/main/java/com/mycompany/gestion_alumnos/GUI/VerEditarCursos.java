@@ -3,6 +3,7 @@ package com.mycompany.gestion_alumnos.GUI;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -62,6 +63,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnEliminarAula = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         lblNombreCurso = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -181,6 +183,14 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnAgregarMaterias.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarMaterias.setText("Agregar materias");
         btnAgregarMaterias.setBorder(null);
+        btnAgregarMaterias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarMateriasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgregarMateriasMouseExited(evt);
+            }
+        });
         btnAgregarMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarMateriasActionPerformed(evt);
@@ -192,6 +202,14 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnEliminarMateria.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarMateria.setText("Eliminar Materia");
         btnEliminarMateria.setBorder(null);
+        btnEliminarMateria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarMateriaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarMateriaMouseExited(evt);
+            }
+        });
         btnEliminarMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarMateriaActionPerformed(evt);
@@ -226,6 +244,14 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnCrearAula.setForeground(new java.awt.Color(255, 255, 255));
         btnCrearAula.setText("Crear aula");
         btnCrearAula.setBorder(null);
+        btnCrearAula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCrearAulaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCrearAulaMouseExited(evt);
+            }
+        });
         btnCrearAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearAulaActionPerformed(evt);
@@ -237,6 +263,14 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnEliminarAula.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarAula.setText("Eliminar aula");
         btnEliminarAula.setBorder(null);
+        btnEliminarAula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarAulaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarAulaMouseExited(evt);
+            }
+        });
         btnEliminarAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarAulaActionPerformed(evt);
@@ -267,8 +301,16 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnRegresar.setBackground(new java.awt.Color(63, 72, 100));
         btnRegresar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegresar.setText("Regresar");
+        btnRegresar.setText("<- Regresar");
         btnRegresar.setBorder(null);
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseExited(evt);
+            }
+        });
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -278,6 +320,25 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         lblNombreCurso.setFont(new java.awt.Font("Waree", 0, 15)); // NOI18N
         lblNombreCurso.setForeground(new java.awt.Color(23, 23, 23));
         lblNombreCurso.setText("CURSO");
+
+        btnActualizar.setBackground(new java.awt.Color(63, 72, 100));
+        btnActualizar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizar.setText("Actualizar datos");
+        btnActualizar.setBorder(null);
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseExited(evt);
+            }
+        });
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPrincipalDataLayout = new javax.swing.GroupLayout(pnlPrincipalData);
         pnlPrincipalData.setLayout(pnlPrincipalDataLayout);
@@ -301,12 +362,15 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
                         .addComponent(lblNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(116, 116, 116)
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         pnlPrincipalDataLayout.setVerticalGroup(
@@ -326,9 +390,11 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
                 .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(18, 18, 18)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -403,6 +469,60 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         consultarCursos.recargarDatos();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        cargarNombre();
+        cargarTablaAulas();
+        cargarTablaMaterias();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnAgregarMateriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMateriasMouseEntered
+        btnAgregarMaterias.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnAgregarMateriasMouseEntered
+
+    private void btnAgregarMateriasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMateriasMouseExited
+        btnAgregarMaterias.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnAgregarMateriasMouseExited
+
+    private void btnEliminarMateriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMateriaMouseEntered
+        btnEliminarMateria.setBackground(new Color(201, 119, 119));
+    }//GEN-LAST:event_btnEliminarMateriaMouseEntered
+
+    private void btnEliminarMateriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMateriaMouseExited
+        btnEliminarMateria.setBackground(new Color(165, 80, 80));
+    }//GEN-LAST:event_btnEliminarMateriaMouseExited
+
+    private void btnCrearAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearAulaMouseEntered
+        btnCrearAula.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnCrearAulaMouseEntered
+
+    private void btnCrearAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearAulaMouseExited
+        btnCrearAula.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnCrearAulaMouseExited
+
+    private void btnEliminarAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAulaMouseEntered
+        btnEliminarAula.setBackground(new Color(201, 119, 119));
+    }//GEN-LAST:event_btnEliminarAulaMouseEntered
+
+    private void btnEliminarAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAulaMouseExited
+        btnEliminarAula.setBackground(new Color(165, 80, 80));
+    }//GEN-LAST:event_btnEliminarAulaMouseExited
+
+    private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
+        btnActualizar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnActualizarMouseEntered
+
+    private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
+        btnActualizar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnActualizarMouseExited
+
+    private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
+        btnRegresar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegresarMouseEntered
+
+    private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
+        btnRegresar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegresarMouseExited
+
     private void cargarNombre() {
         lblNombreCurso.setText(control.leerCurso(idCurso).getNombre());
     }
@@ -419,6 +539,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregarMaterias;
     private javax.swing.JButton btnCrearAula;
     private javax.swing.JButton btnEliminarAula;
