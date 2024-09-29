@@ -23,6 +23,13 @@ public class Controladora {
     public void crearAula(Aula aula) {
         persistencia.crearAula(aula);
     }
+    public void crearAula(String nombre, int cantidadAsientos, Long idCurso) {
+        Aula aula = new Aula();
+        aula.setCurso(leerCurso(idCurso));
+        aula.setNombre(nombre);
+        aula.setNumeroAsientos(cantidadAsientos);
+        this.crearAula(aula);
+    }
 
     public Aula leerAula(Long id) {
         return persistencia.leerAula(id);

@@ -352,7 +352,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMateriasActionPerformed
-       
+
         frameAgregarMaterias = new AgregarMaterias(control, idCurso, control.obtenerListMateriasDeCurso(idCurso), this);
         frameAgregarMaterias.setVisible(true);
         frameAgregarMaterias.setLocationRelativeTo(null);
@@ -363,7 +363,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         // TODO add your handling code here:
         List<Materia> listMateria = new ArrayList<>();
 
-        if(tblMaterias.getRowCount() > 0) {
+        if (tblMaterias.getRowCount() > 0) {
             for (int i = 0; i < tblMaterias.getRowCount(); i++) {
                 boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
                 if (seleccionado) {
@@ -386,7 +386,12 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
 
     private void btnCrearAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAulaActionPerformed
-        // TODO add your handling code here:
+        CrearAula crearAula = new CrearAula(control, idCurso, this);
+        crearAula.setVisible(true);
+        crearAula.setResizable(false);
+        crearAula.setLocationRelativeTo(null);
+        cargarTablaAulas();
+        consultarCursos.recargarDatos();
     }//GEN-LAST:event_btnCrearAulaActionPerformed
 
     private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
@@ -408,7 +413,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }
 
     public final void cargarTablaAulas() {
-        tblAulas.setModel(obtenerModeloTablaAulasSeleccion(new String[]{"SELECCIONAR", "ID", "aula"}, control.obtenerListAulasDeCurso(idCurso)));
+        tblAulas.setModel(obtenerModeloTablaAulasSeleccion(new String[]{"SELECCIONAR", "ID", "AULA", "# Asientos"}, control.obtenerListAulasDeCurso(idCurso)));
         tblAulas.setRowHeight(20);
     }
 

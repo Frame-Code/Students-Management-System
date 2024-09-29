@@ -248,7 +248,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                     mostrarInformacion(this, "No pueden haber campos vacios", "Error");
                     nombreMateria = null;
                 } else {
-                    if (isString(nombreMateria) && control.verificarNombreDisponible(nombreMateria, control.leerListMaterias(), Materia::getNombre)) {
+                    if (isString(nombreMateria, this) && control.verificarNombreDisponible(nombreMateria, control.leerListMaterias(), Materia::getNombre)) {
                         control.crearMateria(nombreMateria);
                         mostrarInformacion(this, "Materia guardada correctamente", "Registro de materia exitoso");
                     } else {
@@ -277,7 +277,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                             mostrarInformacion(this, "No pueden haber campos vacios", "Error");
                             nuevoNombre = null;
                         } else {
-                            if (isString(nuevoNombre)) {
+                            if (isString(nuevoNombre, this)) {
                                 long idAntiguoNombre = (long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0);
                                 control.editarMateria(nuevoNombre, idAntiguoNombre);
                                 mostrarInformacion(this, "Materia editada correctamente", "Editar materia ");
@@ -361,16 +361,6 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         // TODO add your handling code here:
         cargarTabla();
     }//GEN-LAST:event_btnActualizarActionPerformed
-
-    private boolean isString(String nombre) {
-        try {
-            Integer.valueOf(nombre);
-            mostrarInformacion(this, "No se admiten numeros", "Error");
-            return false;
-        } catch (NumberFormatException e) {
-            return true;
-        }
-    }
 
     private void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {

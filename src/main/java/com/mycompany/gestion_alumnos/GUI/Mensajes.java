@@ -54,5 +54,15 @@ public interface Mensajes {
         }
         return respuesta;
     }
+    
+    default boolean isString(String nombre, Component component) {
+        try {
+            Integer.valueOf(nombre);
+            mostrarInformacion(component, "No se admiten numeros", "Error");
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
+    }
 
 }

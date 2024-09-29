@@ -78,7 +78,7 @@ public interface ModeloTabla {
         DefaultTableModel modeloTabla = modeloTablaSeleccion();
         modeloTabla.setColumnIdentifiers(titulos);
         for (Aula aula : listAulas) {
-            Object object[] = {false, aula.getId(), aula.getNombre()};
+            Object object[] = {false, aula.getId(), aula.getNombre(), aula.getNumeroAsientos()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;

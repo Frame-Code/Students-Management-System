@@ -270,7 +270,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
                 int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: "
                         + String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1))
                         + " y sus aulas asignadas. Los estudiantes de cada aula tendran matricula CANCELADA, ", "Advertencia");
-                if (respuesta == optionSi.hashCode()) {
+                if (respuesta == SI) {
                     control.eliminarCurso(idCurso);
                     mostrarInformacion(this, "Cuso eliminado", "Advertencia");
                 }
