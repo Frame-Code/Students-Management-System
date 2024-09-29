@@ -222,6 +222,8 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
                         cantidadAsientos = (int) spnCantidadAulas.getValue();
                         control.crearAula(txtNombreAula.getText(), cantidadAsientos, idCurso);
                         mostrarInformacion(this, "Aula agregada al curso correctamente", "Exito");
+                        txtNombreAula.setText("");
+                        spnCantidadAulas.setValue((int) 1);
                     } catch (Exception e) {
                         mostrarInformacion(this, "Solo se admiten numeros en la cantidad de asientos", "Error");
                     }
@@ -232,33 +234,6 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         } else {
             mostrarInformacion(this, "No pueden haber campos vacios", "Error");
         }
-        
-        
-        
-        
-        /*String nuevaAula;
-        do {
-            nuevaAula = obtenerInformacion(this, "Escribe el nombre de la nueva Aula", "Crear nueva Aula");
-            if (!nuevaAula.equals(CANCELADO)) {
-                if (nuevaAula.equals("")) {
-                    mostrarInformacion(this, "No pueden haber campos vacios", "Error");
-                    nuevaAula = null;
-                } else {
-                    if (isString(nuevaAula, this) && control.verificarNombreDisponible(nuevaAula, control.leerListAulas(), Aula::getNombre)) {
-                        //control.crearMateria(nombreMateria);
-                        //control.crearCurso(curso);
-                        mostrarInformacion(this, "Aula creada correctamente", "Registro de nueva Aula 4exitoso");
-                    } else {
-                        if (!control.verificarNombreDisponible(nuevaAula, control.leerListAulas(), Aula::getNombre)) {
-                            mostrarInformacion(this, "El aula con nombre " + nuevaAula + " ya existe", "Error");
-                        }
-                        nuevaAula = null;
-                    }
-                }
-            } else {
-                break;
-            }
-        } while (nuevaAula == null);*/
     }//GEN-LAST:event_btnAgregarAulaActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
