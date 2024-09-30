@@ -121,6 +121,15 @@ public class Controladora {
         Curso curso = leerCurso(id);
         return obtenerListasDelCurso(curso.getListAulas(), new ArrayList<>());
     }
+    
+    public Aula obtenerAulaDeCurso(String nombre, Long idCurso) {
+        for (Aula aula : this.obtenerListAulasDeCurso(idCurso)) {
+            if(aula.getNombre().equals(nombre)) {
+                return aula;
+            }
+        }
+        return null;
+    }
 
     public void asignarMateriasAlCurso(List<Materia> listMateriasAgregar, Long idCurso) {
         Curso curso = leerCurso(idCurso);

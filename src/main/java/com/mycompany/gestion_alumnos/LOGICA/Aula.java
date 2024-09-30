@@ -48,6 +48,10 @@ public class Aula implements Serializable {
         this.listEstudiantes = listEstudiantes;
     }
     
+    public Integer getNumeroAsientosDisponibles() {
+        return numeroAsientos - listEstudiantes.size();
+    }
+    
     public void agregarEstudiante(Estudiante estudiante) {
         listEstudiantes.add(estudiante);
     }
