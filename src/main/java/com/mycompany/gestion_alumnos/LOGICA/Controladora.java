@@ -23,12 +23,19 @@ public class Controladora {
     public void crearAula(Aula aula) {
         persistencia.crearAula(aula);
     }
+
     public void crearAula(String nombre, int cantidadAsientos, Long idCurso) {
         Aula aula = new Aula();
         aula.setCurso(leerCurso(idCurso));
         aula.setNombre(nombre);
         aula.setNumeroAsientos(cantidadAsientos);
         this.crearAula(aula);
+    }
+
+    public void cambiarNombreAula(Long idAula, String nombre) {
+        Aula aula = this.leerAula(idAula);
+        aula.setNombre(nombre);
+        this.editarAula(aula);
     }
 
     public Aula leerAula(Long id) {
@@ -48,6 +55,12 @@ public class Controladora {
     }
 
     /*--------------------------CURSO-------------------------*/
+    public void cambiarNombreCurso(Long idCurso, String nombre) {
+        Curso curso = this.leerCurso(idCurso);
+        curso.setNombre(nombre);
+        this.editarCurso(curso);
+    }
+
     public void crearCurso(Curso curso) {
         persistencia.crearCurso(curso);
     }
@@ -70,6 +83,7 @@ public class Controladora {
         }
 
     }
+
     //Mi first use of generics and some of functional programming 
     public <T> boolean verificarNombreDisponible(String nombre, List<T> lista, Function<T, String> obtenerNombre) {
         for (T elemento : lista) {
@@ -89,66 +103,65 @@ public class Controladora {
         }
         return true;
     }
-    
+
     //Metodo que retorna una lista de Aulas o Materias de cierto curso
     public <T> List<T> obtenerListasDelCurso(List<T> objeto, List<T> listRetornar) {
         for (T obj : objeto) {
             listRetornar.add(obj);
         }
-        return listRetornar;    
+        return listRetornar;
     }
-    
+
     public List<Materia> obtenerListMateriasDeCurso(Long id) {
         Curso curso = leerCurso(id);
         return obtenerListasDelCurso(curso.getListMaterias(), new ArrayList<>());
     }
-    
+
     public List<Aula> obtenerListAulasDeCurso(Long id) {
         Curso curso = leerCurso(id);
         return obtenerListasDelCurso(curso.getListAulas(), new ArrayList<>());
-    }  
-    
+    }
+
     public void asignarMateriasAlCurso(List<Materia> listMateriasAgregar, Long idCurso) {
         Curso curso = leerCurso(idCurso);
-        
+
         for (Materia materia : curso.getListMaterias()) {
             listMateriasAgregar.add(materia);
         }
         curso.setListMaterias(listMateriasAgregar);
         this.editarCurso(curso);
-        
+
     }
-    
+
     public void eliminarMateriasDeCurso(List<Materia> listMateriasEliminar, Long idCurso, List<Materia> listMateriasDeCurso) {
         //Eliminar la relacion entre curso-materia
         //De la lista de materias del curso, eliminamos las seleccionadas
         List<Materia> listMateriasNoEliminadas = new ArrayList<>(listMateriasDeCurso);
-        
+
         Iterator<Materia> iterator = listMateriasNoEliminadas.iterator();
-        
+
         while (iterator.hasNext()) {
             Materia materia = iterator.next();
             for (Materia materiaEliminar : listMateriasEliminar) {
-                if(materia.getId().equals(materiaEliminar.getId())) {
+                if (materia.getId().equals(materiaEliminar.getId())) {
                     iterator.remove();
                 }
             }
-            
+
         }
-        
+
         //Agregamos al curso la lista de materias que se quedan y se mergea
         Curso curso = leerCurso(idCurso);
         curso.setListMaterias(listMateriasNoEliminadas);
         this.editarCurso(curso);
-        
+
     }
-    
+
     public void eliminarAulasDeCurso(List<Aula> listAulasEliminar) {
         for (Aula aula : listAulasEliminar) {
             this.eliminarAula(aula.getId());
         }
-        
-        
+
     }
 
     public Curso leerCurso(Long id) {
