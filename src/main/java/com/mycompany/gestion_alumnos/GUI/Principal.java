@@ -25,7 +25,7 @@ public class Principal extends javax.swing.JFrame {
         control = new Controladora();
         initComponents();
         this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias};
-        this.pnlMatricularNuevo = new MatricularNuevoEstudiante();
+        this.pnlMatricularNuevo = new MatricularNuevoEstudiante(control);
         this.pnlMatricularExistente = new MatricularEstudianteExistente();
         this.pnlConsultarEstudiantes = new ConsultarEstudiantes();
         this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos(control);

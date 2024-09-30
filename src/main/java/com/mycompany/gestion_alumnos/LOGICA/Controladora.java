@@ -168,6 +168,17 @@ public class Controladora {
         return persistencia.leerCurso(id);
     }
 
+    public Curso leerCurso(String curso) {        
+        //return persistencia.leerCurso(curso.getId());
+        Long id = null;
+        for (Curso cur : this.leerListCursos()) {
+            if(cur.getNombre().equals(curso)) {
+                id = cur.getId();
+            }
+        }
+        return persistencia.leerCurso(id);
+    }
+
     public List<Curso> leerListCursos() {
         return persistencia.leerListCursos();
     }

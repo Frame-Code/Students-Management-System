@@ -678,6 +678,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         } else {
             mostrarInformacion(this, "No existen Aulas para cambiar nombre", "Error");
         }
+        cargarTablaAulas();
     }//GEN-LAST:event_btnCambiarNombreAulaActionPerformed
 
     private void cargarNombre() {
