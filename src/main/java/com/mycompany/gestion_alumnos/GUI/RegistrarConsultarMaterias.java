@@ -77,7 +77,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         btnActualizar.setBackground(new java.awt.Color(63, 72, 100));
         btnActualizar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
-        btnActualizar.setText("Actualizar");
+        btnActualizar.setText("Actualizar datos");
         btnActualizar.setBorder(null);
         btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
