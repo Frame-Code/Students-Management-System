@@ -1,16 +1,27 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.Color;
 
 /**
  *
  * @author Frame-Code
  */
-public class Estudiantes extends javax.swing.JPanel {
-
+public class Estudiantes extends javax.swing.JPanel implements Mensajes, ModeloTabla{
+    
+    private Controladora control;
+    private Long idAula;
     public Estudiantes() {
         initComponents();
     }
+
+    public Estudiantes(Controladora control, Long idAula) {
+        this.control = control;
+        this.idAula = idAula;
+        initComponents();
+        cargarTablaEstudiantes();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -336,6 +347,9 @@ public class Estudiantes extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnularMatriculasActionPerformed
 
+    private void cargarTablaEstudiantes() {
+        tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[] {"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnularMatriculas;
@@ -360,4 +374,5 @@ public class Estudiantes extends javax.swing.JPanel {
     private javax.swing.JTable tblEstudiantes;
     private javax.swing.JTextField txtCedulaBusqueda;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
+import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -113,5 +114,15 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-
+    
+    default DefaultTableModel obtenerModeloTablaEstudiantes(String titulos[], List<Estudiante> listEstudiantes) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (Estudiante estudiante : listEstudiantes) {
+            Object object[] = {estudiante.getId(), estudiante.getNombre(), estudiante.getEdad(), estudiante.getMatricula().getEstado()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
+    
 }

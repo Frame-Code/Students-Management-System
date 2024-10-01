@@ -30,15 +30,20 @@ public class Matricula implements Serializable {
     @Column(name = "ESTADO", nullable = false)
     private String estado;
     
+    @Column (name = "VALOR_PAGADO", nullable = false)
+    private String valor_pagado;
+    
     public Matricula() {
     }
 
-    public Matricula(Long id, LocalDate fecha_matriculacion, LocalDate fecha_vencimiento, String estado) {
+    public Matricula(Long id, LocalDate fecha_matriculacion, LocalDate fecha_vencimiento, String estado, String valor_pagado) {
         this.id = id;
         this.fecha_matriculacion = fecha_matriculacion;
         this.fecha_vencimiento = fecha_vencimiento;
         this.estado = estado;
+        this.valor_pagado = valor_pagado;
     }
+    
 
     public Long getId() {
         return id;
@@ -72,13 +77,22 @@ public class Matricula implements Serializable {
         this.estado = estado;
     }
 
+    public String getValor_pagado() {
+        return valor_pagado;
+    }
+
+    public void setValor_pagado(String valor_pagado) {
+        this.valor_pagado = valor_pagado;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.fecha_matriculacion);
-        hash = 37 * hash + Objects.hashCode(this.fecha_vencimiento);
-        hash = 37 * hash + Objects.hashCode(this.estado);
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.fecha_matriculacion);
+        hash = 89 * hash + Objects.hashCode(this.fecha_vencimiento);
+        hash = 89 * hash + Objects.hashCode(this.estado);
+        hash = 89 * hash + Objects.hashCode(this.valor_pagado);
         return hash;
     }
 
@@ -97,6 +111,9 @@ public class Matricula implements Serializable {
         if (!Objects.equals(this.estado, other.estado)) {
             return false;
         }
+        if (!Objects.equals(this.valor_pagado, other.valor_pagado)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -108,7 +125,8 @@ public class Matricula implements Serializable {
 
     @Override
     public String toString() {
-        return "Matricula{" + "id=" + id + ", fecha_matriculacion=" + fecha_matriculacion + ", fecha_vencimiento=" + fecha_vencimiento + ", estado=" + estado + '}';
+        return "Matricula{" + "id=" + id + ", fecha_matriculacion=" + fecha_matriculacion + ", fecha_vencimiento=" + fecha_vencimiento + ", estado=" + estado + ", valor_pagado=" + valor_pagado + '}';
     }
-   
+
+
 }

@@ -223,14 +223,14 @@ public class Controladora {
     }
     
     public void crearEstudiante(String nombres, String apellidos, Long cedula, LocalDate fechaNacimiento, 
-            Long idCurso, String nombreAula, LocalDate fechaVencimiento, int valorPago, String mesPago) {
-        Matricula matricula = new Matricula(1l, LocalDate.now(), fechaVencimiento, "Activo");
-        PagoColegiatura pago = new PagoColegiatura(1l, valorPago, mesPago, true);
+            Long idCurso, String nombreAula, LocalDate fechaVencimiento, String valorMatricula) {
+        Matricula matricula = new Matricula(1l, LocalDate.now(), fechaVencimiento, "Activo", valorMatricula);
+        //PagoColegiatura pago = new PagoColegiatura();
         this.crearMatricula(matricula);
-        this.crearPago(pago);
+        //this.crearPago(pago);
         
         Estudiante estu = new Estudiante(cedula, nombres + " " + apellidos , fechaNacimiento, matricula, this.obtenerAulaDeCurso(nombreAula, idCurso), new ArrayList<>());
-        estu.agregarPagoColegiatura(pago);
+        //estu.agregarPagoColegiatura(pago);
         estu.setEdad();
         
         this.crearEstudiante(estu);
@@ -248,6 +248,11 @@ public class Controladora {
 
     public List<Estudiante> leerListEstudiantes() {
         return persistencia.leerListEstudiantes();
+    }
+    
+    public List<Estudiante> obtenerListaEstudiantesAula(Long idAula) {
+        Aula aula = this.leerAula(idAula);
+        return obtenerListasDelCurso(aula.getListEstudiantes(), new ArrayList<>());
     }
 
     public void editarEstudiante(Estudiante estudiante) {

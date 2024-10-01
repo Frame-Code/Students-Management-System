@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.Color;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.TableColumn;
 
 /**
@@ -11,7 +12,8 @@ import javax.swing.table.TableColumn;
 public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTabla, Mensajes {
 
     private Controladora control;
-
+    private EstudiantesPorAula estudiantesPorAula;
+    
     public ConsultarEstudiantes() {
         initComponents();
         cargarTablaCursos();
@@ -43,7 +45,7 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
         lblMatricula4 = new javax.swing.JLabel();
         lblMatricula6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        btnCrearAula = new javax.swing.JButton();
+        btnVerEstudiantes = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(196, 196, 196));
         setPreferredSize(new java.awt.Dimension(716, 479));
@@ -167,22 +169,22 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
 
         jPanel3.setBackground(new java.awt.Color(180, 180, 180));
 
-        btnCrearAula.setBackground(new java.awt.Color(63, 72, 100));
-        btnCrearAula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        btnCrearAula.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrearAula.setText("Ver estudiantes");
-        btnCrearAula.setBorder(null);
-        btnCrearAula.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnVerEstudiantes.setBackground(new java.awt.Color(63, 72, 100));
+        btnVerEstudiantes.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnVerEstudiantes.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerEstudiantes.setText("Ver estudiantes");
+        btnVerEstudiantes.setBorder(null);
+        btnVerEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCrearAulaMouseEntered(evt);
+                btnVerEstudiantesMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCrearAulaMouseExited(evt);
+                btnVerEstudiantesMouseExited(evt);
             }
         });
-        btnCrearAula.addActionListener(new java.awt.event.ActionListener() {
+        btnVerEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearAulaActionPerformed(evt);
+                btnVerEstudiantesActionPerformed(evt);
             }
         });
 
@@ -192,14 +194,14 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCrearAula, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVerEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCrearAula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVerEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -250,17 +252,21 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
         columnaID.setPreferredWidth(8);
     }
 
-    private void btnCrearAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearAulaMouseEntered
-        btnCrearAula.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnCrearAulaMouseEntered
+    private void btnVerEstudiantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesMouseEntered
+        btnVerEstudiantes.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnVerEstudiantesMouseEntered
 
-    private void btnCrearAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearAulaMouseExited
-        btnCrearAula.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnCrearAulaMouseExited
+    private void btnVerEstudiantesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesMouseExited
+        btnVerEstudiantes.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnVerEstudiantesMouseExited
 
-    private void btnCrearAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAulaActionPerformed
-
-    }//GEN-LAST:event_btnCrearAulaActionPerformed
+    private void btnVerEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesActionPerformed
+        estudiantesPorAula = new EstudiantesPorAula (control, (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0));
+        estudiantesPorAula.setResizable(false);
+        estudiantesPorAula.setVisible(true);
+        estudiantesPorAula.setLocationRelativeTo(this);
+        estudiantesPorAula.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnVerEstudiantesActionPerformed
 
     private void tblCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCursosMouseClicked
         cargarAulasCurso((Long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0));
@@ -268,7 +274,7 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCrearAula;
+    private javax.swing.JButton btnVerEstudiantes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
