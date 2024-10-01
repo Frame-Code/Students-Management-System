@@ -1,6 +1,7 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
+import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -83,12 +84,31 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-    
+
     default DefaultTableModel obtenerModeloTablaAulas(String titulos[], List<Aula> listAulas) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
         for (Aula aula : listAulas) {
             Object object[] = {aula.getId(), aula.getNombre(), aula.getNumeroAsientos(), aula.getNumeroAsientosDisponibles()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
+    default DefaultTableModel obtenerModeloTablaAulasConEstudiante(String titulos[], List<Aula> listAulas) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (Aula aula : listAulas) {
+            Object object[] = {aula.getId(), aula.getNombre(), aula.getListEstudiantes().size(), aula.getNumeroAsientosDisponibles()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
+
+    default DefaultTableModel obtenerModeloTablaCursos(String titulos[], List<Curso> listCursos) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (Curso curso : listCursos) {
+            Object object[] = {curso.getId(), curso.getNombre()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;
