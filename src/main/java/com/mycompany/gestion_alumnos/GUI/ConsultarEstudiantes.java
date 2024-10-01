@@ -12,10 +12,10 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
 
     private Controladora control;
 
-    /*public ConsultarEstudiantes() {
+    public ConsultarEstudiantes() {
         initComponents();
         cargarTablaCursos();
-    }*/
+    }
     public ConsultarEstudiantes(Controladora control) {
         this.control = control;
         initComponents();
