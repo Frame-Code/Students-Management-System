@@ -164,13 +164,12 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(lblMatricula4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(124, 124, 124)
+                .addComponent(lblMatricula4)
+                .addContainerGap(205, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +269,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnEliminarAula.setBackground(new java.awt.Color(165, 80, 80));
         btnEliminarAula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnEliminarAula.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarAula.setText("Eliminar aula/s");
+        btnEliminarAula.setText("Eliminar aula");
         btnEliminarAula.setBorder(null);
         btnEliminarAula.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -401,31 +400,32 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89))
             .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(112, 112, 112)
-                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(167, 167, 167)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(266, 266, 266)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
                         .addComponent(lblCurso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(264, 264, 264)
-                        .addComponent(btnCambiarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCambiarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(196, 196, 196))
+            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addGap(207, 207, 207)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(175, 175, 175))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPrincipalDataLayout.setVerticalGroup(
             pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -516,32 +516,24 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }//GEN-LAST:event_btnCrearAulaActionPerformed
 
     private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
-        List<Aula> listAulas = new ArrayList<>();
-
+        Long idAula = (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0);
         if (tblAulas.getRowCount() > 0) {
-            for (int i = 0; i < tblAulas.getRowCount(); i++) {
-                boolean seleccionado = (boolean) tblAulas.getValueAt(i, 0);
-                if (seleccionado) {
-                    listAulas.add(control.leerAula((long) tblAulas.getValueAt(i, 1)));
-                }
-            }
-            if (listAulas.isEmpty()) {
-                mostrarInformacion(this, "Selecciona al menos un aula", "Error");
-            } else {
-                //Este condicional puede cambiar
-                if (control.leerAula(idCurso).getListEstudiantes().isEmpty()) {
+            if (tblAulas.getSelectedRow() != -1) {
+                if (control.leerAula(idAula).getNumeroAsientosDisponibles() >= control.leerAula(idAula).getNumeroAsientos()) {
                     int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la/s Aulas del curso?", "Confirmar");
                     if (respuesta == SI) {
-                        control.eliminarAulasDeCurso(listAulas);
-                        mostrarInformacion(this, "Aula/s eliminada/s correctamente", "Aula/s eliminada/s!");
+                        control.eliminarAula(idAula);
+                        mostrarInformacion(this, "Aula eliminada correctamente", "Aula eliminada!");
                         cargarTablaAulas();
                     }
                 } else {
                     mostrarInformacion(this, "No se pueden borrar aulas con estudiantes registrados", "Error");
                 }
+            } else {
+                mostrarInformacion(this, "Selecciona un aula por favor", "Error");
             }
         } else {
-            mostrarInformacion(this, "No existen Aulas para agregar", "Error");
+            mostrarInformacion(this, "No existen Aulas para eliminar", "Error");
         }
     }//GEN-LAST:event_btnEliminarAulaActionPerformed
 
@@ -632,51 +624,37 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCambiarNombreAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaMouseEntered
-        btnActualizar.setBackground(new Color(78, 90, 126));
+        btnCambiarNombreAula.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnCambiarNombreAulaMouseEntered
 
     private void btnCambiarNombreAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaMouseExited
-        btnActualizar.setBackground(new Color(63, 72, 100));
+        btnCambiarNombreAula.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnCambiarNombreAulaMouseExited
 
     private void btnCambiarNombreAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaActionPerformed
-        List<Aula> listAulas = new ArrayList<>();
 
         if (tblAulas.getRowCount() > 0) {
-            for (int i = 0; i < tblAulas.getRowCount(); i++) {
-                boolean seleccionado = (boolean) tblAulas.getValueAt(i, 0);
-                if (seleccionado) {
-                    listAulas.add(control.leerAula((long) tblAulas.getValueAt(i, 1)));
-                }
-            }
-            if (listAulas.isEmpty()) {
-                mostrarInformacion(this, "Selecciona un aula", "Error");
-            } else {
-                System.out.println(listAulas);
-                System.out.println(listAulas.size());
-                
-                if (listAulas.size() == 1) {
-                    String nombre = obtenerInformacion(this, "Escribe el nuevo nombre", "Nuevo nombre");
-                    if (!nombre.equals(CANCELADO)) {
-                        if (nombre.equals("")) {
-                            mostrarInformacion(this, "No pueden haber campos vacios", "Error");
+            if (tblAulas.getSelectedRow() != -1) {
+                String nombre = obtenerInformacion(this, "Escribe el nuevo nombre", "Nuevo nombre");
+                if (!nombre.equals(CANCELADO)) {
+                    if (nombre.equals("")) {
+                        mostrarInformacion(this, "No pueden haber campos vacios", "Error");
+                    } else {
+                        if (isString(nombre, this) && control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
+                            control.cambiarNombreAula((Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), nombre);
+                            mostrarInformacion(this, "Nombre cambiado correctamente", "Cambio de nombre existoso");
                         } else {
-                            if (isString(nombre, this) && control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
-                                control.cambiarNombreAula(listAulas.get(0).getId(), nombre);
-                                mostrarInformacion(this, "Nombre cambiado correctamente", "Cambio de nombre existoso");
-                            } else {
-                                if (!control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
-                                    mostrarInformacion(this, "El aula " + nombre + " ya existe", "Error");
-                                }
+                            if (!control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
+                                mostrarInformacion(this, "El aula " + nombre + " ya existe", "Error");
                             }
                         }
                     }
-                } else {
-                    mostrarInformacion(this, "Selecciona SOLO UN AULA para cambiar nombre", "Error");
                 }
+            } else {
+                mostrarInformacion(this, "Selecciona un aula por favor", "Error");
             }
         } else {
-            mostrarInformacion(this, "No existen Aulas para cambiar nombre", "Error");
+            mostrarInformacion(this, "No existen Aulas para eliminar", "Error");
         }
         cargarTablaAulas();
     }//GEN-LAST:event_btnCambiarNombreAulaActionPerformed
@@ -691,7 +669,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }
 
     public final void cargarTablaAulas() {
-        tblAulas.setModel(obtenerModeloTablaAulasSeleccion(new String[]{"SELECCIONAR", "ID", "AULA", "# Asientos"}, control.obtenerListAulasDeCurso(idCurso)));
+        tblAulas.setModel(obtenerModeloTablaAulas(new String[]{"ID", "AULA", "#Asientos", "#Asientos disponibles"}, control.obtenerListAulasDeCurso(idCurso)));
         tblAulas.setRowHeight(20);
     }
 

@@ -87,6 +87,11 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         lblMesPagado = new javax.swing.JLabel();
         cmbMesMatricula = new javax.swing.JComboBox<>();
         cmbMesPagado = new javax.swing.JComboBox<>();
+        lblMesPagado1 = new javax.swing.JLabel();
+        lblMatricula1 = new javax.swing.JLabel();
+        lblMatricula2 = new javax.swing.JLabel();
+        lblMatricula3 = new javax.swing.JLabel();
+        lblMatricula4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(196, 196, 196));
         setPreferredSize(new java.awt.Dimension(755, 657));
@@ -97,7 +102,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         btnGenerarMatricula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnGenerarMatricula.setForeground(new java.awt.Color(255, 255, 255));
-        btnGenerarMatricula.setText("Generar Matricula ");
+        btnGenerarMatricula.setText("Registrar y Generar Matricula ");
         btnGenerarMatricula.setBorder(null);
         btnGenerarMatricula.setEnabled(false);
         btnGenerarMatricula.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -332,11 +337,11 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         lblMatricula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         lblMatricula.setForeground(new java.awt.Color(71, 71, 71));
-        lblMatricula.setText("Matricula");
+        lblMatricula.setText("MATRICULA");
 
         lblFechaVencimiento.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         lblFechaVencimiento.setForeground(new java.awt.Color(71, 71, 71));
-        lblFechaVencimiento.setText("Fecha de vencimiento:");
+        lblFechaVencimiento.setText("Fecha de vencimiento de matricula:");
 
         spnDiaMatricula.setBorder(null);
         spnDiaMatricula.setEnabled(false);
@@ -360,11 +365,11 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         lblColegiatura.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         lblColegiatura.setForeground(new java.awt.Color(71, 71, 71));
-        lblColegiatura.setText("Colegiatura");
+        lblColegiatura.setText("COLEGIATURA");
 
         lblValorPagado.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         lblValorPagado.setForeground(new java.awt.Color(71, 71, 71));
-        lblValorPagado.setText("Valor pagado:");
+        lblValorPagado.setText("$ Valor");
 
         spnCantidadPagado.setBorder(null);
         spnCantidadPagado.setEnabled(false);
@@ -372,7 +377,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         lblMesPagado.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         lblMesPagado.setForeground(new java.awt.Color(71, 71, 71));
-        lblMesPagado.setText("Mes:");
+        lblMesPagado.setText("Mes pagado:");
 
         cmbMesMatricula.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesMatricula.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
@@ -388,22 +393,34 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         cmbMesPagado.setEnabled(false);
         cmbMesPagado.setOpaque(false);
 
+        lblMesPagado1.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMesPagado1.setForeground(new java.awt.Color(71, 71, 71));
+        lblMesPagado1.setText("$");
+
+        lblMatricula1.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula1.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula1.setText("|");
+
+        lblMatricula2.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula2.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula2.setText("|");
+
+        lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula3.setText("|");
+
+        lblMatricula4.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula4.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula4.setText("|");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(lblMatricula)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblColegiatura)
-                        .addGap(104, 104, 104))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFechaVencimiento)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -420,36 +437,64 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(spnAnioMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12))))
+                                    .addComponent(jLabel12)))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(lblMatricula)))
+                .addGap(58, 58, 58)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMatricula2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMatricula1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMatricula3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMatricula4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblValorPagado)
                             .addComponent(lblMesPagado))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spnCantidadPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(spnCantidadPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblMesPagado1))
                             .addComponent(cmbMesPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(75, 75, 75))))
+                        .addGap(75, 75, 75))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(lblColegiatura)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMatricula)
-                    .addComponent(lblColegiatura))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
+                        .addContainerGap()
+                        .addComponent(lblMatricula1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMatricula2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMatricula3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMatricula4))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(lblColegiatura)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(spnCantidadPagado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblValorPagado))
+                            .addComponent(lblValorPagado)
+                            .addComponent(lblMesPagado1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblMesPagado)
                             .addComponent(cmbMesPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
+                        .addComponent(lblMatricula)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblFechaVencimiento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -461,7 +506,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                             .addComponent(jLabel14)
                             .addComponent(jLabel13)
                             .addComponent(jLabel12))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -484,7 +529,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel17)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(225, 225, 225)
+                        .addGap(228, 228, 228)
                         .addComponent(btnGenerarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -502,9 +547,9 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGenerarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -546,7 +591,6 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         control.crearEstudiante(txtNombres.getText(), txtNombres.getText(), Long.valueOf(txtCedula.getText()), fechaNacimiento,
                 idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento, (int) spnCantidadPagado.getValue(), String.valueOf(cmbMesPagado.getSelectedItem()));
         mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
-        System.out.println(idCurso);
     }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
@@ -671,7 +715,12 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     private javax.swing.JLabel lblColegiatura;
     private javax.swing.JLabel lblFechaVencimiento;
     private javax.swing.JLabel lblMatricula;
+    private javax.swing.JLabel lblMatricula1;
+    private javax.swing.JLabel lblMatricula2;
+    private javax.swing.JLabel lblMatricula3;
+    private javax.swing.JLabel lblMatricula4;
     private javax.swing.JLabel lblMesPagado;
+    private javax.swing.JLabel lblMesPagado1;
     private javax.swing.JLabel lblValorPagado;
     private javax.swing.JSpinner spnAnioMatricula;
     private javax.swing.JSpinner spnAnioNacimiento;
