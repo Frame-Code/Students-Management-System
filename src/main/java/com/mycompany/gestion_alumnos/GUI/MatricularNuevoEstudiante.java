@@ -3,17 +3,24 @@ package com.mycompany.gestion_alumnos.GUI;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
+import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
 import java.awt.Color;
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.SpinnerNumberModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Mensajes{
+public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Mensajes {
+
     private Controladora control;
     private Long idCurso;
+
     public MatricularNuevoEstudiante() {
         initComponents();
     }
@@ -70,7 +77,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         spnDiaMatricula = new javax.swing.JSpinner(modelDiaMatricula);
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(anioActual, anioActual, anioActual+15 , 1);
+        SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(anioActual, anioActual, anioActual+100 , 1);
         spnAnioMatricula = new javax.swing.JSpinner(modelAnioVencimiento);
         jLabel12 = new javax.swing.JLabel();
         lblColegiatura = new javax.swing.JLabel();
@@ -93,6 +100,19 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         btnGenerarMatricula.setText("Generar Matricula ");
         btnGenerarMatricula.setBorder(null);
         btnGenerarMatricula.setEnabled(false);
+        btnGenerarMatricula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnGenerarMatriculaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnGenerarMatriculaMouseExited(evt);
+            }
+        });
+        btnGenerarMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarMatriculaActionPerformed(evt);
+            }
+        });
 
         jLabel17.setForeground(new java.awt.Color(99, 99, 99));
         jLabel17.setText("_______________________________________________Información Personal_______________________________________________");
@@ -141,6 +161,11 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         txtApellidos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
         txtApellidos.setOpaque(false);
+        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApellidosActionPerformed(evt);
+            }
+        });
 
         cmbMesNacimiento.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesNacimiento.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
@@ -253,6 +278,14 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         btnComprobarDisponibilidad.setForeground(new java.awt.Color(255, 255, 255));
         btnComprobarDisponibilidad.setText("Comprobar disponibilidad");
         btnComprobarDisponibilidad.setBorder(null);
+        btnComprobarDisponibilidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnComprobarDisponibilidadMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnComprobarDisponibilidadMouseExited(evt);
+            }
+        });
         btnComprobarDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnComprobarDisponibilidadActionPerformed(evt);
@@ -476,10 +509,11 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnComprobarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadActionPerformed
-        if(!(txtNombres.getText().equals("") && txtApellidos.getText().equals("") && txtCedula.getText().equals(""))) {
+        if (!(txtNombres.getText().equals("") && txtApellidos.getText().equals("") && txtCedula.getText().equals(""))) {
             String nombreAula = String.valueOf(cmbAulas.getSelectedItem());
+            idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
             //Condicional que puede cambiar
-            if(control.obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
+            if (control.obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
                 mostrarInformacion(this, "Hay disponibilidad en el aula!", "Exito");
                 habilitarUltimasOpciones();
             } else {
@@ -490,6 +524,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             mostrarInformacion(this, "No pueden haber campos vacios", "Error");
             bloquearUltimasOpciones();
         }
+
     }//GEN-LAST:event_btnComprobarDisponibilidadActionPerformed
 
     private void cmbCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursosActionPerformed
@@ -504,10 +539,69 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbMesNacimientoActionPerformed
 
+    private void btnGenerarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaActionPerformed
+        LocalDate fechaNacimiento = LocalDate.of((int) spnAnioNacimiento.getValue(), obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())), (int) spnDiaNacimiento.getValue());
+        LocalDate fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(), obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())), (int) spnDiaMatricula.getValue());
+
+        control.crearEstudiante(txtNombres.getText(), txtNombres.getText(), Long.valueOf(txtCedula.getText()), fechaNacimiento,
+                idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento, (int) spnCantidadPagado.getValue(), String.valueOf(cmbMesPagado.getSelectedItem()));
+        mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
+        System.out.println(idCurso);
+    }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
+
+    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidosActionPerformed
+
+    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
+        btnComprobarDisponibilidad.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
+
+    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
+        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
+
+    private void btnGenerarMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseEntered
+        btnGenerarMatricula.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseEntered
+
+    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
+        btnGenerarMatricula.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
+
     private void cargarCmbCursos() {
         for (Curso curso : control.leerListCursos()) {
             cmbCursos.addItem(curso.getNombre());
         }
+    }
+
+    private int obtenerMes(String mes) {
+        if (mes.equals("Enero")) {
+            return 1;
+        } else if (mes.equals("Febrero")) {
+            return 2;
+        } else if (mes.equals("Marzo")) {
+            return 3;
+        } else if (mes.equals("Abril")) {
+            return 4;
+        } else if (mes.equals("Mayo")) {
+            return 5;
+        } else if (mes.equals("Junio")) {
+            return 6;
+        } else if (mes.equals("Julio")) {
+            return 7;
+        } else if (mes.equals("Agosto")) {
+            return 8;
+        } else if (mes.equals("Septiembre")) {
+            return 9;
+        } else if (mes.equals("Octubre")) {
+            return 10;
+        } else if (mes.equals("Noviembre")) {
+            return 11;
+        } else if (mes.equals("Diciembre")) {
+            return 12;
+        }
+        return 0;
     }
 
     private void habilitarUltimasOpciones() {
@@ -528,7 +622,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         btnGenerarMatricula.setBackground(new Color(63, 72, 100));
 
     }
-    
+
     private void bloquearUltimasOpciones() {
         lblColegiatura.setForeground(new Color(71, 71, 71));
         lblFechaVencimiento.setForeground(new Color(71, 71, 71));
@@ -588,4 +682,5 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
+
 }

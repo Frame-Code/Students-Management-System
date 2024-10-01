@@ -22,7 +22,7 @@ import javax.persistence.OneToOne;
 public class Estudiante implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
 
@@ -43,12 +43,20 @@ public class Estudiante implements Serializable {
     @JoinColumn (name = "AULA_ID")
     private Aula aula;
     
-    //Relacion unidireccional donde solo el estudiante conoce sus pagos
-    @OneToMany
-    @JoinColumn(name = "ESTUDIANTE_ID")
+    //Relacion bidireccional donde solo el estudiante conoce sus pagos
+    @OneToMany (mappedBy = "estudiante")
     private List<PagoColegiatura> listPago_colegiaturas;
 
     public Estudiante() {
+    }
+
+    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Matricula matricula, Aula aula, List<PagoColegiatura> listPago_colegiaturas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.matricula = matricula;
+        this.aula = aula;
+        this.listPago_colegiaturas = listPago_colegiaturas;
     }
 
     public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Integer edad, Matricula matricula, Aula aula, List<PagoColegiatura> listPago_colegiaturas) {

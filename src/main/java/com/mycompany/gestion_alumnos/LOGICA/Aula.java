@@ -79,6 +79,10 @@ public class Aula implements Serializable {
     public void setNumeroAsientos(Integer numeroAsientos) {
         this.numeroAsientos = numeroAsientos;
     }
+    
+    public void setNumeroAsientos() {
+        numeroAsientos--;
+    }
 
     public Curso getCurso() {
         return curso;

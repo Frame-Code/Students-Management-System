@@ -1,6 +1,7 @@
 package com.mycompany.gestion_alumnos.LOGICA;
 
 import com.mycompany.gestion_alumnos.PERSISTENCIA.ControladoraPersistencia;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -177,15 +178,13 @@ public class Controladora {
         return persistencia.leerCurso(id);
     }
 
-    public Curso leerCurso(String curso) {        
-        //return persistencia.leerCurso(curso.getId());
-        Long id = null;
+    public Curso leerCurso(String curso) {
         for (Curso cur : this.leerListCursos()) {
             if(cur.getNombre().equals(curso)) {
-                id = cur.getId();
+                return this.leerCurso(cur.getId());
             }
         }
-        return persistencia.leerCurso(id);
+        return null;
     }
 
     public List<Curso> leerListCursos() {
@@ -221,6 +220,26 @@ public class Controladora {
     /*--------------------------ESTUDIANTE-------------------------*/
     public void crearEstudiante(Estudiante estudiante) {
         persistencia.crearEstudiante(estudiante);
+    }
+    
+    public void crearEstudiante(String nombres, String apellidos, Long cedula, LocalDate fechaNacimiento, 
+            Long idCurso, String nombreAula, LocalDate fechaVencimiento, int valorPago, String mesPago) {
+        Matricula matricula = new Matricula(1l, LocalDate.now(), fechaVencimiento, "Activo");
+        PagoColegiatura pago = new PagoColegiatura(1l, valorPago, mesPago, true);
+        this.crearMatricula(matricula);
+        this.crearPago(pago);
+        
+        Estudiante estu = new Estudiante(cedula, nombres + " " + apellidos , fechaNacimiento, matricula, this.obtenerAulaDeCurso(nombreAula, idCurso), new ArrayList<>());
+        estu.agregarPagoColegiatura(pago);
+        estu.setEdad();
+        
+        this.crearEstudiante(estu);
+        
+        Aula aula = this.obtenerAulaDeCurso(nombreAula, idCurso);
+        aula.setNumeroAsientos();
+        this.editarAula(aula);
+        
+        
     }
 
     public Estudiante leerEstudiante(Long id) {
