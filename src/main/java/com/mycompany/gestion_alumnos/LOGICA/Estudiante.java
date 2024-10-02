@@ -26,7 +26,7 @@ public class Estudiante implements Serializable {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NOMBRE", length = 30, nullable = false)
+    @Column(name = "NOMBRE", length = 100, nullable = false)
     private String nombre;
 
     @Column(name = "FECHA_NACIMIENTO", nullable = false)
@@ -187,7 +187,7 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", matricula=" + matricula + ", aula=" + aula + ", listPago_colegiaturas=" + listPago_colegiaturas + '}';
+        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", matricula=" + matricula + ", listPago_colegiaturas=" + listPago_colegiaturas + '}';
     }
     
 }

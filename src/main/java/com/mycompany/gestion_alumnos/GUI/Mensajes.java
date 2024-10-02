@@ -64,5 +64,14 @@ public interface Mensajes {
             return true;
         }
     }
+    
+    default boolean isNumber(String number) {
+        try {
+            Long.valueOf(number);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
 }

@@ -4,12 +4,8 @@ import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
-import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
 import java.awt.Color;
 import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -30,6 +26,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         this.idCurso = control.leerListCursos().get(0).getId();
         initComponents();
         cargarCmbCursos();
+        limpiar();
     }
 
     /**
@@ -504,25 +501,43 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     }//GEN-LAST:event_cmbMesNacimientoActionPerformed
 
     private void btnGenerarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaActionPerformed
-        boolean isRegistered = true;
-        String nombreAula = "";
-        LocalDate fechaNacimiento;
-        LocalDate fechaVencimiento;
-        for (Estudiante estudiante : control.leerListEstudiantes()) {
-            if(!estudiante.getId().equals(Long.valueOf(txtCedula.getText()))) {
+        if (isNumber(txtCedula.getText())) {
+            boolean isRegistered = true;
+            String nombreAula = "";
+            Long numeroCedula = Long.valueOf(txtCedula.getText());
+            idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
+            if (control.leerListEstudiantes().isEmpty()) {
                 isRegistered = false;
             } else {
-                nombreAula = estudiante.getAula().getNombre();
+                for (Estudiante estudiante : control.leerListEstudiantes()) {
+                    if (estudiante.getId().equals(numeroCedula)) {
+                        nombreAula = estudiante.getAula().getNombre();
+                        isRegistered = true;
+                    } else {
+                        isRegistered = false;
+                    }
+                }
             }
-        }
-        if(isRegistered = false) {
-            fechaNacimiento = LocalDate.of((int) spnAnioNacimiento.getValue(), obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())), (int) spnDiaNacimiento.getValue());
-            fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(), obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())), (int) spnDiaMatricula.getValue());
-            control.crearEstudiante(txtNombres.getText(), txtApellidos.getText(), Long.valueOf(txtCedula.getText()), fechaNacimiento,
-                    idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento, String.valueOf(spnCantidadPagado.getValue()));
-            mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
+            if (isRegistered == false) {
+                LocalDate fechaNacimiento = LocalDate.of((int) spnAnioNacimiento.getValue(),
+                        obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())),
+                        (int) spnDiaNacimiento.getValue());
+                LocalDate fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(),
+                        obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
+                        (int) spnDiaMatricula.getValue());
+
+                control.crearEstudiante(txtNombres.getText(), txtApellidos.getText(),
+                        numeroCedula, fechaNacimiento,
+                        idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento,
+                        String.valueOf(spnCantidadPagado.getValue()));
+
+                mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
+                limpiar();
+            } else {
+                mostrarInformacion(this, "El estudiante con dicha cédula ya existe en el aula '" + nombreAula + "'", "Exito");
+            }
         } else {
-            mostrarInformacion(this, "El estudiante ya existe en el aula '" + nombreAula + "'", "Exito");
+            mostrarInformacion(this, "No pueden haber letras en la cedula", "Error");
         }
     }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
 
@@ -550,6 +565,23 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         for (Curso curso : control.leerListCursos()) {
             cmbCursos.addItem(curso.getNombre());
         }
+    }
+    
+    public void limpiar() {
+        txtApellidos.setText("");
+        txtNombres.setText("");
+        txtCedula.setText("");
+        spnDiaNacimiento.setValue(1);
+        cmbMesNacimiento.setSelectedIndex(0);
+        spnAnioNacimiento.setValue(2005);
+        cmbCursos.setSelectedIndex(0);
+        cmbAulas.setSelectedIndex(0);
+        bloquearUltimasOpciones();
+        spnDiaMatricula.setValue(1);
+        cmbMesMatricula.setSelectedIndex(0);
+        spnAnioMatricula.setValue(LocalDate.now().getYear());
+        spnCantidadPagado.setValue(1);
+        
     }
 
     private int obtenerMes(String mes) {

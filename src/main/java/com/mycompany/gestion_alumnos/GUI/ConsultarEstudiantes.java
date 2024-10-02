@@ -12,7 +12,7 @@ import javax.swing.table.TableColumn;
 public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTabla, Mensajes {
 
     private Controladora control;
-    private Estudiantes estudiantes;
+    private ListadoEstudiantesAula estudiantes;
     private Principal principal;
 
     public ConsultarEstudiantes() {
@@ -256,7 +256,7 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
     }
 
     private void cargarAulasCurso(Long idCurso) {
-        tblAulas.setModel(obtenerModeloTablaAulasConEstudiante(new String[]{"ID", "CURSO", "# Estudiantes", "# Asientos disponibles"}, control.obtenerListAulasDeCurso(idCurso)));
+        tblAulas.setModel(obtenerModeloTablaAulasConEstudiante(new String[]{"ID", "AULA", "# Estudiantes", "# Asientos disponibles"}, control.obtenerListAulasDeCurso(idCurso)));
         TableColumn columnaID = tblAulas.getColumnModel().getColumn(0);
         columnaID.setPreferredWidth(8);
         tblAulas.setRowHeight(20);
@@ -287,7 +287,7 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
     private void mostrarEstudiantes() {
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1 && tblAulas.getSelectedRow() != -1) {
-                estudiantes = new Estudiantes(control, (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), this, principal);
+                estudiantes = new ListadoEstudiantesAula(control, (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), this, principal);
                 principal.pnlPrincipalData.add(estudiantes);
                 estudiantes.setVisible(true);
                 this.setVisible(false);

@@ -7,18 +7,18 @@ import java.awt.Color;
  *
  * @author Frame-Code
  */
-public class Estudiantes extends javax.swing.JPanel implements Mensajes, ModeloTabla{
+public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensajes, ModeloTabla{
     
     private Controladora control;
     private Long idAula;
     private ConsultarEstudiantes consultarEstudiantes;
     private Principal principal;
     
-    public Estudiantes() {
+    public ListadoEstudiantesAula() {
         initComponents();
     }
 
-    public Estudiantes(Controladora control, Long idAula, ConsultarEstudiantes consultarEstudiantes, Principal principal) {
+    public ListadoEstudiantesAula(Controladora control, Long idAula, ConsultarEstudiantes consultarEstudiantes, Principal principal) {
         this.control = control;
         this.idAula = idAula;
         this.consultarEstudiantes = consultarEstudiantes;

@@ -119,7 +119,7 @@ public interface ModeloTabla {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
         for (Estudiante estudiante : listEstudiantes) {
-            Object object[] = {estudiante.getId(), estudiante.getNombre(), estudiante.getEdad(), estudiante.getMatricula().getEstado()};
+            Object object[] = {0+estudiante.getId(), estudiante.getNombre(), estudiante.getEdad(), estudiante.getMatricula().getEstado()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;
