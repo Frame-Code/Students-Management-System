@@ -12,14 +12,17 @@ import javax.swing.table.TableColumn;
 public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTabla, Mensajes {
 
     private Controladora control;
-    private EstudiantesPorAula estudiantesPorAula;
-    
+    private Estudiantes estudiantes;
+    private Principal principal;
+
     public ConsultarEstudiantes() {
         initComponents();
         cargarTablaCursos();
     }
-    public ConsultarEstudiantes(Controladora control) {
+
+    public ConsultarEstudiantes(Controladora control, Principal principal) {
         this.control = control;
+        this.principal = principal;
         initComponents();
         cargarTablaCursos();
     }
@@ -109,7 +112,7 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(lblMatricula3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMatricula5))
         );
@@ -127,6 +130,11 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
 
             }
         ));
+        tblAulas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAulasMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblAulas);
 
         lblMatricula4.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -233,23 +241,25 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void cargarTablaCursos() {
         tblCursos.setModel(obtenerModeloTablaCursos(new String[]{"ID", "CURSO"}, control.leerListCursos()));
+        tblCursos.setRowHeight(20);
     }
 
     private void cargarAulasCurso(Long idCurso) {
         tblAulas.setModel(obtenerModeloTablaAulasConEstudiante(new String[]{"ID", "CURSO", "# Estudiantes", "# Asientos disponibles"}, control.obtenerListAulasDeCurso(idCurso)));
         TableColumn columnaID = tblAulas.getColumnModel().getColumn(0);
         columnaID.setPreferredWidth(8);
+        tblAulas.setRowHeight(20);
     }
 
     private void btnVerEstudiantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesMouseEntered
@@ -261,17 +271,33 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
     }//GEN-LAST:event_btnVerEstudiantesMouseExited
 
     private void btnVerEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesActionPerformed
-        estudiantesPorAula = new EstudiantesPorAula (control, (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0));
-        estudiantesPorAula.setResizable(false);
-        estudiantesPorAula.setVisible(true);
-        estudiantesPorAula.setLocationRelativeTo(this);
-        estudiantesPorAula.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        mostrarEstudiantes();
     }//GEN-LAST:event_btnVerEstudiantesActionPerformed
 
     private void tblCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCursosMouseClicked
         cargarAulasCurso((Long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0));
     }//GEN-LAST:event_tblCursosMouseClicked
 
+    private void tblAulasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAulasMouseClicked
+        if(evt.getClickCount() == 2) {
+            mostrarEstudiantes();
+        }
+    }//GEN-LAST:event_tblAulasMouseClicked
+
+    private void mostrarEstudiantes() {
+        if (tblCursos.getRowCount() > 0) {
+            if (tblCursos.getSelectedRow() != -1 && tblAulas.getSelectedRow() != -1) {
+                estudiantes = new Estudiantes(control, (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), this, principal);
+                principal.pnlPrincipalData.add(estudiantes);
+                estudiantes.setVisible(true);
+                this.setVisible(false);
+            } else {
+                mostrarInformacion(this, "Selecciona un aula y un curso por favor", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "No hay tablas cargadas", "Error");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVerEstudiantes;

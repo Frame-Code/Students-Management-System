@@ -11,13 +11,18 @@ public class Estudiantes extends javax.swing.JPanel implements Mensajes, ModeloT
     
     private Controladora control;
     private Long idAula;
+    private ConsultarEstudiantes consultarEstudiantes;
+    private Principal principal;
+    
     public Estudiantes() {
         initComponents();
     }
 
-    public Estudiantes(Controladora control, Long idAula) {
+    public Estudiantes(Controladora control, Long idAula, ConsultarEstudiantes consultarEstudiantes, Principal principal) {
         this.control = control;
         this.idAula = idAula;
+        this.consultarEstudiantes = consultarEstudiantes;
+        this.principal = principal;
         initComponents();
         cargarTablaEstudiantes();
     }
@@ -211,6 +216,11 @@ public class Estudiantes extends javax.swing.JPanel implements Mensajes, ModeloT
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("<-- Regresar");
         btnRegresar.setBorder(null);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnEliminarEstudiante.setBackground(new java.awt.Color(165, 80, 80));
         btnEliminarEstudiante.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -346,6 +356,13 @@ public class Estudiantes extends javax.swing.JPanel implements Mensajes, ModeloT
     private void btnAnularMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnularMatriculasActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.setVisible(false);
+        principal.pnlPrincipalData.removeAll();
+        principal.pnlPrincipalData.add(consultarEstudiantes);
+        consultarEstudiantes.setVisible(true);
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void cargarTablaEstudiantes() {
         tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[] {"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));

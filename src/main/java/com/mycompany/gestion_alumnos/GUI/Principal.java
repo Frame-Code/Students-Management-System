@@ -27,7 +27,7 @@ public class Principal extends javax.swing.JFrame {
         this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias};
         this.pnlMatricularNuevo = new MatricularNuevoEstudiante(control);
         this.pnlMatricularExistente = new MatricularEstudianteExistente();
-        this.pnlConsultarEstudiantes = new ConsultarEstudiantes(control);
+        this.pnlConsultarEstudiantes = new ConsultarEstudiantes(control, this);
         this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos(control);
         this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias(control);
     }
@@ -396,6 +396,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel pnlPrincipalData;
+    public javax.swing.JPanel pnlPrincipalData;
     // End of variables declaration//GEN-END:variables
 }
