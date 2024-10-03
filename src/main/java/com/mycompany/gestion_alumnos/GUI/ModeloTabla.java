@@ -6,6 +6,7 @@ import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -37,6 +38,12 @@ public interface ModeloTabla {
                 return super.getColumnClass(column);
             }
         };
+    }
+    
+    default DefaultTableModel borrarFilas(TableModel modeloTabla, int rowCount) {
+        DefaultTableModel modelo = (DefaultTableModel) modeloTabla;
+        modelo.setRowCount(0);
+        return modelo;
     }
 
     default DefaultTableModel obtenerModeloTablaBasico(String titulos[]) {

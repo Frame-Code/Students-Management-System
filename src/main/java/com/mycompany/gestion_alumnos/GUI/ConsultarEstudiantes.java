@@ -250,7 +250,7 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cargarTablaCursos() {
+    public void cargarTablaCursos() {
         tblCursos.setModel(obtenerModeloTablaCursos(new String[]{"ID", "CURSO"}, control.leerListCursos()));
         tblCursos.setRowHeight(20);
     }

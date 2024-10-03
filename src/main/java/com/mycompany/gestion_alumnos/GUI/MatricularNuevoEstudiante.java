@@ -561,7 +561,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         btnGenerarMatricula.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnGenerarMatriculaMouseExited
 
-    private void cargarCmbCursos() {
+    public void cargarCmbCursos() {
         for (Curso curso : control.leerListCursos()) {
             cmbCursos.addItem(curso.getNombre());
         }

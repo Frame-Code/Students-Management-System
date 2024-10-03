@@ -1,19 +1,22 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Frame-Code
  */
-public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensajes, ModeloTabla{
-    
+public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensajes, ModeloTabla {
+
     private Controladora control;
     private Long idAula;
     private ConsultarEstudiantes consultarEstudiantes;
     private Principal principal;
-    
+
     public ListadoEstudiantesAula() {
         initComponents();
     }
@@ -25,8 +28,8 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         this.principal = principal;
         initComponents();
         cargarTablaEstudiantes();
+        cargarNombre();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +41,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblAula = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtCedulaBusqueda = new javax.swing.JTextField();
@@ -65,9 +68,9 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         jPanel1.setBackground(new java.awt.Color(196, 196, 196));
         jPanel1.setPreferredSize(new java.awt.Dimension(755, 657));
 
-        jLabel1.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(23, 23, 23));
-        jLabel1.setText("Aula");
+        lblAula.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        lblAula.setForeground(new java.awt.Color(23, 23, 23));
+        lblAula.setText("Aula");
 
         jLabel17.setForeground(new java.awt.Color(99, 99, 99));
         jLabel17.setText("________________________________________________Buscar estudiante _______________________________________________");
@@ -129,7 +132,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRICULA"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -298,7 +301,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblAula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel17)
@@ -310,7 +313,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblAula)
                     .addComponent(jLabel2))
                 .addGap(2, 2, 2)
                 .addComponent(jLabel17)
@@ -346,7 +349,25 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+        if (isNumber(txtCedulaBusqueda.getText())) {
+            Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
+            boolean isRegistered = true;
+            List<Estudiante> estudianteBusqueda = new ArrayList<>();
+            for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
+                isRegistered = estudiante.getId().equals(idEstudianteBusqueda);
+            }
+
+            if (isRegistered) {
+                estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
+                tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
+            } else {
+                mostrarInformacion(this, "Estudiante no se encuentra registrado", "Error");
+                tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
+            }
+        } else {
+            mostrarInformacion(this, "Solo se admiten numeros para buscar por cédula", "Error");
+            txtCedulaBusqueda.setText("");
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEstudianteActionPerformed
@@ -365,7 +386,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void cargarTablaEstudiantes() {
-        tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[] {"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
+        tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
+    }
+
+    private void cargarNombre() {
+        lblAula.setText(control.leerAula(idAula).getNombre());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -374,7 +399,6 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     private javax.swing.JButton btnEliminarEstudiante;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnVerEditarEstudiante;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -386,6 +410,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblAula;
     private javax.swing.JLabel lblMatricula2;
     private javax.swing.JTable tblEstudianteEncontrado;
     private javax.swing.JTable tblEstudiantes;

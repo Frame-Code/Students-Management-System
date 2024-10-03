@@ -291,6 +291,7 @@ public class Principal extends javax.swing.JFrame {
     private void btnMatricularNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularNuevoActionPerformed
         inicializarPanel(btnMatricularNuevo, pnlMatricularNuevo);
         pnlMatricularNuevo.limpiar();
+        pnlMatricularNuevo.cargarCmbCursos();
     }//GEN-LAST:event_btnMatricularNuevoActionPerformed
 
     private void btnMatricularExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularExistenteActionPerformed
@@ -299,6 +300,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnConsultaEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesActionPerformed
         inicializarPanel(btnConsultaEstudiantes, pnlConsultarEstudiantes);
+        pnlConsultarEstudiantes.cargarTablaCursos();
+        
     }//GEN-LAST:event_btnConsultaEstudiantesActionPerformed
 
     private void btnRegistrarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCursosActionPerformed
