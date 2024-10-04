@@ -1,7 +1,5 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import java.awt.Color;
-
 /**
  *
  * @author Frame-Code

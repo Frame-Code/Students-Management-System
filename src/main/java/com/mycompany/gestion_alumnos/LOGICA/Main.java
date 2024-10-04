@@ -7,8 +7,7 @@ public class Main {
         System.out.println("Hello World!");
         
         Controladora control = new Controladora();
-        
-        Principal principal = new Principal();
+        Principal principal = new Principal(control);
         principal.setResizable(false);
         principal.setSize(1080, 720);
         principal.setVisible(true);

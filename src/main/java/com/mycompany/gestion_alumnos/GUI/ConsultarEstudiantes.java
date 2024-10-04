@@ -2,7 +2,6 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.Color;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.TableColumn;
 
 /**
@@ -23,8 +22,10 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
     public ConsultarEstudiantes(Controladora control, Principal principal) {
         this.control = control;
         this.principal = principal;
-        initComponents();
-        cargarTablaCursos();
+        this.initComponents();
+        if(!control.leerListCursos().isEmpty()) {
+            this.cargarTablaCursos();
+        }
     }
 
     /**

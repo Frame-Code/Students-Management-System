@@ -87,7 +87,7 @@ public interface ModeloTabla {
         DefaultTableModel modeloTabla = modeloTablaSeleccion();
         modeloTabla.setColumnIdentifiers(titulos);
         for (Aula aula : listAulas) {
-            Object object[] = {false, aula.getId(), aula.getNombre(), aula.getNumeroAsientos(), aula.getNumeroAsientosDisponibles()};
+            Object object[] = {false, aula.getId(), aula.getNombre(), aula.getNumeroAsientosTotales(), aula.getNumeroAsientosDisponibles()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;
@@ -97,7 +97,7 @@ public interface ModeloTabla {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
         for (Aula aula : listAulas) {
-            Object object[] = {aula.getId(), aula.getNombre(), aula.getNumeroAsientos(), aula.getNumeroAsientosDisponibles()};
+            Object object[] = {aula.getId(), aula.getNombre(), aula.getNumeroAsientosTotales(), aula.getNumeroAsientosDisponibles()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;

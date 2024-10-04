@@ -27,8 +27,11 @@ public class Aula implements Serializable {
     @Column(name = "NOMBRE", length = 15, nullable = false)
     private String nombre;
 
-    @Column(name = "NUMERO_ASIENTOS")
-    private Integer numeroAsientos;
+    @Column(name = "ASIENTOS_TOTALES")
+    private Integer numeroAsientosTotales;
+    
+    @Column(name = "ASIENTOS_DISPONIBLES")
+    private Integer numeroAsientosDisponibles;
 
     @ManyToOne
     @JoinColumn(name = "CURSO_ID")
@@ -40,16 +43,12 @@ public class Aula implements Serializable {
     public Aula() {
     }
 
-    public Aula(Long id, String nombre, Integer numeroAsientos, Curso curso, List<Estudiante> listEstudiantes) {
+    public Aula(Long id, String nombre, Integer numeroAsientosTotales, Curso curso, List<Estudiante> listEstudiantes) {
         this.id = id;
         this.nombre = nombre;
-        this.numeroAsientos = numeroAsientos;
+        this.numeroAsientosTotales = numeroAsientosTotales;
         this.curso = curso;
         this.listEstudiantes = listEstudiantes;
-    }
-    
-    public Integer getNumeroAsientosDisponibles() {
-        return numeroAsientos - listEstudiantes.size();
     }
     
     public void agregarEstudiante(Estudiante estudiante) {
@@ -72,18 +71,26 @@ public class Aula implements Serializable {
         this.nombre = nombre;
     }
 
-    public Integer getNumeroAsientos() {
-        return numeroAsientos;
+    public Integer getNumeroAsientosTotales() {
+        return numeroAsientosTotales;
     }
 
-    public void setNumeroAsientos(Integer numeroAsientos) {
-        this.numeroAsientos = numeroAsientos;
+    public void setNumeroAsientosTotales(Integer numeroAsientosTotales) {
+        this.numeroAsientosTotales = numeroAsientosTotales;
+    }
+
+    public Integer getNumeroAsientosDisponibles() {
+        return numeroAsientosDisponibles;
+    }
+
+    public void setNumeroAsientosDisponibles() {
+        this.numeroAsientosDisponibles = numeroAsientosTotales - listEstudiantes.size();
     }
     
-    public void setNumeroAsientos() {
-        numeroAsientos--;
+    public void setNumeroAsientosDisponibles(Integer numeroAsientosDisponibles) {
+        this.numeroAsientosDisponibles = numeroAsientosDisponibles;
     }
-
+    
     public Curso getCurso() {
         return curso;
     }
@@ -102,12 +109,13 @@ public class Aula implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.nombre);
-        hash = 97 * hash + Objects.hashCode(this.numeroAsientos);
-        hash = 97 * hash + Objects.hashCode(this.curso);
-        hash = 97 * hash + Objects.hashCode(this.listEstudiantes);
+        int hash = 5;
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.nombre);
+        hash = 13 * hash + Objects.hashCode(this.numeroAsientosTotales);
+        hash = 13 * hash + Objects.hashCode(this.numeroAsientosDisponibles);
+        hash = 13 * hash + Objects.hashCode(this.curso);
+        hash = 13 * hash + Objects.hashCode(this.listEstudiantes);
         return hash;
     }
 
@@ -129,7 +137,10 @@ public class Aula implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.numeroAsientos, other.numeroAsientos)) {
+        if (!Objects.equals(this.numeroAsientosTotales, other.numeroAsientosTotales)) {
+            return false;
+        }
+        if (!Objects.equals(this.numeroAsientosDisponibles, other.numeroAsientosDisponibles)) {
             return false;
         }
         if (!Objects.equals(this.curso, other.curso)) {
@@ -140,7 +151,7 @@ public class Aula implements Serializable {
 
     @Override
     public String toString() {
-        return "Aula{" + "id=" + id + ", nombre=" + nombre + ", numeroAsientos=" + numeroAsientos + '}';
+        return "Aula{" + "id=" + id + ", nombre=" + nombre + ", numeroAsientosTotales=" + numeroAsientosTotales + ", numeroAsientosDisponibles=" + numeroAsientosDisponibles + ", curso=" + curso + '}';
     }
     
 }

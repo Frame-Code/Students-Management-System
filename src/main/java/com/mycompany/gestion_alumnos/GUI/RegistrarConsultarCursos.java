@@ -25,8 +25,10 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
 
     public RegistrarConsultarCursos(Controladora control) {
         this.control = control;
-        initComponents();
-        cargarTabla();
+        this.initComponents();
+        if(!control.leerListCursos().isEmpty()) {
+            this.cargarTabla();
+        }
     }
 
     /**

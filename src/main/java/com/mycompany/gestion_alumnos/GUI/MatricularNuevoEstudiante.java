@@ -6,6 +6,7 @@ import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
 import java.time.LocalDate;
+import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -23,10 +24,12 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
     public MatricularNuevoEstudiante(Controladora control) {
         this.control = control;
-        this.idCurso = control.leerListCursos().get(0).getId();
-        initComponents();
-        cargarCmbCursos();
-        limpiar();
+        this.initComponents();
+        if (!control.leerListAulas().isEmpty() && !control.leerListCursos().isEmpty()) {
+            this.idCurso = control.leerListCursos().get(0).getId();
+            this.cargarCmbCursos();
+            this.limpiar();
+        }
     }
 
     /**
@@ -66,6 +69,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         jLabel10 = new javax.swing.JLabel();
         cmbAulas = new javax.swing.JComboBox<>();
         btnComprobarDisponibilidad = new javax.swing.JButton();
+        lblMatricula3 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblFechaVencimiento = new javax.swing.JLabel();
@@ -263,7 +267,6 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         jLabel10.setText("Aula:");
 
         cmbAulas.setBackground(new java.awt.Color(180, 180, 180));
-        cmbAulas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbAulas.setBorder(null);
         cmbAulas.setOpaque(false);
 
@@ -286,6 +289,10 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             }
         });
 
+        lblMatricula3.setFont(new java.awt.Font("Waree", 1, 10)); // NOI18N
+        lblMatricula3.setForeground(new java.awt.Color(71, 71, 71));
+        lblMatricula3.setText("Nota: Asegurese que existan cursos y aulas asignadas a dichos cursos");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -301,14 +308,21 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                 .addComponent(cmbAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(87, 87, 87))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(205, 205, 205)
-                .addComponent(btnComprobarDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(205, 205, 205)
+                        .addComponent(btnComprobarDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblMatricula3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lblMatricula3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -465,25 +479,30 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGenerarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnComprobarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadActionPerformed
-        if (!(txtNombres.getText().equals("") && txtApellidos.getText().equals("") && txtCedula.getText().equals(""))) {
-            String nombreAula = String.valueOf(cmbAulas.getSelectedItem());
-            idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
-            //Condicional que puede cambiar
-            if (control.obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
-                mostrarInformacion(this, "Hay disponibilidad en el aula!", "Exito");
-                habilitarUltimasOpciones();
+        if (cmbCursos.getSelectedItem() != null && cmbAulas.getSelectedItem() != null) {
+            if (!(txtNombres.getText().equals("") && txtApellidos.getText().equals("") && txtCedula.getText().equals(""))) {
+                String nombreAula = String.valueOf(cmbAulas.getSelectedItem());
+                idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
+                //Condicional que puede cambiar
+                if (control.obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
+                    mostrarInformacion(this, "Hay disponibilidad en el aula!", "Exito");
+                    habilitarUltimasOpciones();
+                } else {
+                    mostrarInformacion(this, "No hay disponibilidad en el aula", "Error");
+                    bloquearUltimasOpciones();
+                }
             } else {
-                mostrarInformacion(this, "No hay disponibilidad en el aula", "Error");
+                mostrarInformacion(this, "No pueden haber campos vacios", "Error");
                 bloquearUltimasOpciones();
             }
         } else {
-            mostrarInformacion(this, "No pueden haber campos vacios", "Error");
-            bloquearUltimasOpciones();
+            mostrarInformacion(this, "No hay cursos seleccionados", "Error");
+
         }
 
     }//GEN-LAST:event_btnComprobarDisponibilidadActionPerformed
@@ -561,27 +580,32 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         btnGenerarMatricula.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnGenerarMatriculaMouseExited
 
-    public void cargarCmbCursos() {
-        for (Curso curso : control.leerListCursos()) {
-            cmbCursos.addItem(curso.getNombre());
+    public final void cargarCmbCursos() {
+
+        if (isEmptyCombo(cmbCursos)) {
+            for (Curso curso : control.leerListCursos()) {
+                cmbCursos.addItem(curso.getNombre());
+            }
         }
     }
-    
-    public void limpiar() {
+
+    public final void limpiar() {
         txtApellidos.setText("");
         txtNombres.setText("");
         txtCedula.setText("");
         spnDiaNacimiento.setValue(1);
         cmbMesNacimiento.setSelectedIndex(0);
         spnAnioNacimiento.setValue(2005);
-        cmbCursos.setSelectedIndex(0);
-        cmbAulas.setSelectedIndex(0);
+        if (!(isEmptyCombo(cmbAulas) && isEmptyCombo(cmbAulas))) {
+            cmbCursos.setSelectedIndex(0);
+            cmbAulas.setSelectedIndex(0);
+        }
         bloquearUltimasOpciones();
         spnDiaMatricula.setValue(1);
         cmbMesMatricula.setSelectedIndex(0);
         spnAnioMatricula.setValue(LocalDate.now().getYear());
         spnCantidadPagado.setValue(1);
-        
+
     }
 
     private int obtenerMes(String mes) {
@@ -638,7 +662,14 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         btnGenerarMatricula.setEnabled(false);
         btnGenerarMatricula.setBackground(new Color(255, 255, 255));
+    }
 
+    private boolean isEmptyCombo(JComboBox cmb) {
+        int cantidadElementos = 0;
+        for (int i = 0; i < cmb.getItemCount(); i++) {
+            cantidadElementos++;
+        }
+        return (cantidadElementos == 0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -667,6 +698,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblFechaVencimiento;
+    private javax.swing.JLabel lblMatricula3;
     private javax.swing.JLabel lblMesPagado1;
     private javax.swing.JLabel lblValorPagado;
     private javax.swing.JSpinner spnAnioMatricula;

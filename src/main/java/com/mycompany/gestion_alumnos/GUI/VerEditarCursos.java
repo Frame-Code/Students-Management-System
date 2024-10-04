@@ -3,18 +3,11 @@ package com.mycompany.gestion_alumnos.GUI;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
-import com.mycompany.gestion_alumnos.LOGICA.Matricula;
-import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
-import com.mysql.cj.result.LocalDateTimeValueFactory;
 import java.awt.Color;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -36,10 +29,14 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         this.control = control;
         this.idCurso = idCurso;
         this.consultarCursos = consultarCursos;
-        initComponents();
-        cargarNombre();
-        cargarTablaMaterias();
-        cargarTablaAulas();
+        this.initComponents();
+        this.cargarNombre();
+        if(!control.leerListAulas().isEmpty()) {   
+            this.cargarTablaAulas();
+        }
+        if(!control.leerListMaterias().isEmpty()) {
+            this.cargarTablaMaterias();
+        }
     }
 
     /**
@@ -90,20 +87,12 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         tblMaterias.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane2.setViewportView(tblMaterias);
 
         lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -139,20 +128,12 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         tblAulas.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblAulas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane3.setViewportView(tblAulas);
 
         lblMatricula4.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -519,7 +500,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         Long idAula = (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0);
         if (tblAulas.getRowCount() > 0) {
             if (tblAulas.getSelectedRow() != -1) {
-                if (control.leerAula(idAula).getNumeroAsientosDisponibles() >= control.leerAula(idAula).getNumeroAsientos()) {
+                if (control.leerAula(idAula).getNumeroAsientosDisponibles() >= control.leerAula(idAula).getNumeroAsientosTotales()) {
                     int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la/s Aulas del curso?", "Confirmar");
                     if (respuesta == SI) {
                         control.eliminarAula(idAula);

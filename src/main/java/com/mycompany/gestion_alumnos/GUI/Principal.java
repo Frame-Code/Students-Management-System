@@ -13,17 +13,22 @@ import javax.swing.JPanel;
  */
 public class Principal extends javax.swing.JFrame {
 
-    private final JButton BOTONES[];
+    private JButton BOTONES[];
     private Controladora control;
     private MatricularNuevoEstudiante pnlMatricularNuevo;
     private MatricularEstudianteExistente pnlMatricularExistente;
     private ConsultarEstudiantes pnlConsultarEstudiantes;
     private RegistrarConsultarCursos pnlRegistroConsultaCursos;
     private RegistrarConsultarMaterias pnlRegistroConsultarMaterias;
-
+    
+    
+   
     public Principal() {
-        control = new Controladora();
-        initComponents();
+        this.initComponents();
+    }
+    public Principal(Controladora control) {
+        this.initComponents();
+        this.control = control;
         this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias};
         this.pnlMatricularNuevo = new MatricularNuevoEstudiante(control);
         this.pnlMatricularExistente = new MatricularEstudianteExistente();
@@ -31,6 +36,7 @@ public class Principal extends javax.swing.JFrame {
         this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos(control);
         this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias(control);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -290,8 +296,10 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnMatricularNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularNuevoActionPerformed
         inicializarPanel(btnMatricularNuevo, pnlMatricularNuevo);
-        pnlMatricularNuevo.limpiar();
-        pnlMatricularNuevo.cargarCmbCursos();
+        if(!control.leerListCursos().isEmpty() && !control.leerListAulas().isEmpty()) {
+            pnlMatricularNuevo.cargarCmbCursos();
+            pnlMatricularNuevo.limpiar();
+        }
     }//GEN-LAST:event_btnMatricularNuevoActionPerformed
 
     private void btnMatricularExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularExistenteActionPerformed
@@ -301,7 +309,7 @@ public class Principal extends javax.swing.JFrame {
     private void btnConsultaEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesActionPerformed
         inicializarPanel(btnConsultaEstudiantes, pnlConsultarEstudiantes);
         pnlConsultarEstudiantes.cargarTablaCursos();
-        
+
     }//GEN-LAST:event_btnConsultaEstudiantesActionPerformed
 
     private void btnRegistrarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCursosActionPerformed
@@ -362,7 +370,7 @@ public class Principal extends javax.swing.JFrame {
         this.pnlConsultarEstudiantes.setVisible(false);
         this.pnlRegistroConsultaCursos.setVisible(false);
         this.pnlRegistroConsultarMaterias.setVisible(false);
-        pnlPrincipalData.removeAll();
+        this.pnlPrincipalData.removeAll();
 
         pintarBtn(btnParaPintar);
         pnlPrincipalData.add(pnlMostrar);

@@ -23,9 +23,11 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         this.control = control;
         this.idCurso = idCurso;
         this.verEditarCurso = verEditarCurso;
-        initComponents();
-        cargarNombre();
-        setResizable(false);
+        this.setResizable(false);
+        this.initComponents();
+        if(!control.leerListCursos().isEmpty()) {
+            this.cargarNombre();
+        }
     }
 
     /**

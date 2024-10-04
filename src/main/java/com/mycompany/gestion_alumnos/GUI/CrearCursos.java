@@ -16,6 +16,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
     private Controladora control;
     private RegistrarConsultarCursos panelInicial;
     private int asientosPorAula[];
+    private final SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(1,1,8,1);
 
     public CrearCursos() {
         initComponents();
@@ -24,8 +25,10 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
     public CrearCursos(Controladora control, RegistrarConsultarCursos panelInicial) {
         this.control = control;
         this.panelInicial = panelInicial;
-        initComponents();
-        cargarTabla();
+        this.initComponents();
+        if(!control.leerListMaterias().isEmpty()) {
+            cargarTabla();
+        }
     }
 
     /**
@@ -41,8 +44,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtNombreCurso = new javax.swing.JTextField();
-        SpinnerNumberModel modelo = new SpinnerNumberModel(1,1,8,1);
-        spnNumeroAulas = new javax.swing.JSpinner(modelo);
+        spnNumeroAulas = new javax.swing.JSpinner(modeloSpinner);
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnRellenarAsientos = new javax.swing.JButton();
@@ -440,7 +442,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
     private void reiniciarDatos() {
         cargarTabla();
         txtNombreCurso.setText("");
-        spnNumeroAulas.setValue(0);
+        spnNumeroAulas.setModel(modeloSpinner);
         for (int i = 0; i < asientosPorAula.length; i++) {
             asientosPorAula[i] = 0;
         }

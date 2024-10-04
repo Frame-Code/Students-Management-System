@@ -25,11 +25,12 @@ public class Controladora {
         persistencia.crearAula(aula);
     }
 
-    public void crearAula(String nombre, int cantidadAsientos, Long idCurso) {
+    public void crearAula(String nombre, int cantidadAsientosTotales, Long idCurso) {
         Aula aula = new Aula();
         aula.setCurso(leerCurso(idCurso));
         aula.setNombre(nombre);
-        aula.setNumeroAsientos(cantidadAsientos);
+        aula.setNumeroAsientosTotales(cantidadAsientosTotales);
+        aula.setNumeroAsientosDisponibles(cantidadAsientosTotales);
         this.crearAula(aula);
     }
 
@@ -78,6 +79,7 @@ public class Controladora {
         char letraAula = 'A';
         for (int i = 0; i < n_aulas; i++) {
             Aula nuevaAula = new Aula(1l, (nombre + " " + letraAula), n_asientos[i], nuevoCurso, listEstudiante);
+            nuevaAula.setNumeroAsientosDisponibles(n_asientos[i]);
             nuevoCurso.agregarAula(nuevaAula);
             crearAula(nuevaAula);
             letraAula++;
@@ -232,7 +234,7 @@ public class Controladora {
         this.crearEstudiante(estu);
         
         Aula aula = this.obtenerAulaDeCurso(nombreAula, idCurso);
-        aula.setNumeroAsientos();
+        aula.setNumeroAsientosDisponibles();
         this.editarAula(aula);
     }
 

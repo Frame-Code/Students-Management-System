@@ -2,7 +2,6 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +25,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         this.idAula = idAula;
         this.consultarEstudiantes = consultarEstudiantes;
         this.principal = principal;
-        initComponents();
-        cargarTablaEstudiantes();
-        cargarNombre();
+        this.initComponents();
+        if(!control.leerListEstudiantes().isEmpty()) {
+            this.cargarTablaEstudiantes();
+            this.cargarNombre();
+        }
     }
 
     /**
