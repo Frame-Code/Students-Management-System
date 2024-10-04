@@ -25,24 +25,21 @@ public class PagoColegiatura implements Serializable {
     @Column(name = "MONTO")
     private Integer monto;
 
-    @Column(name = "MES", length = 15, nullable = false)
+    @Column(name = "MES", length = 50, nullable = false)
     private String mes;
-
-    @Column(name = "ESTADO", nullable = false)
-    private Boolean estado;
     
     @ManyToOne
-   @JoinColumn(name = "ESTUDIANTE_ID")
+    @JoinColumn(name = "ESTUDIANTE_ID")
     private Estudiante estudiante;
     
     public PagoColegiatura() {
+        
     }
 
-    public PagoColegiatura(Long id, Integer monto, String mes, Boolean estado) {
+    public PagoColegiatura(Long id, Integer monto, String mes) {
         this.id = id;
         this.monto = monto;
         this.mes = mes;
-        this.estado = estado;
     }
 
     public Long getId() {
@@ -69,14 +66,6 @@ public class PagoColegiatura implements Serializable {
         this.mes = mes;
     }
 
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
     public Estudiante getEstudiante() {
         return estudiante;
     }
@@ -91,7 +80,6 @@ public class PagoColegiatura implements Serializable {
         hash = 71 * hash + Objects.hashCode(this.id);
         hash = 71 * hash + Objects.hashCode(this.monto);
         hash = 71 * hash + Objects.hashCode(this.mes);
-        hash = 71 * hash + Objects.hashCode(this.estado);
         hash = 71 * hash + Objects.hashCode(this.estudiante);
         return hash;
     }
@@ -117,15 +105,12 @@ public class PagoColegiatura implements Serializable {
         if (!Objects.equals(this.monto, other.monto)) {
             return false;
         }
-        if (!Objects.equals(this.estado, other.estado)) {
-            return false;
-        }
         return Objects.equals(this.estudiante, other.estudiante);
     }
 
     @Override
     public String toString() {
-        return "PagoColegiatura{" + "id=" + id + ", monto=" + monto + ", mes=" + mes + ", estado=" + estado + ", estudiante=" + estudiante + '}';
+        return "PagoColegiatura{" + "id=" + id + ", monto=" + monto + ", mes=" + mes + ", estudiante=" + estudiante + '}';
     }
 
     

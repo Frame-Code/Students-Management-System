@@ -5,6 +5,7 @@ import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
@@ -174,7 +175,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblMatricula2)
                 .addContainerGap())
@@ -221,7 +222,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -442,6 +443,8 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     
     private void openFrameEditarEstudiante(JTable tbl) {
         verEditarEstudiante = new VerEditarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
+        verEditarEstudiante.setLocationRelativeTo(this);
+        verEditarEstudiante.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
     public void cargarTablaEstudiantes() {

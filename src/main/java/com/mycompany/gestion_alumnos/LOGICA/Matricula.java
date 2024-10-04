@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  *
@@ -29,10 +30,10 @@ public class Matricula implements Serializable {
 
     @Column(name = "ESTADO", nullable = false)
     private String estado;
-    
-    @Column (name = "VALOR_PAGADO", nullable = false)
+
+    @Column(name = "VALOR_PAGADO", nullable = false)
     private String valor_pagado;
-    
+
     public Matricula() {
     }
 
@@ -43,7 +44,6 @@ public class Matricula implements Serializable {
         this.estado = estado;
         this.valor_pagado = valor_pagado;
     }
-    
 
     public Long getId() {
         return id;
@@ -127,6 +127,5 @@ public class Matricula implements Serializable {
     public String toString() {
         return "Matricula{" + "id=" + id + ", fecha_matriculacion=" + fecha_matriculacion + ", fecha_vencimiento=" + fecha_vencimiento + ", estado=" + estado + ", valor_pagado=" + valor_pagado + '}';
     }
-
 
 }

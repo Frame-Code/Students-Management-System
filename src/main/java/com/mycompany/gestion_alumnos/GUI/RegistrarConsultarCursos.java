@@ -13,8 +13,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Frame-Code
  */
 public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mensajes {
-
-    public String nombre = "dsd";
     private Controladora control;
     private VerEditarCursos frameVerEditar;
     private CrearCursos frameCrearCursos;

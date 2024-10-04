@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -35,17 +36,24 @@ public class Estudiante implements Serializable {
     @Column(name = "EDAD")
     private Integer edad;
 
-    @OneToOne 
+    @OneToOne
     @JoinColumn(name = "MATRICULA_ID")
     private Matricula matricula;
-    
+
     @ManyToOne
-    @JoinColumn (name = "AULA_ID")
+    @JoinColumn(name = "AULA_ID")
     private Aula aula;
-    
+
     //Relacion bidireccional donde solo el estudiante conoce sus pagos
-    @OneToMany (mappedBy = "estudiante")
+    @OneToMany(mappedBy = "estudiante")
     private List<PagoColegiatura> listPago_colegiaturas;
+
+    @Transient
+    public static final String ACTIVA = "Activa";
+    @Transient
+    public static final String INACTIVA = "Inactiva";
+    @Transient
+    public static final String ANULADA = "Anulada";
 
     public Estudiante() {
     }
@@ -78,9 +86,25 @@ public class Estudiante implements Serializable {
         }
         return edadGeneral;
     }
-    
+
     public void agregarPagoColegiatura(PagoColegiatura pago) {
         listPago_colegiaturas.add(pago);
+    }
+
+    public String obtenerEstadoMatricula() {
+        setEstadoMatricula();
+        return matricula.getEstado();
+    }
+
+    public void setEstadoMatricula() {
+        if (getMatricula().getFecha_vencimiento().getMonthValue() < LocalDate.now().getMonthValue()) {
+            matricula.setEstado(INACTIVA);
+            setMatricula(matricula);
+        } else if(getMatricula().getEstado().equals(ANULADA)) {
+            matricula.setEstado(ANULADA);
+        } else {
+            matricula.setEstado(ACTIVA);
+        }
     }
 
     public Long getId() {
@@ -189,5 +213,5 @@ public class Estudiante implements Serializable {
     public String toString() {
         return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", matricula=" + matricula + ", listPago_colegiaturas=" + listPago_colegiaturas + '}';
     }
-    
+
 }

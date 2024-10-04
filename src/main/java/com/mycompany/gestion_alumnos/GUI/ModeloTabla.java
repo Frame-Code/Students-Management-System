@@ -4,6 +4,7 @@ import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
+import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -13,7 +14,8 @@ import javax.swing.table.TableModel;
  * @author artist-code
  */
 public interface ModeloTabla {
-
+    public static final String TITULOS_PAGOS[] = {"ID", "MES", "MONTO"};
+    
     default DefaultTableModel modeloTablaBasico() {
         return new DefaultTableModel() {
             @Override
@@ -127,6 +129,16 @@ public interface ModeloTabla {
         modeloTabla.setColumnIdentifiers(titulos);
         for (Estudiante estudiante : listEstudiantes) {
             Object object[] = {0+estudiante.getId(), estudiante.getNombre(), estudiante.getEdad(), estudiante.getMatricula().getEstado()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
+    
+    default DefaultTableModel obtenerModeloTablaPagos(String titulos[], List<PagoColegiatura> listPagos) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (PagoColegiatura pago : listPagos) {
+            Object object[] = {pago.getId(), pago.getMes(), pago.getMonto()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;
