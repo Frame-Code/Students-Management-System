@@ -544,11 +544,18 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
     }//GEN-LAST:event_btnGuardarInformacionActionPerformed
 
     private void btnAnularMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculaActionPerformed
-        // TODO add your handling code here:
+        int respuesta = confirmarInformacion(this, "¿Seguro deseas anular la matricula? El estudiante no estara matriculado en ninguna aula", "Anular Matricula");
+        if (respuesta == SI) {
+            control.anularMatricula(idEstudiante);
+            mostrarInformacion(this, "Matricula Anulada correctamente", "Exito");
+            this.dispose();
+            listadoEstudiantesAula.cargarTablaEstudiantes();
+
+        }
     }//GEN-LAST:event_btnAnularMatriculaActionPerformed
 
     private void btnRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseClicked
-        
+
     }//GEN-LAST:event_btnRegistrarPagoMouseClicked
 
     private void btnRegistrarPagoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseEntered

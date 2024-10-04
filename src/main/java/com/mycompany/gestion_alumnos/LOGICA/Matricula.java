@@ -44,6 +44,12 @@ public class Matricula implements Serializable {
         this.estado = estado;
         this.valor_pagado = valor_pagado;
     }
+    public Matricula(Long id, LocalDate fecha_matriculacion, LocalDate fecha_vencimiento, String valor_pagado) {
+        this.id = id;
+        this.fecha_matriculacion = fecha_matriculacion;
+        this.fecha_vencimiento = fecha_vencimiento;
+        this.valor_pagado = valor_pagado;
+    }
 
     public Long getId() {
         return id;
