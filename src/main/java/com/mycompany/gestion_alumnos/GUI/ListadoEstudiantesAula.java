@@ -408,6 +408,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         principal.pnlPrincipalData.removeAll();
         principal.pnlPrincipalData.add(consultarEstudiantes);
         consultarEstudiantes.setVisible(true);
+        consultarEstudiantes.cargarTablaCursos();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnVerEditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteActionPerformed
@@ -447,7 +448,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         verEditarEstudiante.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
-    public void cargarTablaEstudiantes() {
+    public final void cargarTablaEstudiantes() {
         tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
         tblEstudiantes.setRowHeight(20);
     }

@@ -250,18 +250,18 @@ public class Controladora {
     
     public void anularMatricula(Long idEstudiante) {
         Estudiante estu = leerEstudiante(idEstudiante);
-        for (Estudiante estudiante : this.obtenerListaEstudiantesAula(estu.getAula().getId())) {
-            if(estudiante.getId().equals(this.leerEstudiante(idEstudiante).getId())) {
-                estu.setAula(null);
-                this.editarEstudiante(estudiante);
-                
-                Long idAula = this.leerEstudiante(idEstudiante).getAula().getId();
-                Aula aul = leerAula(idAula);
-                aul.getListEstudiantes().remove(estu);
-                aul.setNumeroAsientosDisponibles();
-                this.editarAula(aul);
-            }
-        }
+        Aula aulaDeEstudiante = this.leerAula(estu.getAula().getId());
+        
+        estu.getMatricula().setEstado(Estudiante.ANULADA);
+        estu.setAula(null);
+        
+        List<Estudiante> listEstudiantes = new ArrayList<>(aulaDeEstudiante.getListEstudiantes());
+        listEstudiantes.remove(estu);
+        aulaDeEstudiante.setListEstudiantes(listEstudiantes);
+        aulaDeEstudiante.setNumeroAsientosDisponibles();
+        this.editarAula(aulaDeEstudiante);
+        this.editarEstudiante(estu);
+        this.editarMatricula(estu.getMatricula());
     }
 
     public Estudiante leerEstudiante(Long id) {
@@ -279,6 +279,13 @@ public class Controladora {
 
     public void editarEstudiante(Estudiante estudiante) {
         persistencia.editarEstudiante(estudiante);
+    }
+    public void editarEstudiante(Long idEstudiante, String nombresCompletos, String valorMatricula) {
+        Estudiante estu = this.leerEstudiante(idEstudiante);
+        estu.setNombre(nombresCompletos);
+        estu.getMatricula().setValor_pagado(valorMatricula);
+        this.editarEstudiante(estu);
+        this.editarMatricula(estu.getMatricula());
     }
 
     public void eliminarEstudiante(Long id) {
@@ -349,9 +356,7 @@ public class Controladora {
         PagoColegiatura pagoColegiatura = new PagoColegiatura();
         pagoColegiatura.setMes(mes);
         pagoColegiatura.setMonto(pago);
-        System.out.println("Monto y mes pasados");
         pagoColegiatura.setEstudiante(this.leerEstudiante(idEstudiante));
-        System.out.println("Estudaiante registrado");
         this.crearPago(pagoColegiatura);
     }
 

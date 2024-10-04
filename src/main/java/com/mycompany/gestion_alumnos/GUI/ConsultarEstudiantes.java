@@ -2,13 +2,14 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.table.TableColumn;
 
 /**
  *
  * @author artist-code
  */
-public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTabla, Mensajes {
+public final class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTabla, Mensajes {
 
     private Controladora control;
     private ListadoEstudiantesAula estudiantes;
@@ -253,6 +254,7 @@ public class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTa
 
     public void cargarTablaCursos() {
         tblCursos.setModel(obtenerModeloTablaCursos(new String[]{"ID", "CURSO"}, control.leerListCursos()));
+        tblAulas.setModel(obtenerModeloTablaAulas(new String[]{"ID", "AULA", "# Estudiantes", "# Asientos disponibles"}, new ArrayList<>()));
         tblCursos.setRowHeight(20);
     }
 

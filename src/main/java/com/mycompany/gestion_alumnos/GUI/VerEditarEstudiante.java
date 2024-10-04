@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import java.awt.Color;
 import java.time.LocalDate;
 import javax.swing.SpinnerNumberModel;
 
@@ -64,9 +65,10 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         jLabel13 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
-        btnAnularMatricula = new javax.swing.JButton();
+        btnEliminarPago = new javax.swing.JButton();
         btnGuardarInformacion = new javax.swing.JButton();
         btnRegistrarPago = new javax.swing.JButton();
+        btnAnularMatricula = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -95,8 +97,9 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         jLabel4.setForeground(new java.awt.Color(23, 23, 23));
         jLabel4.setText("Cedula");
 
+        txtCedula.setBackground(new java.awt.Color(60, 56, 63));
+        txtCedula.setForeground(new java.awt.Color(0, 0, 0));
         txtCedula.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
-        txtCedula.setOpaque(false);
 
         jLabel5.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(23, 23, 23));
@@ -261,15 +264,42 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("<-- Regresar");
         btnRegresar.setBorder(null);
-
-        btnAnularMatricula.setBackground(new java.awt.Color(165, 80, 80));
-        btnAnularMatricula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        btnAnularMatricula.setForeground(new java.awt.Color(255, 255, 255));
-        btnAnularMatricula.setText("Anular Matricula");
-        btnAnularMatricula.setBorder(null);
-        btnAnularMatricula.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseExited(evt);
+            }
+        });
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnularMatriculaActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        btnEliminarPago.setBackground(new java.awt.Color(165, 80, 80));
+        btnEliminarPago.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnEliminarPago.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarPago.setText("Eliminar pago");
+        btnEliminarPago.setBorder(null);
+        btnEliminarPago.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarPagoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarPagoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarPagoMouseExited(evt);
+            }
+        });
+        btnEliminarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPagoActionPerformed(evt);
             }
         });
 
@@ -278,15 +308,64 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         btnGuardarInformacion.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarInformacion.setText("Guardar informacion");
         btnGuardarInformacion.setBorder(null);
+        btnGuardarInformacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarInformacionMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnGuardarInformacionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnGuardarInformacionMouseExited(evt);
+            }
+        });
+        btnGuardarInformacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarInformacionActionPerformed(evt);
+            }
+        });
 
         btnRegistrarPago.setBackground(new java.awt.Color(63, 72, 100));
         btnRegistrarPago.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnRegistrarPago.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarPago.setText("Registrar nuevo pago colegiatura");
         btnRegistrarPago.setBorder(null);
+        btnRegistrarPago.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegistrarPagoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegistrarPagoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegistrarPagoMouseExited(evt);
+            }
+        });
         btnRegistrarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarPagoActionPerformed(evt);
+            }
+        });
+
+        btnAnularMatricula.setBackground(new java.awt.Color(165, 80, 80));
+        btnAnularMatricula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnAnularMatricula.setForeground(new java.awt.Color(255, 255, 255));
+        btnAnularMatricula.setText("Anular Matricula");
+        btnAnularMatricula.setBorder(null);
+        btnAnularMatricula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnularMatriculaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAnularMatriculaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAnularMatriculaMouseExited(evt);
+            }
+        });
+        btnAnularMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularMatriculaActionPerformed(evt);
             }
         });
 
@@ -299,25 +378,28 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addComponent(btnGuardarInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAnularMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAnularMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardarInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuardarInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnularMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -431,11 +513,18 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAnularMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculaActionPerformed
-        control.leerEstudiante(idEstudiante).getMatricula().setEstado(Estudiante.ANULADA);
-        control.anularMatricula(idEstudiante);
-        mostrarInformacion(this, "Matricula Anulada correctamente", "Exito");
-    }//GEN-LAST:event_btnAnularMatriculaActionPerformed
+    private void btnEliminarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPagoActionPerformed
+        if (tblColegiatura.getRowCount() > 0) {
+            if (tblColegiatura.getSelectedRow() != -1) {
+                int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el pago?", "Eliminar pago");
+                if (respuesta == SI) {
+                    control.eliminarPago((Long) tblColegiatura.getValueAt(tblColegiatura.getSelectedRow(), 0));
+                    mostrarInformacion(this, "Pago eliminado correctamene", "Exito");
+                    cargarDatos();
+                }
+            }
+        }
+    }//GEN-LAST:event_btnEliminarPagoActionPerformed
 
     private void btnRegistrarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPagoActionPerformed
         crearPago = new CrearPago(control, idEstudiante, this);
@@ -444,7 +533,87 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         crearPago.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnRegistrarPagoActionPerformed
 
-    public void cargarDatos() {
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.dispose();
+        listadoEstudiantesAula.cargarTablaEstudiantes();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnGuardarInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarInformacionActionPerformed
+        control.editarEstudiante(idEstudiante, txtNombresCompletos.getText(), String.valueOf(spnValorPagado.getValue()));
+        mostrarInformacion(this, "Informacion guardada correctamente", "Exito");
+    }//GEN-LAST:event_btnGuardarInformacionActionPerformed
+
+    private void btnAnularMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnularMatriculaActionPerformed
+
+    private void btnRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseClicked
+        
+    }//GEN-LAST:event_btnRegistrarPagoMouseClicked
+
+    private void btnRegistrarPagoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseEntered
+        btnRegistrarPago.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegistrarPagoMouseEntered
+
+    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
+        btnRegresar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegresarMouseEntered
+
+    private void btnGuardarInformacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarInformacionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarInformacionMouseClicked
+
+    private void btnGuardarInformacionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarInformacionMouseEntered
+        btnGuardarInformacion.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnGuardarInformacionMouseEntered
+
+    private void btnAnularMatriculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnularMatriculaMouseClicked
+
+    private void btnAnularMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculaMouseEntered
+        btnAnularMatricula.setBackground(new Color(201, 119, 119));
+    }//GEN-LAST:event_btnAnularMatriculaMouseEntered
+
+    private void btnEliminarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPagoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarPagoMouseClicked
+
+    private void btnEliminarPagoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPagoMouseEntered
+        btnEliminarPago.setBackground(new Color(201, 119, 119));
+    }//GEN-LAST:event_btnEliminarPagoMouseEntered
+
+    private void btnRegistrarPagoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseExited
+        btnRegistrarPago.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegistrarPagoMouseExited
+
+    private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
+        btnRegresar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegresarMouseExited
+
+    private void btnGuardarInformacionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarInformacionMouseExited
+        btnGuardarInformacion.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnGuardarInformacionMouseExited
+
+    private void btnAnularMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculaMouseExited
+        btnAnularMatricula.setBackground(new Color(165, 80, 80));
+    }//GEN-LAST:event_btnAnularMatriculaMouseExited
+
+    private void btnEliminarPagoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPagoMouseExited
+        btnEliminarPago.setBackground(new Color(165, 80, 80));
+    }//GEN-LAST:event_btnEliminarPagoMouseExited
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        listadoEstudiantesAula.cargarTablaEstudiantes();
+    }
+
+    public final void cargarDatos() {
         txtCedula.setText("0" + String.valueOf(control.leerEstudiante(idEstudiante).getId()));
         txtEdad.setText(String.valueOf(control.leerEstudiante(idEstudiante).getEdad()));
         LocalDate fechaNacimiento = control.leerEstudiante(idEstudiante).getFecha_nacimiento();
@@ -469,6 +638,7 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnularMatricula;
+    private javax.swing.JButton btnEliminarPago;
     private javax.swing.JButton btnGuardarInformacion;
     private javax.swing.JButton btnRegistrarPago;
     private javax.swing.JButton btnRegresar;
