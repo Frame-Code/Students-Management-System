@@ -14,7 +14,7 @@ import java.util.function.Function;
 public class Controladora {
 
     private final ControladoraPersistencia persistencia;
-
+    
     public Controladora() {
         this.persistencia = new ControladoraPersistencia();
     }

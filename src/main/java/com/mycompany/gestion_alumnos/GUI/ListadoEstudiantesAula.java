@@ -4,6 +4,7 @@ import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 
 /**
  *
@@ -15,6 +16,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     private Long idAula;
     private ConsultarEstudiantes consultarEstudiantes;
     private Principal principal;
+    private VerEditarEstudiante verEditarEstudiante;
 
     public ListadoEstudiantesAula() {
         initComponents();
@@ -26,7 +28,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         this.consultarEstudiantes = consultarEstudiantes;
         this.principal = principal;
         this.initComponents();
-        if(!control.leerListEstudiantes().isEmpty()) {
+        if (!control.leerListEstudiantes().isEmpty()) {
             this.cargarTablaEstudiantes();
             this.cargarNombre();
         }
@@ -144,6 +146,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
                 return canEdit [columnIndex];
             }
         });
+        tblEstudianteEncontrado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEstudianteEncontradoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEstudianteEncontrado);
 
         lblMatricula2.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -192,6 +199,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEstudiantesMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tblEstudiantes);
@@ -253,6 +265,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         btnVerEditarEstudiante.setForeground(new java.awt.Color(255, 255, 255));
         btnVerEditarEstudiante.setText("Ver/Editar informacion detallada del estudiante ");
         btnVerEditarEstudiante.setBorder(null);
+        btnVerEditarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerEditarEstudianteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -355,12 +372,18 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             boolean isRegistered = true;
             List<Estudiante> estudianteBusqueda = new ArrayList<>();
             for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
-                isRegistered = estudiante.getId().equals(idEstudianteBusqueda);
+                if (estudiante.getId().equals(idEstudianteBusqueda)) {
+                    isRegistered = true;
+                    break;
+                } else {
+                    isRegistered = false;
+                }
             }
 
             if (isRegistered) {
                 estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
                 tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
+                tblEstudianteEncontrado.setRowHeight(20);
             } else {
                 mostrarInformacion(this, "Estudiante no se encuentra registrado", "Error");
                 tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
@@ -386,8 +409,44 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         consultarEstudiantes.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void cargarTablaEstudiantes() {
+    private void btnVerEditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteActionPerformed
+        if(tblEstudianteEncontrado.getSelectedRow() != -1) {
+            openFrameEditarEstudiante(tblEstudianteEncontrado);
+        } else if(tblEstudiantes.getSelectedRow() != -1) {
+            openFrameEditarEstudiante(tblEstudiantes);
+        }
+    }//GEN-LAST:event_btnVerEditarEstudianteActionPerformed
+
+    private void tblEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstudiantesMouseClicked
+        if (tblEstudianteEncontrado.getRowCount() > 0) {
+            if (tblEstudianteEncontrado.getRowCount() != -1) {
+                tblEstudianteEncontrado.clearSelection();
+            }
+        }
+        if (evt.getClickCount() == 2) {
+            openFrameEditarEstudiante(tblEstudiantes);
+        }
+
+    }//GEN-LAST:event_tblEstudiantesMouseClicked
+
+    private void tblEstudianteEncontradoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstudianteEncontradoMouseClicked
+        if (tblEstudiantes.getRowCount() > 0) {
+            if (tblEstudiantes.getRowCount() != -1) {
+                tblEstudiantes.clearSelection();
+            }
+        }
+        if (evt.getClickCount() == 2) {
+            openFrameEditarEstudiante(tblEstudianteEncontrado);
+        }
+    }//GEN-LAST:event_tblEstudianteEncontradoMouseClicked
+    
+    private void openFrameEditarEstudiante(JTable tbl) {
+        verEditarEstudiante = new VerEditarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
+    }
+    
+    public void cargarTablaEstudiantes() {
         tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
+        tblEstudiantes.setRowHeight(20);
     }
 
     private void cargarNombre() {

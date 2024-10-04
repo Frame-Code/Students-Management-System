@@ -1,12 +1,26 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+
 /**
  *
  * @author Frame-Code
  */
 public class VerEditarEstudiante extends javax.swing.JPanel {
+    private Long idEstudiante;
+    private Controladora control;
+    private ListadoEstudiantesAula listadoEstudiantesAula;
+    
     public VerEditarEstudiante() {
         initComponents();
+    }
+    public VerEditarEstudiante(Long idEstudiante, Controladora control, ListadoEstudiantesAula listadoEstudiantesAula) {
+        this.idEstudiante = idEstudiante;
+        this.control = control;
+        this.listadoEstudiantesAula = listadoEstudiantesAula;
+        this.setVisible(true);
+        initComponents();
+        cargarDatos();
     }
 
     /**
@@ -394,7 +408,11 @@ public class VerEditarEstudiante extends javax.swing.JPanel {
     private void btnAnularMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnularMatriculaActionPerformed
-
+    
+          
+    private void cargarDatos() {
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnularMatricula;
