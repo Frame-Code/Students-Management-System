@@ -233,7 +233,7 @@ public class Controladora {
         estu.setEdad();
         estu.setEstadoMatricula();
         matricula.setEstado(estu.obtenerEstadoMatricula());
-        
+
         this.crearEstudiante(estu);
         this.crearMatricula(matricula);
         setEstadoMatricula(estu);
@@ -300,24 +300,45 @@ public class Controladora {
         Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
 
         this.eliminarPagosEstudiante(id);
-        
+
         List<Estudiante> listEstudiantes = aula.getListEstudiantes();
         Iterator<Estudiante> iterator = listEstudiantes.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Estudiante estudiante = iterator.next();
-            if(estudiante.getId().equals(estu.getId())) {
+            if (estudiante.getId().equals(estu.getId())) {
                 iterator.remove();
             }
         }
         aula.setListEstudiantes(listEstudiantes);
         aula.setNumeroAsientosDisponibles();
-        
+
         persistencia.eliminarEstudiante(id);
-        
+
         this.eliminarMatricula(matricula.getId());
-        
+
         this.editarAula(aula);
 
+    }
+
+    public void anularMatriculas(Long idAula) {
+        List<Estudiante> listEstudiantes = this.obtenerListaEstudiantesAula(idAula);
+        for (Estudiante estudiante : listEstudiantes) {
+            Matricula matricula = estudiante.getMatricula();
+            matricula.setEstado(Estudiante.ANULADA);
+            estudiante.setMatricula(matricula);
+            estudiante.setAula(null);
+        }
+
+        Aula aula = this.leerAula(idAula);
+        aula.getListEstudiantes().clear();
+        aula.setNumeroAsientosDisponibles();
+
+        this.editarAula(aula);
+        
+        for (Estudiante estudiante : listEstudiantes) {
+            this.editarEstudiante(estudiante);
+            this.editarMatricula(estudiante.getMatricula());
+        }
     }
 
     /*--------------------------MATERIA-------------------------*/

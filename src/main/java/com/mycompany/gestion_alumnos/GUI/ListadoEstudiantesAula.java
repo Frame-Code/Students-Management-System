@@ -419,7 +419,13 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }
 
     private void btnAnularMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculasActionPerformed
-        // TODO add your handling code here:
+        int respuesta = confirmarInformacion(this, "¿Seguro deseas anular todas las matriculas?", "Anular matriculas");
+        if (respuesta == SI) {
+            control.anularMatriculas(idAula);
+            mostrarInformacion(this, "Matriculas anuladas completamente", "Exito");
+            cargarTablaEstudiantes();
+        }
+
     }//GEN-LAST:event_btnAnularMatriculasActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed

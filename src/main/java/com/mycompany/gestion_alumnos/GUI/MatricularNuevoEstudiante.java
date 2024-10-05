@@ -525,18 +525,21 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             String nombreAula = "";
             Long numeroCedula = Long.valueOf(txtCedula.getText());
             idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
+            
             if (control.leerListEstudiantes().isEmpty()) {
                 isRegistered = false;
             } else {
-                for (Estudiante estudiante : control.leerListEstudiantes()) {
+                for (Estudiante estudiante : control.leerListEstudiantes()) {());
                     if (estudiante.getId().equals(numeroCedula)) {
                         nombreAula = estudiante.getAula().getNombre();
                         isRegistered = true;
+                        break;
                     } else {
                         isRegistered = false;
                     }
                 }
             }
+            
             if (isRegistered == false) {
                 LocalDate fechaNacimiento = LocalDate.of((int) spnAnioNacimiento.getValue(),
                         obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())),
