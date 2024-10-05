@@ -14,7 +14,7 @@ import java.util.function.Function;
 public class Controladora {
 
     private final ControladoraPersistencia persistencia;
-    
+
     public Controladora() {
         this.persistencia = new ControladoraPersistencia();
     }
@@ -124,10 +124,10 @@ public class Controladora {
         Curso curso = leerCurso(id);
         return obtenerListasDelCurso(curso.getListAulas(), new ArrayList<>());
     }
-    
+
     public Aula obtenerAulaDeCurso(String nombre, Long idCurso) {
         for (Aula aula : this.obtenerListAulasDeCurso(idCurso)) {
-            if(aula.getNombre().equals(nombre)) {
+            if (aula.getNombre().equals(nombre)) {
                 return aula;
             }
         }
@@ -182,7 +182,7 @@ public class Controladora {
 
     public Curso leerCurso(String curso) {
         for (Curso cur : this.leerListCursos()) {
-            if(cur.getNombre().equals(curso)) {
+            if (cur.getNombre().equals(curso)) {
                 return this.leerCurso(cur.getId());
             }
         }
@@ -223,41 +223,41 @@ public class Controladora {
     public void crearEstudiante(Estudiante estudiante) {
         persistencia.crearEstudiante(estudiante);
     }
-    
-    public void crearEstudiante(String nombres, String apellidos, Long cedula, LocalDate fechaNacimiento, 
+
+    public void crearEstudiante(String nombres, String apellidos, Long cedula, LocalDate fechaNacimiento,
             Long idCurso, String nombreAula, LocalDate fechaVencimiento, String valorMatricula) {
-        
+
         Matricula matricula = new Matricula(1l, LocalDate.now(), fechaVencimiento, valorMatricula);
-        
-        
-        Estudiante estu = new Estudiante(cedula, apellidos + " " + nombres , fechaNacimiento, matricula, this.obtenerAulaDeCurso(nombreAula, idCurso), new ArrayList<>());
+
+        Estudiante estu = new Estudiante(cedula, apellidos + " " + nombres, fechaNacimiento, matricula, this.obtenerAulaDeCurso(nombreAula, idCurso), new ArrayList<>());
         estu.setEdad();
         estu.setEstadoMatricula();
         this.crearMatricula(matricula);
         this.crearEstudiante(estu);
         setEstadoMatricula(estu);
-        
+
         Aula aula = this.obtenerAulaDeCurso(nombreAula, idCurso);
         aula.setNumeroAsientosDisponibles();
         this.editarAula(aula);
     }
-    
+
     private void setEstadoMatricula(Estudiante estudiante) {
         estudiante.setEstadoMatricula();
         this.editarEstudiante(estudiante);
     }
+
     public String obtenerEstadoMatricula(Estudiante estudiante) {
         setEstadoMatricula(estudiante);
         return this.leerEstudiante(estudiante.getId()).getMatricula().getEstado();
     }
-    
+
     public void anularMatricula(Long idEstudiante) {
         Estudiante estu = leerEstudiante(idEstudiante);
         Aula aulaDeEstudiante = this.leerAula(estu.getAula().getId());
-        
+
         estu.getMatricula().setEstado(Estudiante.ANULADA);
         estu.setAula(null);
-        
+
         List<Estudiante> listEstudiantes = new ArrayList<>(aulaDeEstudiante.getListEstudiantes());
         listEstudiantes.remove(estu);
         aulaDeEstudiante.setListEstudiantes(listEstudiantes);
@@ -274,7 +274,7 @@ public class Controladora {
     public List<Estudiante> leerListEstudiantes() {
         return persistencia.leerListEstudiantes();
     }
-    
+
     public List<Estudiante> obtenerListaEstudiantesAula(Long idAula) {
         Aula aula = this.leerAula(idAula);
         return obtenerListasDelCurso(aula.getListEstudiantes(), new ArrayList<>());
@@ -283,6 +283,7 @@ public class Controladora {
     public void editarEstudiante(Estudiante estudiante) {
         persistencia.editarEstudiante(estudiante);
     }
+
     public void editarEstudiante(Long idEstudiante, String nombresCompletos, String valorMatricula) {
         Estudiante estu = this.leerEstudiante(idEstudiante);
         estu.setNombre(nombresCompletos);
@@ -292,7 +293,29 @@ public class Controladora {
     }
 
     public void eliminarEstudiante(Long id) {
+        Estudiante estu = this.leerEstudiante(id);
+        Aula aula = this.leerAula(estu.getAula().getId());
+        Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
+
+        this.eliminarPagosEstudiante(id);
+        
+        List<Estudiante> listEstudiantes = aula.getListEstudiantes();
+        Iterator<Estudiante> iterator = listEstudiantes.iterator();
+        while(iterator.hasNext()) {
+            Estudiante estudiante = iterator.next();
+            if(estudiante.getId().equals(estu.getId())) {
+                iterator.remove();
+            }
+        }
+        aula.setListEstudiantes(listEstudiantes);
+        aula.setNumeroAsientosDisponibles();
+        
         persistencia.eliminarEstudiante(id);
+        
+        this.eliminarMatricula(matricula.getId());
+        
+        this.editarAula(aula);
+
     }
 
     /*--------------------------MATERIA-------------------------*/
@@ -353,9 +376,9 @@ public class Controladora {
     public void crearPago(PagoColegiatura pago) {
         persistencia.crearPago(pago);
     }
-    
+
     public void crearPago(int pago, String mes, Long idEstudiante) {
-       // String mes_anio = mes + " - " + String.valueOf(LocalDate.now().getYear());
+        // String mes_anio = mes + " - " + String.valueOf(LocalDate.now().getYear());
         PagoColegiatura pagoColegiatura = new PagoColegiatura();
         pagoColegiatura.setMes(mes);
         pagoColegiatura.setMonto(pago);
@@ -377,6 +400,13 @@ public class Controladora {
 
     public void eliminarPago(Long id) {
         persistencia.eliminarPago(id);
+    }
+
+    public void eliminarPagosEstudiante(Long idEstudiante) {
+        for (PagoColegiatura pago : this.leerEstudiante(idEstudiante).getListPago_colegiaturas()) {
+            this.eliminarPago(pago.getId());
+        }
+        this.leerEstudiante(idEstudiante).getListPago_colegiaturas().clear();
     }
 
 }

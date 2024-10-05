@@ -396,8 +396,23 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEstudianteActionPerformed
-        // TODO add your handling code here:
+        if (tblEstudianteEncontrado.getRowCount() > 0 || tblEstudiantes.getRowCount() > 0) {
+            if (tblEstudianteEncontrado.getSelectedRow() != -1) {
+                eliminarEstudiante(tblEstudianteEncontrado);
+            } else if (tblEstudiantes.getSelectedRow() != -1) {
+                eliminarEstudiante(tblEstudiantes);
+            }
+        }
     }//GEN-LAST:event_btnEliminarEstudianteActionPerformed
+
+    private void eliminarEstudiante(JTable tbl) {
+        int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el estudiante permanentemente?", "Eliminar estudiante");
+        if (respuesta == SI) {
+            control.eliminarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0));
+            mostrarInformacion(this, "Estudiante eliminado correctamente", "Exito");
+            cargarTablaEstudiantes();
+        }
+    }
 
     private void btnAnularMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculasActionPerformed
         // TODO add your handling code here:
@@ -412,10 +427,12 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnVerEditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteActionPerformed
-        if(tblEstudianteEncontrado.getSelectedRow() != -1) {
-            openFrameEditarEstudiante(tblEstudianteEncontrado);
-        } else if(tblEstudiantes.getSelectedRow() != -1) {
-            openFrameEditarEstudiante(tblEstudiantes);
+        if (tblEstudianteEncontrado.getRowCount() > 0 || tblEstudiantes.getRowCount() > 0) {
+            if (tblEstudianteEncontrado.getSelectedRow() != -1) {
+                openFrameEditarEstudiante(tblEstudianteEncontrado);
+            } else if (tblEstudiantes.getSelectedRow() != -1) {
+                openFrameEditarEstudiante(tblEstudiantes);
+            }
         }
     }//GEN-LAST:event_btnVerEditarEstudianteActionPerformed
 
@@ -441,13 +458,13 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             openFrameEditarEstudiante(tblEstudianteEncontrado);
         }
     }//GEN-LAST:event_tblEstudianteEncontradoMouseClicked
-    
+
     private void openFrameEditarEstudiante(JTable tbl) {
         verEditarEstudiante = new VerEditarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
         verEditarEstudiante.setLocationRelativeTo(this);
         verEditarEstudiante.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
-    
+
     public final void cargarTablaEstudiantes() {
         tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
         tblEstudiantes.setRowHeight(20);

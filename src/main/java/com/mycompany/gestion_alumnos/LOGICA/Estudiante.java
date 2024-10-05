@@ -97,14 +97,20 @@ public class Estudiante implements Serializable {
     }
 
     public void setEstadoMatricula() {
-        if (getMatricula().getFecha_vencimiento().getMonthValue() < LocalDate.now().getMonthValue()) {
-            matricula.setEstado(INACTIVA);
-            setMatricula(matricula);
-        } else if(getMatricula().getEstado().equals(ANULADA)) {
+        if(getMatricula().getEstado().equals(ANULADA)) {
             matricula.setEstado(ANULADA);
         } else {
-            matricula.setEstado(ACTIVA);
+            if(LocalDate.now().getYear() >= getMatricula().getFecha_vencimiento().getYear()) {
+                if(LocalDate.now().getMonthValue() > getMatricula().getFecha_vencimiento().getMonthValue()) {
+                    matricula.setEstado(INACTIVA);
+                } else {
+                    matricula.setEstado(ACTIVA);
+                }
+            } else {
+                matricula.setEstado(ACTIVA);
+            }
         }
+        setMatricula(matricula);
     }
 
     public Long getId() {
