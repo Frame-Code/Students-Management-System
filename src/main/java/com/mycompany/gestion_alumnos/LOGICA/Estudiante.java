@@ -76,7 +76,7 @@ public class Estudiante implements Serializable {
         this.aula = aula;
         this.listPago_colegiaturas = listPago_colegiaturas;
     }
-    
+
     public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Aula aula, List<PagoColegiatura> listPago_colegiaturas) {
         this.id = id;
         this.nombre = nombre;
@@ -99,17 +99,21 @@ public class Estudiante implements Serializable {
         listPago_colegiaturas.add(pago);
     }
 
-    public String obtenerEstadoMatricula() {
-        setEstadoMatricula();
+    public String obtenerEstadoMatricula(boolean isNew) {
+        if(isNew) {
+            setEstadoMatricula();
+        } else {
+            setEstadoMatriculaByEstudianteExistente();
+        }
         return matricula.getEstado();
     }
 
     public void setEstadoMatricula() {
-        if(getMatricula().getEstado().equals(ANULADA)) {
+        if (getMatricula().getEstado().equals(ANULADA)) {
             matricula.setEstado(ANULADA);
         } else {
-            if(LocalDate.now().getYear() >= getMatricula().getFecha_vencimiento().getYear()) {
-                if(LocalDate.now().getMonthValue() > getMatricula().getFecha_vencimiento().getMonthValue()) {
+            if (LocalDate.now().getYear() >= getMatricula().getFecha_vencimiento().getYear()) {
+                if (LocalDate.now().getMonthValue() > getMatricula().getFecha_vencimiento().getMonthValue()) {
                     matricula.setEstado(INACTIVA);
                 } else {
                     matricula.setEstado(ACTIVA);
@@ -118,6 +122,20 @@ public class Estudiante implements Serializable {
                 matricula.setEstado(ACTIVA);
             }
         }
+        setMatricula(matricula);
+    }
+
+    public void setEstadoMatriculaByEstudianteExistente() {
+        if (LocalDate.now().getYear() >= getMatricula().getFecha_vencimiento().getYear()) {
+            if (LocalDate.now().getMonthValue() > getMatricula().getFecha_vencimiento().getMonthValue()) {
+                matricula.setEstado(INACTIVA);
+            } else {
+                matricula.setEstado(ACTIVA);
+            }
+        } else {
+            matricula.setEstado(ACTIVA);
+        }
+
         setMatricula(matricula);
     }
 

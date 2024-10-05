@@ -51,6 +51,8 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
         lblMatricula6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnVerEstudiantes = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        btnVerEstudiantesAnulados = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(196, 196, 196));
         setPreferredSize(new java.awt.Dimension(716, 479));
@@ -66,20 +68,12 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
         tblCursos.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tblCursos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCursosMouseClicked(evt);
@@ -143,9 +137,9 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
         lblMatricula4.setForeground(new java.awt.Color(71, 71, 71));
         lblMatricula4.setText("Aulas");
 
-        lblMatricula6.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        lblMatricula6.setFont(new java.awt.Font("Waree", 1, 10)); // NOI18N
         lblMatricula6.setForeground(new java.awt.Color(71, 71, 71));
-        lblMatricula6.setText("Selecciona un aula para ver sus estudiantes");
+        lblMatricula6.setText("Doble click en un aula para ver sus estudiante, o presionar el boton");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -157,14 +151,11 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(160, 160, 160)
-                                .addComponent(lblMatricula4))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblMatricula6, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 9, Short.MAX_VALUE)))
+                        .addGap(160, 160, 160)
+                        .addComponent(lblMatricula4))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblMatricula6)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -215,6 +206,44 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel6.setBackground(new java.awt.Color(180, 180, 180));
+
+        btnVerEstudiantesAnulados.setBackground(new java.awt.Color(63, 72, 100));
+        btnVerEstudiantesAnulados.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnVerEstudiantesAnulados.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerEstudiantesAnulados.setText("Ver estudiantes con matriculas anuladas");
+        btnVerEstudiantesAnulados.setBorder(null);
+        btnVerEstudiantesAnulados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnVerEstudiantesAnuladosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnVerEstudiantesAnuladosMouseExited(evt);
+            }
+        });
+        btnVerEstudiantesAnulados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerEstudiantesAnuladosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVerEstudiantesAnulados, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVerEstudiantesAnulados, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,9 +261,12 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
                                 .addGap(13, 13, 13)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(97, 97, 97)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                                .addGap(108, 108, 108)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,11 +274,13 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -287,6 +321,18 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
         }
     }//GEN-LAST:event_tblAulasMouseClicked
 
+    private void btnVerEstudiantesAnuladosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseEntered
+
+    private void btnVerEstudiantesAnuladosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseExited
+
+    private void btnVerEstudiantesAnuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerEstudiantesAnuladosActionPerformed
+
     private void mostrarEstudiantes() {
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1 && tblAulas.getSelectedRow() != -1) {
@@ -304,10 +350,12 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVerEstudiantes;
+    private javax.swing.JButton btnVerEstudiantesAnulados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblMatricula3;

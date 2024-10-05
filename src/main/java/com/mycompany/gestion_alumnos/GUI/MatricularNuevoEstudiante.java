@@ -584,7 +584,6 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     }//GEN-LAST:event_btnGenerarMatriculaMouseExited
 
     public final void cargarCmbCursos() {
-
         if (isEmptyCombo(cmbCursos)) {
             for (Curso curso : control.leerListCursos()) {
                 cmbCursos.addItem(curso.getNombre());

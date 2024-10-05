@@ -31,7 +31,7 @@ public class Principal extends javax.swing.JFrame {
         this.control = control;
         this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias};
         this.pnlMatricularNuevo = new MatricularNuevoEstudiante(control);
-        this.pnlMatricularExistente = new MatricularEstudianteExistente();
+        this.pnlMatricularExistente = new MatricularEstudianteExistente(control);
         this.pnlConsultarEstudiantes = new ConsultarEstudiantes(control, this);
         this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos(control);
         this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias(control);
@@ -304,6 +304,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnMatricularExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularExistenteActionPerformed
         inicializarPanel(btnMatricularExistente, pnlMatricularExistente);
+        pnlMatricularExistente.limpiar();
     }//GEN-LAST:event_btnMatricularExistenteActionPerformed
 
     private void btnConsultaEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesActionPerformed

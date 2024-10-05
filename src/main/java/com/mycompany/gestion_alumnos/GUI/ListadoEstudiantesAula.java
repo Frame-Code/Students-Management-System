@@ -2,6 +2,7 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
@@ -89,6 +90,14 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar ");
         btnBuscar.setBorder(null);
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseExited(evt);
+            }
+        });
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -227,12 +236,25 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         );
 
         jPanel6.setBackground(new java.awt.Color(180, 180, 180));
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel6MouseEntered(evt);
+            }
+        });
 
         btnRegresar.setBackground(new java.awt.Color(63, 72, 100));
         btnRegresar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("<-- Regresar");
         btnRegresar.setBorder(null);
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseExited(evt);
+            }
+        });
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -244,6 +266,14 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         btnEliminarEstudiante.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarEstudiante.setText("Eliminar estudiante");
         btnEliminarEstudiante.setBorder(null);
+        btnEliminarEstudiante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarEstudianteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarEstudianteMouseExited(evt);
+            }
+        });
         btnEliminarEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarEstudianteActionPerformed(evt);
@@ -255,6 +285,14 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         btnAnularMatriculas.setForeground(new java.awt.Color(255, 255, 255));
         btnAnularMatriculas.setText("Anular todas las matriculas");
         btnAnularMatriculas.setBorder(null);
+        btnAnularMatriculas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAnularMatriculasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAnularMatriculasMouseExited(evt);
+            }
+        });
         btnAnularMatriculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnularMatriculasActionPerformed(evt);
@@ -266,6 +304,14 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         btnVerEditarEstudiante.setForeground(new java.awt.Color(255, 255, 255));
         btnVerEditarEstudiante.setText("Ver/Editar informacion detallada del estudiante ");
         btnVerEditarEstudiante.setBorder(null);
+        btnVerEditarEstudiante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnVerEditarEstudianteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnVerEditarEstudianteMouseExited(evt);
+            }
+        });
         btnVerEditarEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerEditarEstudianteActionPerformed(evt);
@@ -472,6 +518,50 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             openFrameEditarEstudiante(tblEstudianteEncontrado);
         }
     }//GEN-LAST:event_tblEstudianteEncontradoMouseClicked
+
+    private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
+        btnBuscar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnBuscarMouseEntered
+
+    private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
+        btnBuscar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnBuscarMouseExited
+
+    private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel6MouseEntered
+
+    private void btnVerEditarEstudianteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteMouseExited
+        btnVerEditarEstudiante.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnVerEditarEstudianteMouseExited
+
+    private void btnVerEditarEstudianteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteMouseEntered
+        btnVerEditarEstudiante.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnVerEditarEstudianteMouseEntered
+
+    private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
+        btnRegresar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegresarMouseEntered
+
+    private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
+        btnRegresar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegresarMouseExited
+
+    private void btnEliminarEstudianteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarEstudianteMouseEntered
+        btnEliminarEstudiante.setBackground(new Color(201, 119, 119));
+    }//GEN-LAST:event_btnEliminarEstudianteMouseEntered
+
+    private void btnEliminarEstudianteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarEstudianteMouseExited
+        btnEliminarEstudiante.setBackground(new Color(165, 80, 80));
+    }//GEN-LAST:event_btnEliminarEstudianteMouseExited
+
+    private void btnAnularMatriculasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculasMouseEntered
+        btnAnularMatriculas.setBackground(new Color(201, 119, 119));
+    }//GEN-LAST:event_btnAnularMatriculasMouseEntered
+
+    private void btnAnularMatriculasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculasMouseExited
+        btnAnularMatriculas.setBackground(new Color(165, 80, 80));
+    }//GEN-LAST:event_btnAnularMatriculasMouseExited
 
     private void openFrameEditarEstudiante(JTable tbl) {
         verEditarEstudiante = new VerEditarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);

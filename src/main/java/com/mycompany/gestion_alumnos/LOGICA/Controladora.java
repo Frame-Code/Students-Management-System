@@ -232,7 +232,7 @@ public class Controladora {
         estu.setMatricula(matricula);
         estu.setEdad();
         estu.setEstadoMatricula();
-        matricula.setEstado(estu.obtenerEstadoMatricula());
+        matricula.setEstado(estu.obtenerEstadoMatricula(true));
 
         this.crearEstudiante(estu);
         this.crearMatricula(matricula);
@@ -334,11 +334,33 @@ public class Controladora {
         aula.setNumeroAsientosDisponibles();
 
         this.editarAula(aula);
-        
+
         for (Estudiante estudiante : listEstudiantes) {
             this.editarEstudiante(estudiante);
             this.editarMatricula(estudiante.getMatricula());
         }
+    }
+
+    public void matricularEstudianteExistente(Long idEstudiante, Long idCurso, String nombreAula, LocalDate fechaVencimiento, String valorMatricula) {
+        Estudiante estu = this.leerEstudiante(idEstudiante);
+        estu.setAula(this.obtenerAulaDeCurso(nombreAula, idCurso));
+        estu.setListPago_colegiaturas(new ArrayList<>());
+        Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
+        estu.setEdad();
+        estu.setEstadoMatricula();
+        matricula.setEstado(estu.obtenerEstadoMatricula(false));
+        matricula.setValor_pagado(valorMatricula);
+        estu.setMatricula(matricula);
+
+        this.editarEstudiante(estu);
+        this.editarMatricula(matricula);
+        this.setEstadoMatricula(estu);
+
+        Aula aula = this.obtenerAulaDeCurso(nombreAula, idCurso);
+        aula.setNumeroAsientosDisponibles();
+        this.editarAula(aula);
+        
+
     }
 
     /*--------------------------MATERIA-------------------------*/
