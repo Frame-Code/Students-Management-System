@@ -601,7 +601,6 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelAnioVencimiento)"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="LocalDate fechaActual = LocalDate.now();&#xa;int anioActual = fechaActual.getYear();&#xa;SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(anioActual, anioActual, anioActual+100 , 1);"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel19">

@@ -33,6 +33,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         if (!control.leerListEstudiantes().isEmpty()) {
             this.cargarTablaEstudiantes();
             this.cargarNombre();
+            this.cargarEstadoMatricula();
         }
     }
 
@@ -519,6 +520,13 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         }
     }//GEN-LAST:event_tblEstudianteEncontradoMouseClicked
 
+    public void cargarEstadoMatricula() {
+        for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
+            control.verificarEstadoMatricula(estudiante.getId());
+        }
+    }
+    
+    
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnBuscarMouseEntered

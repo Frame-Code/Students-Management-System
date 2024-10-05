@@ -347,8 +347,12 @@ public class Controladora {
         estu.setListPago_colegiaturas(new ArrayList<>());
         Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
         estu.setEdad();
+        matricula.setFecha_vencimiento(fechaVencimiento);
+        matricula.setFecha_matriculacion(LocalDate.now());
+        estu.setMatricula(matricula);
         estu.setEstadoMatricula();
         matricula.setEstado(estu.obtenerEstadoMatricula(false));
+        System.out.println(estu.obtenerEstadoMatricula(false));
         matricula.setValor_pagado(valorMatricula);
         estu.setMatricula(matricula);
 
@@ -359,10 +363,61 @@ public class Controladora {
         Aula aula = this.obtenerAulaDeCurso(nombreAula, idCurso);
         aula.setNumeroAsientosDisponibles();
         this.editarAula(aula);
-        
 
     }
+    
+    public void verificarEstadoMatricula(Long idEstudiante) {
+        Estudiante estu = this.leerEstudiante(idEstudiante);
+        List<PagoColegiatura> listPagos = estu.getListPago_colegiaturas();
+        Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
+        if(listPagos.size() >= 1) {
+            int mesUltimoPago = obtenerMes(listPagos.get(listPagos.size()-1).getMes());
+            System.out.println(mesUltimoPago);
+            int mesActual = LocalDate.now().getMonthValue();
+            System.out.println(mesActual);
+            if(mesUltimoPago <= mesActual) {
+                matricula.setEstado(Estudiante.INACTIVA);
+                System.out.println("entro if if");
+            } else {
+                estu.setEstadoMatricula();
+                matricula.setEstado(estu.obtenerEstadoMatricula(false));
+            }
+        }
+        estu.setMatricula(matricula);
+        this.editarEstudiante(estu);
+        this.editarMatricula(matricula);
+        System.out.println("Se termino ");
+    }
 
+    private int obtenerMes(String mes) {
+        if (mes.equals("Enero")) {
+            return 1;
+        } else if (mes.equals("Febrero")) {
+            return 2;
+        } else if (mes.equals("Marzo")) {
+            return 3;
+        } else if (mes.equals("Abril")) {
+            return 4;
+        } else if (mes.equals("Mayo")) {
+            return 5;
+        } else if (mes.equals("Junio")) {
+            return 6;
+        } else if (mes.equals("Julio")) {
+            return 7;
+        } else if (mes.equals("Agosto")) {
+            return 8;
+        } else if (mes.equals("Septiembre")) {
+            return 9;
+        } else if (mes.equals("Octubre")) {
+            return 10;
+        } else if (mes.equals("Noviembre")) {
+            return 11;
+        } else if (mes.equals("Diciembre")) {
+            return 12;
+        }
+        return 0;
+    }
+    
     /*--------------------------MATERIA-------------------------*/
     public void crearMateria(Materia materia) {
         persistencia.crearMateria(materia);
@@ -423,14 +478,16 @@ public class Controladora {
     }
 
     public void crearPago(int pago, String mes, Long idEstudiante) {
-        // String mes_anio = mes + " - " + String.valueOf(LocalDate.now().getYear());
         PagoColegiatura pagoColegiatura = new PagoColegiatura();
         pagoColegiatura.setMes(mes);
         pagoColegiatura.setMonto(pago);
         pagoColegiatura.setEstudiante(this.leerEstudiante(idEstudiante));
+        
+        
+        
         this.crearPago(pagoColegiatura);
     }
-
+    
     public PagoColegiatura leerPago(Long id) {
         return persistencia.leerPago(id);
     }

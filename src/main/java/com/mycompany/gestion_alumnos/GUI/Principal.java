@@ -305,6 +305,7 @@ public class Principal extends javax.swing.JFrame {
     private void btnMatricularExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularExistenteActionPerformed
         inicializarPanel(btnMatricularExistente, pnlMatricularExistente);
         pnlMatricularExistente.limpiar();
+        pnlMatricularExistente.bloquearUltimasOpciones();
     }//GEN-LAST:event_btnMatricularExistenteActionPerformed
 
     private void btnConsultaEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesActionPerformed

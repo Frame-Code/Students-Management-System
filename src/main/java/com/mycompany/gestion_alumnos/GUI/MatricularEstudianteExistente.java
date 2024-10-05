@@ -19,6 +19,9 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
 
     private Controladora control;
     private Long idCurso;
+    private final LocalDate fechaActual = LocalDate.now();
+    private final int anioActual = fechaActual.getYear();
+    private final SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(anioActual, anioActual, anioActual + 100, 1);
 
     public MatricularEstudianteExistente() {
         initComponents();
@@ -65,9 +68,6 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         spnDiaMatricula = new javax.swing.JSpinner(modelDiaMatricula);
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        LocalDate fechaActual = LocalDate.now();
-        int anioActual = fechaActual.getYear();
-        SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(anioActual, anioActual, anioActual+100 , 1);
         spnAnioMatricula = new javax.swing.JSpinner(modelAnioVencimiento);
         jLabel19 = new javax.swing.JLabel();
         lblValorPagado = new javax.swing.JLabel();
@@ -513,6 +513,7 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         LocalDate fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(),
                 obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
                 (int) spnDiaMatricula.getValue());
+        System.out.println(fechaVencimiento);
 
         control.matricularEstudianteExistente(idEstudiante, idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento, String.valueOf(spnCantidadPagado.getValue()));
         mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
@@ -640,6 +641,7 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
     public final void limpiar() {
         txtCedulaBusqueda.setText("");
         tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
+        spnAnioMatricula.setModel(modelAnioVencimiento);
         this.bloquearUltimasOpciones();
 
     }

@@ -253,6 +253,7 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
     private void btnGenerarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPagoActionPerformed
         int montoColegiatura = (int) spnMontoPagar.getValue();
         control.crearPago(montoColegiatura, (String) cmbMes.getSelectedItem(), idEstudiante);
+        control.verificarEstadoMatricula(idEstudiante);
         mostrarInformacion(this, "Pago generado correctamente", "Exito");
         this.dispose();
         verEditarEstudiante.cargarDatos();

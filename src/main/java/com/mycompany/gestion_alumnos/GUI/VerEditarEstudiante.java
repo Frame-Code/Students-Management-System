@@ -536,6 +536,7 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
         listadoEstudiantesAula.cargarTablaEstudiantes();
+        listadoEstudiantesAula.cargarEstadoMatricula();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnGuardarInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarInformacionActionPerformed

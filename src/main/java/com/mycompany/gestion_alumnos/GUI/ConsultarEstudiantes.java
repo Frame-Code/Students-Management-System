@@ -339,6 +339,7 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
                 estudiantes = new ListadoEstudiantesAula(control, (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), this, principal);
                 principal.pnlPrincipalData.add(estudiantes);
                 estudiantes.setVisible(true);
+                estudiantes.cargarEstadoMatricula();
                 this.setVisible(false);
             } else {
                 mostrarInformacion(this, "Selecciona un aula y un curso por favor", "Error");

@@ -44,7 +44,7 @@ public class Estudiante implements Serializable {
     @JoinColumn(name = "AULA_ID")
     private Aula aula;
 
-    //Relacion bidireccional donde solo el estudiante conoce sus pagos
+    //Relacion bidireccional 
     @OneToMany(mappedBy = "estudiante")
     private List<PagoColegiatura> listPago_colegiaturas;
 
