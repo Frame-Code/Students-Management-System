@@ -227,13 +227,15 @@ public class Controladora {
     public void crearEstudiante(String nombres, String apellidos, Long cedula, LocalDate fechaNacimiento,
             Long idCurso, String nombreAula, LocalDate fechaVencimiento, String valorMatricula) {
 
-        Matricula matricula = new Matricula(1l, LocalDate.now(), fechaVencimiento, valorMatricula);
-
-        Estudiante estu = new Estudiante(cedula, apellidos + " " + nombres, fechaNacimiento, matricula, this.obtenerAulaDeCurso(nombreAula, idCurso), new ArrayList<>());
+        Estudiante estu = new Estudiante(cedula, apellidos + " " + nombres, fechaNacimiento, this.obtenerAulaDeCurso(nombreAula, idCurso), new ArrayList<>());
+        Matricula matricula = new Matricula(1l, LocalDate.now(), fechaVencimiento, Estudiante.ACTIVA, valorMatricula);
+        estu.setMatricula(matricula);
         estu.setEdad();
         estu.setEstadoMatricula();
-        this.crearMatricula(matricula);
+        matricula.setEstado(estu.obtenerEstadoMatricula());
+        
         this.crearEstudiante(estu);
+        this.crearMatricula(matricula);
         setEstadoMatricula(estu);
 
         Aula aula = this.obtenerAulaDeCurso(nombreAula, idCurso);

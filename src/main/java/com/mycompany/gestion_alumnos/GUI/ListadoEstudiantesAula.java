@@ -401,7 +401,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
                 eliminarEstudiante(tblEstudianteEncontrado);
             } else if (tblEstudiantes.getSelectedRow() != -1) {
                 eliminarEstudiante(tblEstudiantes);
+            } else {
+                mostrarInformacion(this, "Selecciona un estudiante", "Error");
             }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarEstudianteActionPerformed
 
@@ -432,7 +436,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
                 openFrameEditarEstudiante(tblEstudianteEncontrado);
             } else if (tblEstudiantes.getSelectedRow() != -1) {
                 openFrameEditarEstudiante(tblEstudiantes);
+            } else {
+                mostrarInformacion(this, "Selecciona un estudiante", "Error");
             }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnVerEditarEstudianteActionPerformed
 

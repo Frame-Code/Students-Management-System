@@ -76,6 +76,14 @@ public class Estudiante implements Serializable {
         this.aula = aula;
         this.listPago_colegiaturas = listPago_colegiaturas;
     }
+    
+    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Aula aula, List<PagoColegiatura> listPago_colegiaturas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.aula = aula;
+        this.listPago_colegiaturas = listPago_colegiaturas;
+    }
 
     private Integer agregarEdad() {
         Integer edadGeneral = LocalDate.now().getYear() - this.fecha_nacimiento.getYear();
