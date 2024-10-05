@@ -529,7 +529,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             if (control.leerListEstudiantes().isEmpty()) {
                 isRegistered = false;
             } else {
-                for (Estudiante estudiante : control.leerListEstudiantes()) {());
+                for (Estudiante estudiante : control.leerListEstudiantes()) {
                     if (estudiante.getId().equals(numeroCedula)) {
                         nombreAula = estudiante.getAula().getNombre();
                         isRegistered = true;
