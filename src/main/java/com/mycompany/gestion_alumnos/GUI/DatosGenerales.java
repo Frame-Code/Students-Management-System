@@ -1,34 +1,29 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
-import com.mycompany.gestion_alumnos.LOGICA.Curso;
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
 import java.time.LocalDate;
-import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
+public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Utils{
 
     private Controladora control;
-    private Long idCurso;
+    private Principal principal;
 
     public DatosGenerales() {
         initComponents();
     }
 
-    public DatosGenerales(Controladora control) {
+    public DatosGenerales(Controladora control, Principal principal) {
         this.control = control;
+        this.principal = principal;
         this.initComponents();
-        if (!control.leerListAulas().isEmpty() && !control.leerListCursos().isEmpty()) {
-            this.idCurso = control.leerListCursos().get(0).getId();
-            this.limpiar();
-        }
+        this.cargarDatos();
+
     }
 
     /**
@@ -48,12 +43,13 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
         txtTipoInstitucion = new javax.swing.JTextField();
         txtNombreInstitucion = new javax.swing.JTextField();
         lblValorPagado = new javax.swing.JLabel();
-        SpinnerNumberModel modelPago = new SpinnerNumberModel(1, 1, 500, 1);
-        spnValorMatricula = new javax.swing.JSpinner(modelPago);
+        SpinnerNumberModel modelCostoMatricula = new SpinnerNumberModel(1, 1, 500, 1);
+        spnValorMatricula = new javax.swing.JSpinner(modelCostoMatricula);
         lblMesPagado1 = new javax.swing.JLabel();
         lblMesPagado2 = new javax.swing.JLabel();
         lblValorPagado1 = new javax.swing.JLabel();
-        spnValorColegiatura = new javax.swing.JSpinner(modelPago);
+        SpinnerNumberModel modelCostoColegiatura = new SpinnerNumberModel(1, 1, 500, 1);
+        spnValorColegiatura = new javax.swing.JSpinner(modelCostoColegiatura);
         btnRegistrar = new javax.swing.JButton();
         SpinnerNumberModel modelDiaInicioCiclo = new SpinnerNumberModel(1, 1, 31, 1);
         spnDiaInicioCiclo = new javax.swing.JSpinner(modelDiaInicioCiclo);
@@ -120,12 +116,12 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
             }
         });
 
+        lblValorPagado.setBackground(new java.awt.Color(0, 0, 0));
         lblValorPagado.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        lblValorPagado.setForeground(new java.awt.Color(71, 71, 71));
+        lblValorPagado.setForeground(new java.awt.Color(23, 23, 23));
         lblValorPagado.setText("$ Valor de matrícula");
 
         spnValorMatricula.setBorder(null);
-        spnValorMatricula.setEnabled(false);
         spnValorMatricula.setOpaque(false);
 
         lblMesPagado1.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -137,11 +133,10 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
         lblMesPagado2.setText("$");
 
         lblValorPagado1.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        lblValorPagado1.setForeground(new java.awt.Color(71, 71, 71));
+        lblValorPagado1.setForeground(new java.awt.Color(23, 23, 23));
         lblValorPagado1.setText("$ Valor de colegiatura");
 
         spnValorColegiatura.setBorder(null);
-        spnValorColegiatura.setEnabled(false);
         spnValorColegiatura.setOpaque(false);
 
         btnRegistrar.setBackground(new java.awt.Color(63, 72, 100));
@@ -164,14 +159,12 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
         });
 
         spnDiaInicioCiclo.setBorder(null);
-        spnDiaInicioCiclo.setEnabled(false);
         spnDiaInicioCiclo.setOpaque(false);
 
         cmbMesInicioCiclo.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesInicioCiclo.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMesInicioCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
         cmbMesInicioCiclo.setBorder(null);
-        cmbMesInicioCiclo.setEnabled(false);
         cmbMesInicioCiclo.setOpaque(false);
         cmbMesInicioCiclo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,11 +173,10 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
         });
 
         spnAnioInicioCiclo.setBorder(null);
-        spnAnioInicioCiclo.setEnabled(false);
         spnAnioInicioCiclo.setOpaque(false);
 
         lblFechaVencimiento.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        lblFechaVencimiento.setForeground(new java.awt.Color(71, 71, 71));
+        lblFechaVencimiento.setForeground(new java.awt.Color(23, 23, 23));
         lblFechaVencimiento.setText("Fecha de inicio del ciclo");
 
         jLabel14.setFont(new java.awt.Font("Waree", 1, 8)); // NOI18N
@@ -200,22 +192,19 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
         jLabel12.setText("Año");
 
         lblFechaVencimiento1.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
-        lblFechaVencimiento1.setForeground(new java.awt.Color(71, 71, 71));
+        lblFechaVencimiento1.setForeground(new java.awt.Color(23, 23, 23));
         lblFechaVencimiento1.setText("Fecha de finalizacion del ciclo");
 
         spnDiaFinalCiclo.setBorder(null);
-        spnDiaFinalCiclo.setEnabled(false);
         spnDiaFinalCiclo.setOpaque(false);
 
         cmbMesFinalCiclo.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesFinalCiclo.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMesFinalCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
         cmbMesFinalCiclo.setBorder(null);
-        cmbMesFinalCiclo.setEnabled(false);
         cmbMesFinalCiclo.setOpaque(false);
 
         spnAnioFinalCiclo.setBorder(null);
-        spnAnioFinalCiclo.setEnabled(false);
         spnAnioFinalCiclo.setOpaque(false);
 
         jLabel15.setFont(new java.awt.Font("Waree", 1, 8)); // NOI18N
@@ -491,9 +480,42 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
+        LocalDate inicioCiclo = LocalDate.of((int) spnAnioInicioCiclo.getValue(),
+                obtenerMes(String.valueOf(cmbMesInicioCiclo.getSelectedItem())),
+                (int) spnDiaInicioCiclo.getValue());
+        LocalDate finalCiclo = LocalDate.of((int) spnAnioFinalCiclo.getValue(),
+                obtenerMes(String.valueOf(cmbMesFinalCiclo.getSelectedItem())),
+                (int) spnDiaFinalCiclo.getValue());
+        control.crearInstitucion(txtTipoInstitucion.getText(), txtNombreInstitucion.getText(), String.valueOf(spnValorMatricula.getValue()), (Integer) spnValorColegiatura.getValue(), inicioCiclo, finalCiclo);
+        mostrarInformacion(this, "Datos registrados correctamente", "Exito");
+        Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size() - 1).getId();
+        principal.lblNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
+        principal.lblTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
+        this.cargarDatos();
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    public final void cargarDatos() {
+        if (!control.leerListInstitucion().isEmpty()) {
+            Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size() - 1).getId();
+            LocalDate inicioCiclo = control.leerInstitucion(idInstitucion).getFechaInicioCiclo();
+            LocalDate finalCiclo = control.leerInstitucion(idInstitucion).getFechaFinalCiclo();
+            
+            txtNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
+            txtTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
+            spnValorMatricula.setValue(Integer.valueOf(control.leerInstitucion(idInstitucion).getCostoMatricula()));
+            spnValorColegiatura.setValue(control.leerInstitucion(idInstitucion).getCostoColegiatura());
+            
+            spnDiaInicioCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaInicioCiclo().getDayOfMonth());
+            spnAnioInicioCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaInicioCiclo().getYear());
+            cmbMesInicioCiclo.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaInicioCiclo().getMonthValue()));
+            
+            spnDiaFinalCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth());
+            cmbMesFinalCiclo.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue()));
+            spnAnioFinalCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear());
+        
+        }
+    }
 
     private void txtNombreInstitucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreInstitucionActionPerformed
         // TODO add your handling code here:
@@ -510,55 +532,6 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes {
     private void cmbMesInicioCicloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesInicioCicloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbMesInicioCicloActionPerformed
-
-
-    public final void limpiar() {
-  /*      txtApellidos.setText("");
-        txtNombres.setText("");
-        txtCedula.setText("");
-        spnDiaNacimiento.setValue(1);
-        cmbMesNacimiento.setSelectedIndex(0);
-        spnAnioNacimiento.setValue(2005);
-        if (!(isEmptyCombo(cmbAulas) && isEmptyCombo(cmbAulas))) {
-            cmbCursos.setSelectedIndex(0);
-            cmbAulas.setSelectedIndex(0);
-        }
-        bloquearUltimasOpciones();
-        spnDiaMatricula.setValue(1);
-        cmbMesMatricula.setSelectedIndex(0);
-        spnAnioMatricula.setValue(LocalDate.now().getYear());
-        spnCantidadPagado.setValue(1);
-*/
-    }
-
-    private int obtenerMes(String mes) {
-        if (mes.equals("Enero")) {
-            return 1;
-        } else if (mes.equals("Febrero")) {
-            return 2;
-        } else if (mes.equals("Marzo")) {
-            return 3;
-        } else if (mes.equals("Abril")) {
-            return 4;
-        } else if (mes.equals("Mayo")) {
-            return 5;
-        } else if (mes.equals("Junio")) {
-            return 6;
-        } else if (mes.equals("Julio")) {
-            return 7;
-        } else if (mes.equals("Agosto")) {
-            return 8;
-        } else if (mes.equals("Septiembre")) {
-            return 9;
-        } else if (mes.equals("Octubre")) {
-            return 10;
-        } else if (mes.equals("Noviembre")) {
-            return 11;
-        } else if (mes.equals("Diciembre")) {
-            return 12;
-        }
-        return 0;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;

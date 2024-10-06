@@ -33,7 +33,8 @@ public class Principal extends javax.swing.JFrame {
         this.pnlConsultarEstudiantes = new ConsultarEstudiantes(control, this);
         this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos(control);
         this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias(control);
-        this.pnlDatosGenerales = new DatosGenerales(control);
+        this.pnlDatosGenerales = new DatosGenerales(control, this);
+        this.cargarNombre();
     }
 
     /**
@@ -54,8 +55,8 @@ public class Principal extends javax.swing.JFrame {
         btnConsultaEstudiantes = new javax.swing.JButton();
         btnRegistrarCursos = new javax.swing.JButton();
         btnRegistrarMaterias = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblTipoInstitucion = new javax.swing.JLabel();
+        lblNombreInstitucion = new javax.swing.JLabel();
         btnRegistrarDatos = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -189,13 +190,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Waree", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("UNIDAD EDUCATIVA ");
+        lblTipoInstitucion.setFont(new java.awt.Font("Waree", 1, 14)); // NOI18N
+        lblTipoInstitucion.setForeground(new java.awt.Color(255, 255, 255));
+        lblTipoInstitucion.setText("UNIDAD EDUCATIVA ");
 
-        jLabel4.setFont(new java.awt.Font("Waree", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("\"25 DE SEPTIEMBRE\"");
+        lblNombreInstitucion.setFont(new java.awt.Font("Waree", 1, 20)); // NOI18N
+        lblNombreInstitucion.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreInstitucion.setText("\"25 DE SEPTIEMBRE\"");
 
         btnRegistrarDatos.setBackground(new java.awt.Color(39, 44, 62));
         btnRegistrarDatos.setFont(new java.awt.Font("Waree", 0, 17)); // NOI18N
@@ -227,30 +228,27 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(btnConsultaEstudiantes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnRegistrarCursos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnRegistrarMaterias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRegistrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel3)))
-                .addContainerGap(55, Short.MAX_VALUE))
-            .addComponent(btnRegistrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblNombreInstitucion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTipoInstitucion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel3)
+                .addComponent(lblTipoInstitucion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNombreInstitucion)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(134, 134, 134)
+                .addGap(122, 122, 122)
                 .addComponent(btnMatricularNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMatricularExistente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -492,6 +490,14 @@ public class Principal extends javax.swing.JFrame {
         btn.setOpaque(true);
     }
 
+    private void cargarNombre() {
+        if(!control.leerListInstitucion().isEmpty()) {
+            Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size()-1).getId();
+            lblNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
+            lblTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
+        }
+    }
+    
     private void resetFrame() {
         this.setSize(1079, 719);
         this.setSize(1080, 720);
@@ -506,8 +512,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrarMaterias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -515,6 +519,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    public javax.swing.JLabel lblNombreInstitucion;
+    public javax.swing.JLabel lblTipoInstitucion;
     public javax.swing.JPanel pnlPrincipalData;
     // End of variables declaration//GEN-END:variables
 }

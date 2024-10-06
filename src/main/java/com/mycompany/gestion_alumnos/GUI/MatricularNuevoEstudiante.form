@@ -641,7 +641,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelDiaMatricula)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(1, 1, 31, 1);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="int valorInicialModelDia = 1;&#xa;if(idInstitucion != null) {&#xa;    valorInicialModelDia = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth();&#xa;}&#xa;SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(valorInicialModelDia, 1, 31, 1);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
@@ -676,7 +676,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelAnioVencimiento)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(anioActual, anioActual, anioActual+100 , 1);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="int valorInicialModelAnio = anioActual;&#xa;if(idInstitucion != null) {&#xa;    valorInicialModelAnio = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear();&#xa;}&#xa;&#xa;SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(valorInicialModelAnio, anioActual, anioActual+100 , 1);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel12">
@@ -722,7 +722,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Waree" size="12" style="0"/>
             </Property>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="if(idInstitucion != null) {&#xa;    for(int i = 0; i &lt; meses.length; i++) {&#xa;        if(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue() == obtenerMes(meses[i])) {&#xa;            cmbMesMatricula.setSelectedItem(meses[i]);&#xa;        }&#xa;    }&#xa;}">
               <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(meses)" type="code"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

@@ -281,11 +281,11 @@ public class Controladora {
         Aula aula = this.leerAula(idAula);
         return obtenerListasDelCurso(aula.getListEstudiantes(), new ArrayList<>());
     }
-    
+
     public List<Estudiante> obtenerListaEstudiantesAnulados() {
         List<Estudiante> listEstudiantesAnulados = new ArrayList<>();
-        for (Estudiante estudiante: this.leerListEstudiantes()) {
-            if(estudiante.getAula() == null) {
+        for (Estudiante estudiante : this.leerListEstudiantes()) {
+            if (estudiante.getAula() == null) {
                 listEstudiantesAnulados.add(estudiante);
             }
         }
@@ -329,7 +329,7 @@ public class Controladora {
         this.editarAula(aula);
 
     }
-    
+
     public void eliminarEstudianteAnulado(Long id) {
         Estudiante estu = this.leerEstudiante(id);
         Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
@@ -387,17 +387,17 @@ public class Controladora {
         this.editarAula(aula);
 
     }
-    
+
     public void verificarEstadoMatricula(Long idEstudiante) {
         Estudiante estu = this.leerEstudiante(idEstudiante);
         List<PagoColegiatura> listPagos = estu.getListPago_colegiaturas();
         Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
-        if(listPagos.size() >= 1) {
-            int mesUltimoPago = obtenerMes(listPagos.get(listPagos.size()-1).getMes());
+        if (listPagos.size() >= 1) {
+            int mesUltimoPago = obtenerMes(listPagos.get(listPagos.size() - 1).getMes());
             System.out.println(mesUltimoPago);
             int mesActual = LocalDate.now().getMonthValue();
             System.out.println(mesActual);
-            if(mesUltimoPago < mesActual) {
+            if (mesUltimoPago < mesActual) {
                 matricula.setEstado(Estudiante.INACTIVA);
                 System.out.println("entro if if");
             } else {
@@ -439,7 +439,7 @@ public class Controladora {
         }
         return 0;
     }
-    
+
     /*--------------------------MATERIA-------------------------*/
     public void crearMateria(Materia materia) {
         persistencia.crearMateria(materia);
@@ -504,12 +504,10 @@ public class Controladora {
         pagoColegiatura.setMes(mes);
         pagoColegiatura.setMonto(pago);
         pagoColegiatura.setEstudiante(this.leerEstudiante(idEstudiante));
-        
-        
-        
+
         this.crearPago(pagoColegiatura);
     }
-    
+
     public PagoColegiatura leerPago(Long id) {
         return persistencia.leerPago(id);
     }
@@ -531,6 +529,34 @@ public class Controladora {
             this.eliminarPago(pago.getId());
         }
         this.leerEstudiante(idEstudiante).getListPago_colegiaturas().clear();
+    }
+
+    /*--------------------------INSTITUCION-------------------------*/
+    public void crearInstitucion(Institucion institucion) {
+        persistencia.crearInstitucion(institucion);
+    }
+    
+    public void crearInstitucion(String tipo, String nombre, String valorMatricula, Integer valorColegiatura,
+            LocalDate inicioCiclo, LocalDate finalCiclo) {
+        Institucion insti = new Institucion(1l,tipo, nombre, valorMatricula, valorColegiatura, inicioCiclo, finalCiclo);
+        System.out.println(insti);
+        this.crearInstitucion(insti);
+    }
+
+    public Institucion leerInstitucion(Long id) {
+        return persistencia.leerInstitucion(id);
+    }
+
+    public List<Institucion> leerListInstitucion() {
+        return persistencia.leerListInstitucion();
+    }
+
+    public void editarInstitucion(Institucion institucion) {
+        persistencia.editarInstitucion(institucion);
+    }
+
+    public void eliminarInstitucion(Long id) {
+        persistencia.eliminarInstitucion(id);
     }
 
 }

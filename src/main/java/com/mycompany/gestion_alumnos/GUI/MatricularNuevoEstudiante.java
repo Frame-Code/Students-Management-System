@@ -13,10 +13,11 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author Frame-Code
  */
-public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Mensajes {
+public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Mensajes, Utils {
 
     private Controladora control;
     private Long idCurso;
+    private Long idInstitucion;
 
     public MatricularNuevoEstudiante() {
         initComponents();
@@ -24,6 +25,9 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
     public MatricularNuevoEstudiante(Controladora control) {
         this.control = control;
+        if(!control.leerListInstitucion().isEmpty()) {
+             this.idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size()-1).getId();
+        }
         this.initComponents();
         if (!control.leerListAulas().isEmpty() && !control.leerListCursos().isEmpty()) {
             this.idCurso = control.leerListCursos().get(0).getId();
@@ -73,11 +77,20 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         jLabel18 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblFechaVencimiento = new javax.swing.JLabel();
-        SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(1, 1, 31, 1);
+        int valorInicialModelDia = 1;
+        if(idInstitucion != null) {
+            valorInicialModelDia = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth();
+        }
+        SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(valorInicialModelDia, 1, 31, 1);
         spnDiaMatricula = new javax.swing.JSpinner(modelDiaMatricula);
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(anioActual, anioActual, anioActual+100 , 1);
+        int valorInicialModelAnio = anioActual;
+        if(idInstitucion != null) {
+            valorInicialModelAnio = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear();
+        }
+
+        SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(valorInicialModelAnio, anioActual, anioActual+100 , 1);
         spnAnioMatricula = new javax.swing.JSpinner(modelAnioVencimiento);
         jLabel12 = new javax.swing.JLabel();
         lblValorPagado = new javax.swing.JLabel();
@@ -373,6 +386,13 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         cmbMesMatricula.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesMatricula.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMesMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
+        if(idInstitucion != null) {
+            for(int i = 0; i < meses.length; i++) {
+                if(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue() == obtenerMes(meses[i])) {
+                    cmbMesMatricula.setSelectedItem(meses[i]);
+                }
+            }
+        }
         cmbMesMatricula.setBorder(null);
         cmbMesMatricula.setEnabled(false);
         cmbMesMatricula.setOpaque(false);
@@ -609,36 +629,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         spnCantidadPagado.setValue(1);
 
     }
-
-    private int obtenerMes(String mes) {
-        if (mes.equals("Enero")) {
-            return 1;
-        } else if (mes.equals("Febrero")) {
-            return 2;
-        } else if (mes.equals("Marzo")) {
-            return 3;
-        } else if (mes.equals("Abril")) {
-            return 4;
-        } else if (mes.equals("Mayo")) {
-            return 5;
-        } else if (mes.equals("Junio")) {
-            return 6;
-        } else if (mes.equals("Julio")) {
-            return 7;
-        } else if (mes.equals("Agosto")) {
-            return 8;
-        } else if (mes.equals("Septiembre")) {
-            return 9;
-        } else if (mes.equals("Octubre")) {
-            return 10;
-        } else if (mes.equals("Noviembre")) {
-            return 11;
-        } else if (mes.equals("Diciembre")) {
-            return 12;
-        }
-        return 0;
-    }
-
+    
     private void habilitarUltimasOpciones() {
         lblFechaVencimiento.setForeground(new Color(23, 23, 23));
         lblValorPagado.setForeground(new Color(23, 23, 23));

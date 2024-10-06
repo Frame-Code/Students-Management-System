@@ -301,11 +301,14 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblValorPagado">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Waree" size="12" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="47" green="47" red="47" type="rgb"/>
+              <Color blue="17" green="17" red="17" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="$ Valor de matr&#xed;cula"/>
           </Properties>
@@ -315,12 +318,11 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelPago)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel modelPago = new SpinnerNumberModel(1, 1, 500, 1);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelCostoMatricula)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel modelCostoMatricula = new SpinnerNumberModel(1, 1, 500, 1);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblMesPagado1">
@@ -351,7 +353,7 @@
               <Font name="Waree" size="12" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="47" green="47" red="47" type="rgb"/>
+              <Color blue="17" green="17" red="17" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="$ Valor de colegiatura"/>
           </Properties>
@@ -361,11 +363,11 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelPago)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelCostoColegiatura)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel modelCostoColegiatura = new SpinnerNumberModel(1, 1, 500, 1);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnRegistrar">
@@ -395,7 +397,6 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
@@ -417,7 +418,6 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -433,7 +433,6 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
@@ -447,7 +446,7 @@
               <Font name="Waree" size="12" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="47" green="47" red="47" type="rgb"/>
+              <Color blue="17" green="17" red="17" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Fecha de inicio del ciclo"/>
           </Properties>
@@ -491,7 +490,7 @@
               <Font name="Waree" size="12" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="47" green="47" red="47" type="rgb"/>
+              <Color blue="17" green="17" red="17" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Fecha de finalizacion del ciclo"/>
           </Properties>
@@ -501,7 +500,6 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
@@ -523,7 +521,6 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
@@ -535,7 +532,6 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
