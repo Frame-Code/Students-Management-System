@@ -1,10 +1,17 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import static java.awt.SystemColor.control;
+
 /**
  *
  * @author artist-code
  */
 public interface Utils {
+    public Controladora controladora = new Controladora();
+    public Long ID_INSTITUCION = controladora.leerListInstitucion().get(controladora.leerListInstitucion().size()-1).getId();
+    
+    
     default String obtenerMesPorNumero(int mes) {
         if (mes == 1) {
             return "Enero";

@@ -437,7 +437,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelAnioInicioCiclo)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="LocalDate fechaActual = LocalDate.now();&#xa;int anioActual = fechaActual.getYear();&#xa;SpinnerNumberModel modelAnioInicioCiclo = new SpinnerNumberModel(anioActual-50, anioActual, anioActual+100 , 1);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="LocalDate fechaActual = LocalDate.now();&#xa;int anioActual = fechaActual.getYear();&#xa;SpinnerNumberModel modelAnioInicioCiclo = new SpinnerNumberModel(anioActual, anioActual-50, anioActual+100 , 1);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblFechaVencimiento">

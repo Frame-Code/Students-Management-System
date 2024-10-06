@@ -57,7 +57,7 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Util
         cmbMesInicioCiclo = new javax.swing.JComboBox<>();
         LocalDate fechaActual = LocalDate.now();
         int anioActual = fechaActual.getYear();
-        SpinnerNumberModel modelAnioInicioCiclo = new SpinnerNumberModel(anioActual-50, anioActual, anioActual+100 , 1);
+        SpinnerNumberModel modelAnioInicioCiclo = new SpinnerNumberModel(anioActual, anioActual-50, anioActual+100 , 1);
         spnAnioInicioCiclo = new javax.swing.JSpinner(modelAnioInicioCiclo);
         lblFechaVencimiento = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();

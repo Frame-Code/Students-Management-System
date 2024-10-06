@@ -78,15 +78,16 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         jPanel3 = new javax.swing.JPanel();
         lblFechaVencimiento = new javax.swing.JLabel();
         int valorInicialModelDia = 1;
-        if(idInstitucion != null) {
+        if (!control.leerListInstitucion().isEmpty()) {
             valorInicialModelDia = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth();
         }
+
         SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(valorInicialModelDia, 1, 31, 1);
         spnDiaMatricula = new javax.swing.JSpinner(modelDiaMatricula);
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         int valorInicialModelAnio = anioActual;
-        if(idInstitucion != null) {
+        if (!control.leerListInstitucion().isEmpty()) {
             valorInicialModelAnio = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear();
         }
 
@@ -94,7 +95,12 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         spnAnioMatricula = new javax.swing.JSpinner(modelAnioVencimiento);
         jLabel12 = new javax.swing.JLabel();
         lblValorPagado = new javax.swing.JLabel();
-        SpinnerNumberModel modelPago = new SpinnerNumberModel(1, 1, 500, 1);
+        int valorInicialModelPago = 1;
+        if (!control.leerListInstitucion().isEmpty()) {
+            valorInicialModelPago = Integer.valueOf(control.leerInstitucion(idInstitucion).getCostoMatricula());
+        }
+
+        SpinnerNumberModel modelPago = new SpinnerNumberModel(valorInicialModelPago, 1, 500, 1);
         spnCantidadPagado = new javax.swing.JSpinner(modelPago);
         cmbMesMatricula = new javax.swing.JComboBox<>();
         lblMesPagado1 = new javax.swing.JLabel();
@@ -386,12 +392,8 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         cmbMesMatricula.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesMatricula.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMesMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
-        if(idInstitucion != null) {
-            for(int i = 0; i < meses.length; i++) {
-                if(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue() == obtenerMes(meses[i])) {
-                    cmbMesMatricula.setSelectedItem(meses[i]);
-                }
-            }
+        if (!control.leerListInstitucion().isEmpty()) {
+            cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue()));
         }
         cmbMesMatricula.setBorder(null);
         cmbMesMatricula.setEnabled(false);
@@ -623,10 +625,10 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             cmbAulas.setSelectedIndex(0);
         }
         bloquearUltimasOpciones();
-        spnDiaMatricula.setValue(1);
-        cmbMesMatricula.setSelectedIndex(0);
-        spnAnioMatricula.setValue(LocalDate.now().getYear());
-        spnCantidadPagado.setValue(1);
+        spnDiaMatricula.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth());
+        cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue()));
+        spnAnioMatricula.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear());
+        spnCantidadPagado.setValue(Integer.valueOf(control.leerInstitucion(idInstitucion).getCostoMatricula()));
 
     }
     

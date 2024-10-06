@@ -566,7 +566,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelDiaMatricula)"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(1, 1, 31, 1);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="int valorInicialModelDia = 1;&#xa;if (!control.leerListInstitucion().isEmpty()) {&#xa;    valorInicialModelDia = control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getDayOfMonth();&#xa;}&#xa;&#xa;SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(valorInicialModelDia, 1, 31, 1);"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel15">
@@ -601,6 +601,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelAnioVencimiento)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="int valorInicialModelAnio = anioActual;&#xa;if (!control.leerListInstitucion().isEmpty()) {&#xa;    valorInicialModelAnio = control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getYear();&#xa;}&#xa;modelAnioVencimiento.setValue(valorInicialModelAnio);"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel19">
@@ -635,7 +636,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(modelPago)"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel modelPago = new SpinnerNumberModel(1, 1, 500, 1);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="int valorInicialModelPago = 1;&#xa;if (!control.leerListInstitucion().isEmpty()) {&#xa;    valorInicialModelPago = Integer.valueOf(control.leerInstitucion(ID_INSTITUCION).getCostoMatricula());&#xa;}&#xa;&#xa;&#xa;SpinnerNumberModel modelPago = new SpinnerNumberModel(valorInicialModelPago, 1, 500, 1);"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbMesMatricula">
@@ -646,7 +647,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Waree" size="12" style="0"/>
                 </Property>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="if (!control.leerListInstitucion().isEmpty()) {&#xa;    cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getMonthValue()));&#xa;}">
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(meses)" type="code"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
