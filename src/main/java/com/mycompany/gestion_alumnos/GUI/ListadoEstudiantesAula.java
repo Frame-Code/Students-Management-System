@@ -520,7 +520,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         }
     }//GEN-LAST:event_tblEstudianteEncontradoMouseClicked
 
-    public void cargarEstadoMatricula() {
+    public final void cargarEstadoMatricula() {
         for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
             control.verificarEstadoMatricula(estudiante.getId());
         }

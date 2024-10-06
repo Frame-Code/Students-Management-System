@@ -13,6 +13,7 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
 
     private Controladora control;
     private ListadoEstudiantesAula estudiantes;
+    private ListadoEstudiantesAnulados anulados;
     private Principal principal;
 
     public ConsultarEstudiantes() {
@@ -282,7 +283,7 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -330,7 +331,11 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
     }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseExited
 
     private void btnVerEstudiantesAnuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosActionPerformed
-        // TODO add your handling code here:
+        anulados = new ListadoEstudiantesAnulados(control, this, principal);
+        principal.pnlPrincipalData.add(anulados);
+        anulados.setVisible(true);
+        anulados.cargarTablaEstudiantes();
+        this.setVisible(false);
     }//GEN-LAST:event_btnVerEstudiantesAnuladosActionPerformed
 
     private void mostrarEstudiantes() {

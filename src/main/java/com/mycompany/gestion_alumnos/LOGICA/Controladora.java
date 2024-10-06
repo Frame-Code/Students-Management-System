@@ -281,6 +281,16 @@ public class Controladora {
         Aula aula = this.leerAula(idAula);
         return obtenerListasDelCurso(aula.getListEstudiantes(), new ArrayList<>());
     }
+    
+    public List<Estudiante> obtenerListaEstudiantesAnulados() {
+        List<Estudiante> listEstudiantesAnulados = new ArrayList<>();
+        for (Estudiante estudiante: this.leerListEstudiantes()) {
+            if(estudiante.getAula() == null) {
+                listEstudiantesAnulados.add(estudiante);
+            }
+        }
+        return listEstudiantesAnulados;
+    }
 
     public void editarEstudiante(Estudiante estudiante) {
         persistencia.editarEstudiante(estudiante);
@@ -317,6 +327,18 @@ public class Controladora {
         this.eliminarMatricula(matricula.getId());
 
         this.editarAula(aula);
+
+    }
+    
+    public void eliminarEstudianteAnulado(Long id) {
+        Estudiante estu = this.leerEstudiante(id);
+        Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
+
+        this.eliminarPagosEstudiante(id);
+
+        persistencia.eliminarEstudiante(id);
+
+        this.eliminarMatricula(matricula.getId());
 
     }
 
@@ -375,7 +397,7 @@ public class Controladora {
             System.out.println(mesUltimoPago);
             int mesActual = LocalDate.now().getMonthValue();
             System.out.println(mesActual);
-            if(mesUltimoPago <= mesActual) {
+            if(mesUltimoPago < mesActual) {
                 matricula.setEstado(Estudiante.INACTIVA);
                 System.out.println("entro if if");
             } else {
