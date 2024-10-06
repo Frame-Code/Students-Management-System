@@ -323,11 +323,11 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
     }//GEN-LAST:event_tblAulasMouseClicked
 
     private void btnVerEstudiantesAnuladosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseEntered
-        // TODO add your handling code here:
+        btnVerEstudiantesAnulados.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseEntered
 
     private void btnVerEstudiantesAnuladosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseExited
-        // TODO add your handling code here:
+        btnVerEstudiantesAnulados.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseExited
 
     private void btnVerEstudiantesAnuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosActionPerformed

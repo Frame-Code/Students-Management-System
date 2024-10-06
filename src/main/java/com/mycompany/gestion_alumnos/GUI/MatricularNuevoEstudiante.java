@@ -507,17 +507,13 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
     }//GEN-LAST:event_btnComprobarDisponibilidadActionPerformed
 
-    private void cmbCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursosActionPerformed
-        String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
-        cmbAulas.removeAllItems();
-        for (Aula aula : control.obtenerListAulasDeCurso(control.leerCurso(nombreCurso).getId())) {
-            cmbAulas.addItem(aula.getNombre());
-        }
-    }//GEN-LAST:event_cmbCursosActionPerformed
+    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
+        btnComprobarDisponibilidad.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
 
-    private void cmbMesNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesNacimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMesNacimientoActionPerformed
+    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
+        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
 
     private void btnGenerarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaActionPerformed
         if (isNumber(txtCedula.getText())) {
@@ -525,7 +521,7 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             String nombreAula = "";
             Long numeroCedula = Long.valueOf(txtCedula.getText());
             idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
-            
+
             if (control.leerListEstudiantes().isEmpty()) {
                 isRegistered = false;
             } else {
@@ -539,19 +535,19 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                     }
                 }
             }
-            
+
             if (isRegistered == false) {
                 LocalDate fechaNacimiento = LocalDate.of((int) spnAnioNacimiento.getValue(),
-                        obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())),
-                        (int) spnDiaNacimiento.getValue());
+                    obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())),
+                    (int) spnDiaNacimiento.getValue());
                 LocalDate fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(),
-                        obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
-                        (int) spnDiaMatricula.getValue());
+                    obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
+                    (int) spnDiaMatricula.getValue());
 
                 control.crearEstudiante(txtNombres.getText(), txtApellidos.getText(),
-                        numeroCedula, fechaNacimiento,
-                        idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento,
-                        String.valueOf(spnCantidadPagado.getValue()));
+                    numeroCedula, fechaNacimiento,
+                    idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento,
+                    String.valueOf(spnCantidadPagado.getValue()));
 
                 mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
                 limpiar();
@@ -563,25 +559,29 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         }
     }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
 
-    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidosActionPerformed
-
-    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
-        btnComprobarDisponibilidad.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
-
-    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
-        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
+    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
+        btnGenerarMatricula.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
 
     private void btnGenerarMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseEntered
         btnGenerarMatricula.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnGenerarMatriculaMouseEntered
 
-    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
-        btnGenerarMatricula.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
+    private void cmbCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursosActionPerformed
+        String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
+        cmbAulas.removeAllItems();
+        for (Aula aula : control.obtenerListAulasDeCurso(control.leerCurso(nombreCurso).getId())) {
+            cmbAulas.addItem(aula.getNombre());
+        }
+    }//GEN-LAST:event_cmbCursosActionPerformed
+
+    private void cmbMesNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesNacimientoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMesNacimientoActionPerformed
+
+    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidosActionPerformed
 
     public final void cargarCmbCursos() {
         if (isEmptyCombo(cmbCursos)) {
