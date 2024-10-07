@@ -26,6 +26,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         this.control = control;
         this.panelInicial = panelInicial;
         this.initComponents();
+        this.setResizable(false);
         if(!control.leerListMaterias().isEmpty()) {
             cargarTabla();
         }

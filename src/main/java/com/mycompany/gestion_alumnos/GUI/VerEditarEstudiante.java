@@ -27,7 +27,6 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         this.idEstudiante = idEstudiante;
         this.control = control;
         this.listadoEstudiantesAula = listadoEstudiantesAula;
-        this.setVisible(true);
         this.setResizable(false);
         initComponents();
         cargarDatos();
@@ -522,7 +521,11 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
                     mostrarInformacion(this, "Pago eliminado correctamene", "Exito");
                     cargarDatos();
                 }
+            } else {
+                mostrarInformacion(this, "Selecciona un pago", "Error");
             }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarPagoActionPerformed
 

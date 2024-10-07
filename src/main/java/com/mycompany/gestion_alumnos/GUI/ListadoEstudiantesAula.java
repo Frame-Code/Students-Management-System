@@ -466,13 +466,20 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }
 
     private void btnAnularMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculasActionPerformed
-        int respuesta = confirmarInformacion(this, "¿Seguro deseas anular todas las matriculas?", "Anular matriculas");
-        if (respuesta == SI) {
-            control.anularMatriculas(idAula);
-            mostrarInformacion(this, "Matriculas anuladas completamente", "Exito");
-            cargarTablaEstudiantes();
+        if (tblEstudianteEncontrado.getRowCount() > 0 || tblEstudiantes.getRowCount() > 0) {
+            if (tblEstudianteEncontrado.getSelectedRow() != -1 || tblEstudiantes.getSelectedRow() != -1) {
+                int respuesta = confirmarInformacion(this, "¿Seguro deseas anular todas las matriculas?", "Anular matriculas");
+                if (respuesta == SI) {
+                    control.anularMatriculas(idAula);
+                    mostrarInformacion(this, "Matriculas anuladas completamente", "Exito");
+                    cargarTablaEstudiantes();
+                }
+            } else {
+                mostrarInformacion(this, "Selecciona un estudiante", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "No hay estudiantes para anular matriculas", "Error");
         }
-
     }//GEN-LAST:event_btnAnularMatriculasActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -525,8 +532,8 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             control.verificarEstadoMatricula(estudiante.getId());
         }
     }
-    
-    
+
+
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnBuscarMouseEntered
@@ -573,6 +580,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
 
     private void openFrameEditarEstudiante(JTable tbl) {
         verEditarEstudiante = new VerEditarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
+        verEditarEstudiante.setVisible(true);
         verEditarEstudiante.setLocationRelativeTo(this);
         verEditarEstudiante.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }

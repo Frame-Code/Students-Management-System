@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 
@@ -115,6 +116,14 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar ");
         btnBuscar.setBorder(null);
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseExited(evt);
+            }
+        });
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -233,6 +242,14 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         btnComprobarDisponibilidad.setText("Comprobar disponibilidad");
         btnComprobarDisponibilidad.setBorder(null);
         btnComprobarDisponibilidad.setEnabled(false);
+        btnComprobarDisponibilidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnComprobarDisponibilidadMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnComprobarDisponibilidadMouseExited(evt);
+            }
+        });
         btnComprobarDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnComprobarDisponibilidadActionPerformed(evt);
@@ -248,13 +265,13 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
                 .addComponent(lblCurso)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
                 .addComponent(lblAula)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(205, 205, 205)
+                .addGap(224, 224, 224)
                 .addComponent(btnComprobarDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -389,6 +406,14 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         btnGenerarMatricula.setText("Generar Matricula ");
         btnGenerarMatricula.setBorder(null);
         btnGenerarMatricula.setEnabled(false);
+        btnGenerarMatricula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnGenerarMatriculaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnGenerarMatriculaMouseExited(evt);
+            }
+        });
         btnGenerarMatricula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarMatriculaActionPerformed(evt);
@@ -537,6 +562,30 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         this.bloquearUltimasOpciones();
     }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
 
+    private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
+        btnBuscar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnBuscarMouseEntered
+
+    private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
+        btnBuscar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnBuscarMouseExited
+
+    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
+        pintarBtnSelectExited(btnComprobarDisponibilidad, new Color(78, 90, 126));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
+
+    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
+        pintarBtnSelectExited(btnComprobarDisponibilidad, new Color(63, 72, 100));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
+
+    private void btnGenerarMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseEntered
+        pintarBtnSelectExited(btnGenerarMatricula, new Color(78, 90, 126));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseEntered
+
+    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
+        pintarBtnSelectExited(btnGenerarMatricula, new Color(63, 72, 100));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
+
     public final void cargarCmbCursos() {
         if (isEmptyCombo(cmbCursos)) {
             for (Curso curso : control.leerListCursos()) {
@@ -631,6 +680,16 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         spnAnioMatricula.setModel(modelAnioVencimiento);
         this.bloquearUltimasOpciones();
 
+    }
+
+    private void pintarBtnSelectExited(JButton btn, Color color) {
+        if (btn.isEnabled()) {
+            btn.setBackground(color);
+        } else {
+            btn.setBackground(new java.awt.Color(60, 63, 65));
+
+        }
+        btn.setOpaque(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

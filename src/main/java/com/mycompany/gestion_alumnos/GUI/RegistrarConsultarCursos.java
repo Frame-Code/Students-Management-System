@@ -267,15 +267,20 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
         // TODO add your handling code here:
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1) {
-                Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
-                int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: "
-                        + String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1))
-                        + " y sus aulas asignadas. Los estudiantes de cada aula tendran matricula CANCELADA, ", "Advertencia");
-                if (respuesta == SI) {
-                    control.eliminarCurso(idCurso);
-                    mostrarInformacion(this, "Cuso eliminado", "Advertencia");
+                
+                if(control.isDisponibleParaBorrar((long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0))) {
+                    Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
+                    int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: " + 
+                            String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1)), 
+                            "Advertencia");
+                    if (respuesta == SI) {
+                        control.eliminarCurso(idCurso);
+                        mostrarInformacion(this, "Cuso eliminado", "Advertencia");
+                    }
+                    recargarDatos();
+                } else {
+                    mostrarInformacion(this, "No se pueden borrar cursos que tienen aulas con estudiantes matriculados", "Error");
                 }
-                recargarDatos();
             } else {
                 mostrarInformacion(this, "Selecciona una materia por favor", "Error");
             }

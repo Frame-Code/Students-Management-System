@@ -144,6 +144,15 @@ public class Controladora {
         this.editarCurso(curso);
 
     }
+    
+    public boolean isDisponibleParaBorrar(long idCurso) {
+        for (Aula aula : this.obtenerListAulasDeCurso(idCurso)) {
+            if(!aula.getListEstudiantes().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void eliminarMateriasDeCurso(List<Materia> listMateriasEliminar, Long idCurso, List<Materia> listMateriasDeCurso) {
         //Eliminar la relacion entre curso-materia
@@ -539,8 +548,11 @@ public class Controladora {
     public void crearInstitucion(String tipo, String nombre, String valorMatricula, Integer valorColegiatura,
             LocalDate inicioCiclo, LocalDate finalCiclo) {
         Institucion insti = new Institucion(1l,tipo, nombre, valorMatricula, valorColegiatura, inicioCiclo, finalCiclo);
-        System.out.println(insti);
-        this.crearInstitucion(insti);
+        if(this.leerListInstitucion().isEmpty()) {
+            this.crearInstitucion(insti);
+        } else {
+            this.editarInstitucion(insti);
+        }
     }
 
     public Institucion leerInstitucion(Long id) {
