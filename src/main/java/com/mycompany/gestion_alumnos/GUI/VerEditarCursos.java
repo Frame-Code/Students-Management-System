@@ -2,18 +2,12 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
-import com.mycompany.gestion_alumnos.LOGICA.Matricula;
-import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
-import com.mysql.cj.result.LocalDateTimeValueFactory;
 import java.awt.Color;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -35,10 +29,14 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         this.control = control;
         this.idCurso = idCurso;
         this.consultarCursos = consultarCursos;
-        initComponents();
-        cargarNombre();
-        cargarTablaMaterias();
-        cargarTablaAulas();
+        this.initComponents();
+        this.cargarNombre();
+        if(!control.leerListAulas().isEmpty()) {   
+            this.cargarTablaAulas();
+        }
+        if(!control.leerListMaterias().isEmpty()) {
+            this.cargarTablaMaterias();
+        }
     }
 
     /**
@@ -67,8 +65,10 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         jPanel3 = new javax.swing.JPanel();
         btnCrearAula = new javax.swing.JButton();
         btnEliminarAula = new javax.swing.JButton();
+        btnCambiarNombreAula = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         lblNombreCurso = new javax.swing.JLabel();
+        btnCambiarNombre = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,7 +78,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
 
         jLabel1.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(23, 23, 23));
-        jLabel1.setText("CONSULTAR CURSO");
+        jLabel1.setText("___________CONSULTAR CURSO_________");
 
         jPanel4.setBackground(new java.awt.Color(180, 180, 180));
 
@@ -87,20 +87,12 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         tblMaterias.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane2.setViewportView(tblMaterias);
 
         lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -136,20 +128,12 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         tblAulas.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         tblAulas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {}
             },
             new String [] {
-                "Title 1", "Title 2"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane3.setViewportView(tblAulas);
 
         lblMatricula4.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -161,13 +145,12 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(lblMatricula4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(124, 124, 124)
+                .addComponent(lblMatricula4)
+                .addContainerGap(205, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +189,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnEliminarMateria.setBackground(new java.awt.Color(165, 80, 80));
         btnEliminarMateria.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
         btnEliminarMateria.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarMateria.setText("Eliminar Materia");
+        btnEliminarMateria.setText("Eliminar Materia/s");
         btnEliminarMateria.setBorder(null);
         btnEliminarMateria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -283,6 +266,25 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
             }
         });
 
+        btnCambiarNombreAula.setBackground(new java.awt.Color(63, 72, 100));
+        btnCambiarNombreAula.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnCambiarNombreAula.setForeground(new java.awt.Color(255, 255, 255));
+        btnCambiarNombreAula.setText("Cambiar nombre");
+        btnCambiarNombreAula.setBorder(null);
+        btnCambiarNombreAula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCambiarNombreAulaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCambiarNombreAulaMouseExited(evt);
+            }
+        });
+        btnCambiarNombreAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarNombreAulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -291,7 +293,8 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEliminarAula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCrearAula, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                    .addComponent(btnCrearAula, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(btnCambiarNombreAula, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -299,6 +302,8 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCrearAula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCambiarNombreAula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -326,6 +331,25 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         lblNombreCurso.setFont(new java.awt.Font("Waree", 0, 15)); // NOI18N
         lblNombreCurso.setForeground(new java.awt.Color(23, 23, 23));
         lblNombreCurso.setText("CURSO");
+
+        btnCambiarNombre.setBackground(new java.awt.Color(63, 72, 100));
+        btnCambiarNombre.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
+        btnCambiarNombre.setForeground(new java.awt.Color(255, 255, 255));
+        btnCambiarNombre.setText("Cambiar nombre curso");
+        btnCambiarNombre.setBorder(null);
+        btnCambiarNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCambiarNombreMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCambiarNombreMouseExited(evt);
+            }
+        });
+        btnCambiarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarNombreActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setBackground(new java.awt.Color(63, 72, 100));
         btnActualizar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -357,37 +381,43 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89))
             .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(jLabel1))
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(167, 167, 167)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(265, 265, 265)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalDataLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
                         .addComponent(lblCurso)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(116, 116, 116)
-                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(btnCambiarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(196, 196, 196))
+            .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
+                .addGap(207, 207, 207)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPrincipalDataLayout.setVerticalGroup(
             pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalDataLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addGap(1, 1, 1)
                 .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCurso)
                     .addComponent(lblNombreCurso))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCambiarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPrincipalDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -467,32 +497,24 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }//GEN-LAST:event_btnCrearAulaActionPerformed
 
     private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
-        List<Aula> listAulas = new ArrayList<>();
-
         if (tblAulas.getRowCount() > 0) {
-            for (int i = 0; i < tblAulas.getRowCount(); i++) {
-                boolean seleccionado = (boolean) tblAulas.getValueAt(i, 0);
-                if (seleccionado) {
-                    listAulas.add(control.leerAula((long) tblAulas.getValueAt(i, 1)));
-                }
-            }
-            if (listAulas.isEmpty()) {
-                mostrarInformacion(this, "Selecciona al menos una materia", "Error");
-            } else {
-                //Este condicional puede cambiar
-                if(control.leerAula(idCurso).getListEstudiantes().isEmpty()) {
+            if (tblAulas.getSelectedRow() != -1) {
+                Long idAula = (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0);
+                if (control.leerAula(idAula).getNumeroAsientosDisponibles() >= control.leerAula(idAula).getNumeroAsientosTotales()) {
                     int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la/s Aulas del curso?", "Confirmar");
                     if (respuesta == SI) {
-                        control.eliminarAulasDeCurso(listAulas);
-                        mostrarInformacion(this, "Aula/s eliminada/s correctamente", "Aula/s eliminada/s!");
+                        control.eliminarAula(idAula);
+                        mostrarInformacion(this, "Aula eliminada correctamente", "Aula eliminada!");
                         cargarTablaAulas();
                     }
                 } else {
                     mostrarInformacion(this, "No se pueden borrar aulas con estudiantes registrados", "Error");
                 }
+            } else {
+                mostrarInformacion(this, "Selecciona un aula por favor", "Error");
             }
         } else {
-            mostrarInformacion(this, "No existen materias para agregar", "Error");
+            mostrarInformacion(this, "No existen Aulas para eliminar", "Error");
         }
     }//GEN-LAST:event_btnEliminarAulaActionPerformed
 
@@ -501,11 +523,24 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         consultarCursos.recargarDatos();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    private void btnCambiarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarNombreActionPerformed
+        String nombre = obtenerInformacion(this, "Escribe el nuevo nombre", "Nuevo nombre");
+        if (!nombre.equals(CANCELADO)) {
+            if (nombre.equals("")) {
+                mostrarInformacion(this, "No pueden haber campos vacios", "Error");
+            } else {
+                if (isString(nombre, this) && control.verificarNombreDisponible(nombre, control.leerListCursos(), Curso::getNombre)) {
+                    control.cambiarNombreCurso(idCurso, nombre);
+                    mostrarInformacion(this, "Nombre cambiado correctamente", "Cambio de nombre existoso");
+                } else {
+                    if (!control.verificarNombreDisponible(nombre, control.leerListCursos(), Curso::getNombre)) {
+                        mostrarInformacion(this, "El curso " + nombre + " ya existe", "Error");
+                    }
+                }
+            }
+        }
         cargarNombre();
-        cargarTablaAulas();
-        cargarTablaMaterias();
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    }//GEN-LAST:event_btnCambiarNombreActionPerformed
 
     private void btnAgregarMateriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMateriasMouseEntered
         btnAgregarMaterias.setBackground(new Color(78, 90, 126));
@@ -539,13 +574,13 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         btnEliminarAula.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnEliminarAulaMouseExited
 
-    private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
-        btnActualizar.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnActualizarMouseEntered
+    private void btnCambiarNombreMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreMouseEntered
+        btnCambiarNombre.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnCambiarNombreMouseEntered
 
-    private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
-        btnActualizar.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnActualizarMouseExited
+    private void btnCambiarNombreMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreMouseExited
+        btnCambiarNombre.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnCambiarNombreMouseExited
 
     private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
         btnRegresar.setBackground(new Color(78, 90, 126));
@@ -554,6 +589,56 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
         btnRegresar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegresarMouseExited
+
+    private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
+        btnActualizar.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnActualizarMouseEntered
+
+    private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
+        btnActualizar.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnActualizarMouseExited
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        cargarNombre();
+        cargarTablaAulas();
+        cargarTablaMaterias();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnCambiarNombreAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaMouseEntered
+        btnCambiarNombreAula.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnCambiarNombreAulaMouseEntered
+
+    private void btnCambiarNombreAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaMouseExited
+        btnCambiarNombreAula.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnCambiarNombreAulaMouseExited
+
+    private void btnCambiarNombreAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaActionPerformed
+
+        if (tblAulas.getRowCount() > 0) {
+            if (tblAulas.getSelectedRow() != -1) {
+                String nombre = obtenerInformacion(this, "Escribe el nuevo nombre", "Nuevo nombre");
+                if (!nombre.equals(CANCELADO)) {
+                    if (nombre.equals("")) {
+                        mostrarInformacion(this, "No pueden haber campos vacios", "Error");
+                    } else {
+                        if (isString(nombre, this) && control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
+                            control.cambiarNombreAula((Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), nombre);
+                            mostrarInformacion(this, "Nombre cambiado correctamente", "Cambio de nombre existoso");
+                        } else {
+                            if (!control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
+                                mostrarInformacion(this, "El aula " + nombre + " ya existe", "Error");
+                            }
+                        }
+                    }
+                }
+            } else {
+                mostrarInformacion(this, "Selecciona un aula por favor", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "No existen Aulas para eliminar", "Error");
+        }
+        cargarTablaAulas();
+    }//GEN-LAST:event_btnCambiarNombreAulaActionPerformed
 
     private void cargarNombre() {
         lblNombreCurso.setText(control.leerCurso(idCurso).getNombre());
@@ -565,7 +650,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }
 
     public final void cargarTablaAulas() {
-        tblAulas.setModel(obtenerModeloTablaAulasSeleccion(new String[]{"SELECCIONAR", "ID", "AULA", "# Asientos"}, control.obtenerListAulasDeCurso(idCurso)));
+        tblAulas.setModel(obtenerModeloTablaAulas(new String[]{"ID", "AULA", "#Asientos", "#Asientos disponibles"}, control.obtenerListAulasDeCurso(idCurso)));
         tblAulas.setRowHeight(20);
     }
 
@@ -573,6 +658,8 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregarMaterias;
+    private javax.swing.JButton btnCambiarNombre;
+    private javax.swing.JButton btnCambiarNombreAula;
     private javax.swing.JButton btnCrearAula;
     private javax.swing.JButton btnEliminarAula;
     private javax.swing.JButton btnEliminarMateria;

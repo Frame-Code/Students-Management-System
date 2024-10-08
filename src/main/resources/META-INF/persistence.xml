@@ -8,6 +8,7 @@
     <class>com.mycompany.gestion_alumnos.LOGICA.Materia</class>
     <class>com.mycompany.gestion_alumnos.LOGICA.Matricula</class>
     <class>com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura</class>
+    <class>com.mycompany.gestion_alumnos.LOGICA.Institucion</class>
     <properties>
       <!--Los datos de acceso son cargados en la clase JPAUtil usando variables de entorno .env para importat las credenciales -->
     </properties>

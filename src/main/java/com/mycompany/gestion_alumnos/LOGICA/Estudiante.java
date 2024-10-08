@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -22,11 +23,11 @@ import javax.persistence.OneToOne;
 public class Estudiante implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NOMBRE", length = 30, nullable = false)
+    @Column(name = "NOMBRE", length = 100, nullable = false)
     private String nombre;
 
     @Column(name = "FECHA_NACIMIENTO", nullable = false)
@@ -35,20 +36,35 @@ public class Estudiante implements Serializable {
     @Column(name = "EDAD")
     private Integer edad;
 
-    @OneToOne 
+    @OneToOne
     @JoinColumn(name = "MATRICULA_ID")
     private Matricula matricula;
-    
+
     @ManyToOne
-    @JoinColumn (name = "AULA_ID")
+    @JoinColumn(name = "AULA_ID")
     private Aula aula;
-    
-    //Relacion unidireccional donde solo el estudiante conoce sus pagos
-    @OneToMany
-    @JoinColumn(name = "ESTUDIANTE_ID")
+
+    //Relacion bidireccional 
+    @OneToMany(mappedBy = "estudiante")
     private List<PagoColegiatura> listPago_colegiaturas;
 
+    @Transient
+    public static final String ACTIVA = "Activa";
+    @Transient
+    public static final String INACTIVA = "Inactiva";
+    @Transient
+    public static final String ANULADA = "Anulada";
+
     public Estudiante() {
+    }
+
+    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Matricula matricula, Aula aula, List<PagoColegiatura> listPago_colegiaturas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.matricula = matricula;
+        this.aula = aula;
+        this.listPago_colegiaturas = listPago_colegiaturas;
     }
 
     public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Integer edad, Matricula matricula, Aula aula, List<PagoColegiatura> listPago_colegiaturas) {
@@ -57,6 +73,14 @@ public class Estudiante implements Serializable {
         this.fecha_nacimiento = fecha_nacimiento;
         this.edad = edad;
         this.matricula = matricula;
+        this.aula = aula;
+        this.listPago_colegiaturas = listPago_colegiaturas;
+    }
+
+    public Estudiante(Long id, String nombre, LocalDate fecha_nacimiento, Aula aula, List<PagoColegiatura> listPago_colegiaturas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.fecha_nacimiento = fecha_nacimiento;
         this.aula = aula;
         this.listPago_colegiaturas = listPago_colegiaturas;
     }
@@ -70,9 +94,49 @@ public class Estudiante implements Serializable {
         }
         return edadGeneral;
     }
-    
+
     public void agregarPagoColegiatura(PagoColegiatura pago) {
         listPago_colegiaturas.add(pago);
+    }
+
+    public String obtenerEstadoMatricula(boolean isNew) {
+        if(isNew) {
+            setEstadoMatricula();
+        } else {
+            setEstadoMatriculaByEstudianteExistente();
+        }
+        return matricula.getEstado();
+    }
+
+    public void setEstadoMatricula() {
+        if (getMatricula().getEstado().equals(ANULADA)) {
+            matricula.setEstado(ANULADA);
+        } else {
+            if (LocalDate.now().getYear() >= getMatricula().getFecha_vencimiento().getYear()) {
+                if (LocalDate.now().getMonthValue() > getMatricula().getFecha_vencimiento().getMonthValue()) {
+                    matricula.setEstado(INACTIVA);
+                } else {
+                    matricula.setEstado(ACTIVA);
+                }
+            } else {
+                matricula.setEstado(ACTIVA);
+            }
+        }
+        setMatricula(matricula);
+    }
+
+    public void setEstadoMatriculaByEstudianteExistente() {
+        if (LocalDate.now().getYear() >= getMatricula().getFecha_vencimiento().getYear()) {
+            if (LocalDate.now().getMonthValue() > getMatricula().getFecha_vencimiento().getMonthValue()) {
+                matricula.setEstado(INACTIVA);
+            } else {
+                matricula.setEstado(ACTIVA);
+            }
+        } else {
+            matricula.setEstado(ACTIVA);
+        }
+
+        setMatricula(matricula);
     }
 
     public Long getId() {
@@ -179,7 +243,7 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", matricula=" + matricula + ", aula=" + aula + ", listPago_colegiaturas=" + listPago_colegiaturas + '}';
+        return "Estudiante{" + "id=" + id + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", matricula=" + matricula + ", listPago_colegiaturas=" + listPago_colegiaturas + '}';
     }
-    
+
 }

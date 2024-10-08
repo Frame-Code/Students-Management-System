@@ -1,10 +1,8 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -13,23 +11,30 @@ import javax.swing.JPanel;
  */
 public class Principal extends javax.swing.JFrame {
 
-    private final JButton BOTONES[];
+    private JButton BOTONES[];
     private Controladora control;
     private MatricularNuevoEstudiante pnlMatricularNuevo;
     private MatricularEstudianteExistente pnlMatricularExistente;
     private ConsultarEstudiantes pnlConsultarEstudiantes;
     private RegistrarConsultarCursos pnlRegistroConsultaCursos;
     private RegistrarConsultarMaterias pnlRegistroConsultarMaterias;
+    private DatosGenerales pnlDatosGenerales;
 
     public Principal() {
-        control = new Controladora();
-        initComponents();
-        this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias};
-        this.pnlMatricularNuevo = new MatricularNuevoEstudiante();
-        this.pnlMatricularExistente = new MatricularEstudianteExistente();
-        this.pnlConsultarEstudiantes = new ConsultarEstudiantes();
+        this.initComponents();
+    }
+
+    public Principal(Controladora control) {
+        this.initComponents();
+        this.control = control;
+        this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias, btnRegistrarDatos};
+        this.pnlMatricularNuevo = new MatricularNuevoEstudiante(control);
+        this.pnlMatricularExistente = new MatricularEstudianteExistente(control);
+        this.pnlConsultarEstudiantes = new ConsultarEstudiantes(control, this);
         this.pnlRegistroConsultaCursos = new RegistrarConsultarCursos(control);
         this.pnlRegistroConsultarMaterias = new RegistrarConsultarMaterias(control);
+        this.pnlDatosGenerales = new DatosGenerales(control, this);
+        this.cargarNombre();
     }
 
     /**
@@ -41,6 +46,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnMatricularNuevo = new javax.swing.JButton();
@@ -49,11 +55,19 @@ public class Principal extends javax.swing.JFrame {
         btnConsultaEstudiantes = new javax.swing.JButton();
         btnRegistrarCursos = new javax.swing.JButton();
         btnRegistrarMaterias = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblTipoInstitucion = new javax.swing.JLabel();
+        lblNombreInstitucion = new javax.swing.JLabel();
+        btnRegistrarDatos = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         pnlPrincipalData = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+
+        jLabel6.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(23, 23, 23));
+        jLabel6.setText("REGISTRAR - CONSULTAR MATERIAS");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -72,6 +86,9 @@ public class Principal extends javax.swing.JFrame {
         btnMatricularNuevo.setBorderPainted(false);
         btnMatricularNuevo.setOpaque(false);
         btnMatricularNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMatricularNuevoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnMatricularNuevoMouseEntered(evt);
             }
@@ -173,46 +190,68 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Waree", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("UNIDAD EDUCATIVA ");
+        lblTipoInstitucion.setFont(new java.awt.Font("Waree", 1, 14)); // NOI18N
+        lblTipoInstitucion.setForeground(new java.awt.Color(255, 255, 255));
+        lblTipoInstitucion.setText("UNIDAD EDUCATIVA ");
 
-        jLabel4.setFont(new java.awt.Font("Waree", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("\"25 DE SEPTIEMBRE\"");
+        lblNombreInstitucion.setFont(new java.awt.Font("Waree", 1, 20)); // NOI18N
+        lblNombreInstitucion.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreInstitucion.setText("\"25 DE SEPTIEMBRE\"");
+
+        btnRegistrarDatos.setBackground(new java.awt.Color(39, 44, 62));
+        btnRegistrarDatos.setFont(new java.awt.Font("Waree", 0, 17)); // NOI18N
+        btnRegistrarDatos.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarDatos.setText("° Registrar datos generales");
+        btnRegistrarDatos.setBorder(null);
+        btnRegistrarDatos.setBorderPainted(false);
+        btnRegistrarDatos.setOpaque(false);
+        btnRegistrarDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegistrarDatosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegistrarDatosMouseExited(evt);
+            }
+        });
+        btnRegistrarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarDatosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(btnMatricularNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnMatricularExistente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
             .addComponent(btnConsultaEstudiantes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnRegistrarCursos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnRegistrarMaterias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRegistrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(jLabel1)
+                .addContainerGap(100, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblNombreInstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTipoInstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel3)
+                .addGap(28, 28, 28)
+                .addComponent(lblTipoInstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNombreInstitucion)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(134, 134, 134)
+                .addGap(122, 122, 122)
                 .addComponent(btnMatricularNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMatricularExistente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,7 +261,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnRegistrarCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegistrarMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRegistrarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
         );
 
         jPanel3.setBackground(new java.awt.Color(196, 196, 196));
@@ -237,7 +278,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(155, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86))
         );
@@ -252,6 +293,42 @@ public class Principal extends javax.swing.JFrame {
         pnlPrincipalData.setBackground(new java.awt.Color(196, 196, 196));
         pnlPrincipalData.setForeground(new java.awt.Color(0, 0, 0));
         pnlPrincipalData.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setBackground(new java.awt.Color(196, 196, 196));
+
+        jLabel5.setFont(new java.awt.Font("Waree", 1, 48)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(23, 23, 23));
+        jLabel5.setText("BIENVENIDO");
+
+        jLabel7.setFont(new java.awt.Font("Waree", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(23, 23, 23));
+        jLabel7.setText("Selecciona una opción para comenzar");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(219, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(205, 205, 205))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(186, 186, 186))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(199, 199, 199)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addContainerGap(336, Short.MAX_VALUE))
+        );
+
+        pnlPrincipalData.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -290,14 +367,22 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnMatricularNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularNuevoActionPerformed
         inicializarPanel(btnMatricularNuevo, pnlMatricularNuevo);
+        if (!control.leerListCursos().isEmpty() && !control.leerListAulas().isEmpty()) {
+            pnlMatricularNuevo.cargarCmbCursos();
+            pnlMatricularNuevo.limpiar();
+        }
     }//GEN-LAST:event_btnMatricularNuevoActionPerformed
 
     private void btnMatricularExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularExistenteActionPerformed
         inicializarPanel(btnMatricularExistente, pnlMatricularExistente);
+        pnlMatricularExistente.limpiar();
+        pnlMatricularExistente.bloquearUltimasOpciones();
     }//GEN-LAST:event_btnMatricularExistenteActionPerformed
 
     private void btnConsultaEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesActionPerformed
         inicializarPanel(btnConsultaEstudiantes, pnlConsultarEstudiantes);
+        pnlConsultarEstudiantes.cargarTablaCursos();
+
     }//GEN-LAST:event_btnConsultaEstudiantesActionPerformed
 
     private void btnRegistrarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCursosActionPerformed
@@ -309,48 +394,65 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarMateriasActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        pnlPrincipalData.add(new JLabel("Selecciona una opción"), BorderLayout.NORTH);
+
     }//GEN-LAST:event_formWindowOpened
 
     private void btnMatricularNuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularNuevoMouseEntered
-        btnMatricularNuevo.setBackground(new Color(78, 90, 126));
+        pintarBtnSelectExited(btnMatricularNuevo, new Color(78, 90, 126));
     }//GEN-LAST:event_btnMatricularNuevoMouseEntered
 
     private void btnMatricularNuevoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularNuevoMouseExited
-        btnMatricularNuevo.setBackground(new Color(63, 72, 100));
+        pintarBtnSelectExited(btnMatricularNuevo, new Color(63, 72, 100));
     }//GEN-LAST:event_btnMatricularNuevoMouseExited
 
     private void btnMatricularExistenteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularExistenteMouseEntered
-        btnMatricularExistente.setBackground(new Color(78, 90, 126));
+        pintarBtnSelectExited(btnMatricularExistente, new Color(78, 90, 126));
     }//GEN-LAST:event_btnMatricularExistenteMouseEntered
 
     private void btnMatricularExistenteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularExistenteMouseExited
-        btnMatricularExistente.setBackground(new Color(63, 72, 100));
+        pintarBtnSelectExited(btnMatricularExistente, new Color(63, 72, 100));
     }//GEN-LAST:event_btnMatricularExistenteMouseExited
 
     private void btnConsultaEstudiantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesMouseEntered
-        btnConsultaEstudiantes.setBackground(new Color(78, 90, 126));
+        pintarBtnSelectExited(btnConsultaEstudiantes, new Color(78, 90, 126));
     }//GEN-LAST:event_btnConsultaEstudiantesMouseEntered
 
     private void btnConsultaEstudiantesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultaEstudiantesMouseExited
-        btnConsultaEstudiantes.setBackground(new Color(63, 72, 100));
+        pintarBtnSelectExited(btnConsultaEstudiantes, new Color(63, 72, 100));
     }//GEN-LAST:event_btnConsultaEstudiantesMouseExited
 
     private void btnRegistrarCursosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarCursosMouseEntered
-        btnRegistrarCursos.setBackground(new Color(78, 90, 126));
+        pintarBtnSelectExited(btnRegistrarCursos, new Color(78, 90, 126));
     }//GEN-LAST:event_btnRegistrarCursosMouseEntered
 
     private void btnRegistrarCursosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarCursosMouseExited
-        btnRegistrarCursos.setBackground(new Color(63, 72, 100));
+        pintarBtnSelectExited(btnRegistrarCursos, new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegistrarCursosMouseExited
 
     private void btnRegistrarMateriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriasMouseEntered
-        btnRegistrarMaterias.setBackground(new Color(78, 90, 126));
+        pintarBtnSelectExited(btnRegistrarMaterias, new Color(78, 90, 126));
     }//GEN-LAST:event_btnRegistrarMateriasMouseEntered
 
     private void btnRegistrarMateriasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriasMouseExited
-        btnRegistrarMaterias.setBackground(new Color(63, 72, 100));
+        pintarBtnSelectExited(btnRegistrarMaterias, new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegistrarMateriasMouseExited
+
+    private void btnRegistrarDatosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarDatosMouseEntered
+        pintarBtnSelectExited(btnRegistrarDatos, new Color(78, 90, 126));
+    }//GEN-LAST:event_btnRegistrarDatosMouseEntered
+
+    private void btnRegistrarDatosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarDatosMouseExited
+        pintarBtnSelectExited(btnRegistrarDatos, new Color(63, 72, 100));
+    }//GEN-LAST:event_btnRegistrarDatosMouseExited
+
+    private void btnRegistrarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarDatosActionPerformed
+        inicializarPanel(btnRegistrarDatos, pnlDatosGenerales);
+    }//GEN-LAST:event_btnRegistrarDatosActionPerformed
+
+    private void btnMatricularNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularNuevoMouseClicked
+        btnMatricularNuevo.setBackground(new java.awt.Color(39, 44, 62));
+        btnMatricularNuevo.setOpaque(true);
+    }//GEN-LAST:event_btnMatricularNuevoMouseClicked
 
     private void inicializarPanel(JButton btnParaPintar, JPanel pnlMostrar) {
         this.pnlMatricularNuevo.setVisible(false);
@@ -358,7 +460,8 @@ public class Principal extends javax.swing.JFrame {
         this.pnlConsultarEstudiantes.setVisible(false);
         this.pnlRegistroConsultaCursos.setVisible(false);
         this.pnlRegistroConsultarMaterias.setVisible(false);
-        pnlPrincipalData.removeAll();
+        this.pnlDatosGenerales.setVisible(false);
+        this.pnlPrincipalData.removeAll();
 
         pintarBtn(btnParaPintar);
         pnlPrincipalData.add(pnlMostrar);
@@ -371,13 +474,33 @@ public class Principal extends javax.swing.JFrame {
             if (btn == btnPintar) {
                 btn.setBackground(new java.awt.Color(39, 44, 62));
                 btn.setOpaque(true);
+                btn.setSelected(true);
             } else {
                 btn.setBackground(new java.awt.Color(147, 147, 147));
                 btn.setOpaque(false);
+                btn.setSelected(false);
             }
         }
     }
 
+    private void pintarBtnSelectExited(JButton btn, Color color) {
+        if (btn.isSelected()) {
+            btn.setBackground(new java.awt.Color(39, 44, 62));
+        } else {
+            btn.setBackground(color);
+
+        }
+        btn.setOpaque(true);
+    }
+
+    private void cargarNombre() {
+        if(!control.leerListInstitucion().isEmpty()) {
+            Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size()-1).getId();
+            lblNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
+            lblTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
+        }
+    }
+    
     private void resetFrame() {
         this.setSize(1079, 719);
         this.setSize(1080, 720);
@@ -388,14 +511,19 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnMatricularExistente;
     private javax.swing.JButton btnMatricularNuevo;
     private javax.swing.JButton btnRegistrarCursos;
+    private javax.swing.JButton btnRegistrarDatos;
     private javax.swing.JButton btnRegistrarMaterias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel pnlPrincipalData;
+    private javax.swing.JPanel jPanel4;
+    public javax.swing.JLabel lblNombreInstitucion;
+    public javax.swing.JLabel lblTipoInstitucion;
+    public javax.swing.JPanel pnlPrincipalData;
     // End of variables declaration//GEN-END:variables
 }

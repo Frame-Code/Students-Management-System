@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mensajes {
 
-    public String nombre = "dsd";
     private Controladora control;
     private VerEditarCursos frameVerEditar;
     private CrearCursos frameCrearCursos;
@@ -25,8 +24,10 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
 
     public RegistrarConsultarCursos(Controladora control) {
         this.control = control;
-        initComponents();
-        cargarTabla();
+        this.initComponents();
+        if (!control.leerListCursos().isEmpty()) {
+            this.cargarTabla();
+        }
     }
 
     /**
@@ -70,6 +71,11 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
 
             }
         ));
+        tblCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCursosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblCursos);
 
         lblMatricula3.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -248,12 +254,7 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
     private void btnVerEditarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarCursoActionPerformed
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1) {
-                Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
-                frameVerEditar = new VerEditarCursos(control, idCurso, this);
-                frameVerEditar.setVisible(true);
-                frameVerEditar.setLocationRelativeTo(null);
-                frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frameVerEditar.setResizable(false);
+                openVerEditarCurso();
             } else {
                 mostrarInformacion(this, "Selecciona una materia por favor", "Error");
             }
@@ -267,15 +268,20 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
         // TODO add your handling code here:
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1) {
-                Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
-                int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: "
-                        + String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1))
-                        + " y sus aulas asignadas. Los estudiantes de cada aula tendran matricula CANCELADA, ", "Advertencia");
-                if (respuesta == SI) {
-                    control.eliminarCurso(idCurso);
-                    mostrarInformacion(this, "Cuso eliminado", "Advertencia");
+
+                if (control.isDisponibleParaBorrar((long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0))) {
+                    Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
+                    int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: "
+                            + String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1)),
+                            "Advertencia");
+                    if (respuesta == SI) {
+                        control.eliminarCurso(idCurso);
+                        mostrarInformacion(this, "Cuso eliminado", "Advertencia");
+                    }
+                    recargarDatos();
+                } else {
+                    mostrarInformacion(this, "No se pueden borrar cursos que tienen aulas con estudiantes matriculados", "Error");
                 }
-                recargarDatos();
             } else {
                 mostrarInformacion(this, "Selecciona una materia por favor", "Error");
             }
@@ -340,10 +346,25 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
         btnEliminarCurso.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnEliminarCursoMouseExited
 
+    private void tblCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCursosMouseClicked
+        if (evt.getClickCount() == 2) {
+            openVerEditarCurso();
+        }
+    }//GEN-LAST:event_tblCursosMouseClicked
+
+    private void openVerEditarCurso() {
+        Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
+        frameVerEditar = new VerEditarCursos(control, idCurso, this);
+        frameVerEditar.setVisible(true);
+        frameVerEditar.setLocationRelativeTo(null);
+        frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameVerEditar.setResizable(false);
+    }
+
     public void recargarDatos() {
         cargarTabla();
     }
-    
+
     //Factorizar este metodo
     private void cargarTabla() {
         DefaultTableModel modeloTabla = new DefaultTableModel() {

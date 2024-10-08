@@ -23,8 +23,10 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
 
     public RegistrarConsultarMaterias(Controladora control) {
         this.control = control;
-        initComponents();
-        cargarTabla();
+        this.initComponents();
+        if(!control.leerListMaterias().isEmpty()) {
+            this.cargarTabla();  
+        }
     }
 
     /**

@@ -5,7 +5,6 @@ import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 
 /**
  *
@@ -27,10 +26,12 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
         this.idCurso = idCurso;
         this.listMateriasDelCurso = listMateriasDelCurso;
         this.verEditarCurso = verEditarCurso;
-        initComponents();
-        cargarNombre();
-        cargarTablaMaterias();
-        setResizable(false);
+        this.setResizable(false);
+        this.initComponents();
+        if(!control.leerListMaterias().isEmpty()) {
+            this.cargarNombre();
+            this.cargarTablaMaterias();
+        }
     }
 
     /**

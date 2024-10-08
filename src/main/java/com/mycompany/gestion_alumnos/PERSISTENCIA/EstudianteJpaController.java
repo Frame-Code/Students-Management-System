@@ -7,7 +7,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
 import com.mycompany.gestion_alumnos.PERSISTENCIA.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -28,6 +30,9 @@ public class EstudianteJpaController implements Serializable {
     }
 
     public void create(Estudiante estudiante) {
+        if (estudiante.getListPago_colegiaturas() == null) {
+            estudiante.setListPago_colegiaturas(new ArrayList<PagoColegiatura>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -37,10 +42,25 @@ public class EstudianteJpaController implements Serializable {
                 aula = em.getReference(aula.getClass(), aula.getId());
                 estudiante.setAula(aula);
             }
+            List<PagoColegiatura> attachedListPago_colegiaturas = new ArrayList<PagoColegiatura>();
+            for (PagoColegiatura listPago_colegiaturasPagoColegiaturaToAttach : estudiante.getListPago_colegiaturas()) {
+                listPago_colegiaturasPagoColegiaturaToAttach = em.getReference(listPago_colegiaturasPagoColegiaturaToAttach.getClass(), listPago_colegiaturasPagoColegiaturaToAttach.getId());
+                attachedListPago_colegiaturas.add(listPago_colegiaturasPagoColegiaturaToAttach);
+            }
+            estudiante.setListPago_colegiaturas(attachedListPago_colegiaturas);
             em.persist(estudiante);
             if (aula != null) {
                 aula.getListEstudiantes().add(estudiante);
                 aula = em.merge(aula);
+            }
+            for (PagoColegiatura listPago_colegiaturasPagoColegiatura : estudiante.getListPago_colegiaturas()) {
+                Estudiante oldEstudianteOfListPago_colegiaturasPagoColegiatura = listPago_colegiaturasPagoColegiatura.getEstudiante();
+                listPago_colegiaturasPagoColegiatura.setEstudiante(estudiante);
+                listPago_colegiaturasPagoColegiatura = em.merge(listPago_colegiaturasPagoColegiatura);
+                if (oldEstudianteOfListPago_colegiaturasPagoColegiatura != null) {
+                    oldEstudianteOfListPago_colegiaturasPagoColegiatura.getListPago_colegiaturas().remove(listPago_colegiaturasPagoColegiatura);
+                    oldEstudianteOfListPago_colegiaturasPagoColegiatura = em.merge(oldEstudianteOfListPago_colegiaturasPagoColegiatura);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -58,10 +78,19 @@ public class EstudianteJpaController implements Serializable {
             Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getId());
             Aula aulaOld = persistentEstudiante.getAula();
             Aula aulaNew = estudiante.getAula();
+            List<PagoColegiatura> listPago_colegiaturasOld = persistentEstudiante.getListPago_colegiaturas();
+            List<PagoColegiatura> listPago_colegiaturasNew = estudiante.getListPago_colegiaturas();
             if (aulaNew != null) {
                 aulaNew = em.getReference(aulaNew.getClass(), aulaNew.getId());
                 estudiante.setAula(aulaNew);
             }
+            List<PagoColegiatura> attachedListPago_colegiaturasNew = new ArrayList<PagoColegiatura>();
+            for (PagoColegiatura listPago_colegiaturasNewPagoColegiaturaToAttach : listPago_colegiaturasNew) {
+                listPago_colegiaturasNewPagoColegiaturaToAttach = em.getReference(listPago_colegiaturasNewPagoColegiaturaToAttach.getClass(), listPago_colegiaturasNewPagoColegiaturaToAttach.getId());
+                attachedListPago_colegiaturasNew.add(listPago_colegiaturasNewPagoColegiaturaToAttach);
+            }
+            listPago_colegiaturasNew = attachedListPago_colegiaturasNew;
+            estudiante.setListPago_colegiaturas(listPago_colegiaturasNew);
             estudiante = em.merge(estudiante);
             if (aulaOld != null && !aulaOld.equals(aulaNew)) {
                 aulaOld.getListEstudiantes().remove(estudiante);
@@ -70,6 +99,23 @@ public class EstudianteJpaController implements Serializable {
             if (aulaNew != null && !aulaNew.equals(aulaOld)) {
                 aulaNew.getListEstudiantes().add(estudiante);
                 aulaNew = em.merge(aulaNew);
+            }
+            for (PagoColegiatura listPago_colegiaturasOldPagoColegiatura : listPago_colegiaturasOld) {
+                if (!listPago_colegiaturasNew.contains(listPago_colegiaturasOldPagoColegiatura)) {
+                    listPago_colegiaturasOldPagoColegiatura.setEstudiante(null);
+                    listPago_colegiaturasOldPagoColegiatura = em.merge(listPago_colegiaturasOldPagoColegiatura);
+                }
+            }
+            for (PagoColegiatura listPago_colegiaturasNewPagoColegiatura : listPago_colegiaturasNew) {
+                if (!listPago_colegiaturasOld.contains(listPago_colegiaturasNewPagoColegiatura)) {
+                    Estudiante oldEstudianteOfListPago_colegiaturasNewPagoColegiatura = listPago_colegiaturasNewPagoColegiatura.getEstudiante();
+                    listPago_colegiaturasNewPagoColegiatura.setEstudiante(estudiante);
+                    listPago_colegiaturasNewPagoColegiatura = em.merge(listPago_colegiaturasNewPagoColegiatura);
+                    if (oldEstudianteOfListPago_colegiaturasNewPagoColegiatura != null && !oldEstudianteOfListPago_colegiaturasNewPagoColegiatura.equals(estudiante)) {
+                        oldEstudianteOfListPago_colegiaturasNewPagoColegiatura.getListPago_colegiaturas().remove(listPago_colegiaturasNewPagoColegiatura);
+                        oldEstudianteOfListPago_colegiaturasNewPagoColegiatura = em.merge(oldEstudianteOfListPago_colegiaturasNewPagoColegiatura);
+                    }
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -104,6 +150,11 @@ public class EstudianteJpaController implements Serializable {
             if (aula != null) {
                 aula.getListEstudiantes().remove(estudiante);
                 aula = em.merge(aula);
+            }
+            List<PagoColegiatura> listPago_colegiaturas = estudiante.getListPago_colegiaturas();
+            for (PagoColegiatura listPago_colegiaturasPagoColegiatura : listPago_colegiaturas) {
+                listPago_colegiaturasPagoColegiatura.setEstudiante(null);
+                listPago_colegiaturasPagoColegiatura = em.merge(listPago_colegiaturasPagoColegiatura);
             }
             em.remove(estudiante);
             em.getTransaction().commit();

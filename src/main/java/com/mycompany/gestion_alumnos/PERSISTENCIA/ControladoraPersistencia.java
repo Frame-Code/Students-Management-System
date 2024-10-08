@@ -3,6 +3,7 @@ package com.mycompany.gestion_alumnos.PERSISTENCIA;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
+import com.mycompany.gestion_alumnos.LOGICA.Institucion;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import com.mycompany.gestion_alumnos.LOGICA.Matricula;
 import com.mycompany.gestion_alumnos.LOGICA.PagoColegiatura;
@@ -23,6 +24,7 @@ public class ControladoraPersistencia {
     private final MateriaJpaController materiaJPA;
     private final MatriculaJpaController matriculaJPA;
     private final PagoColegiaturaJpaController pagoJPA;
+    private final InstitucionJpaController institucionJPA;
 
     public ControladoraPersistencia() {
         this.aulaJPA = new AulaJpaController(util.getEntityManagerFactory());
@@ -31,6 +33,7 @@ public class ControladoraPersistencia {
         this.materiaJPA = new MateriaJpaController(util.getEntityManagerFactory());
         this.matriculaJPA = new MatriculaJpaController(util.getEntityManagerFactory());
         this.pagoJPA = new PagoColegiaturaJpaController(util.getEntityManagerFactory());
+        this.institucionJPA = new InstitucionJpaController(util.getEntityManagerFactory());
     }
 
     /*--------------------------METHODS CRUD-------------------------*/
@@ -208,5 +211,34 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    /*--------------------------INSTITUCION-------------------------*/
+    public void crearInstitucion(Institucion institucion) {
+        institucionJPA.create(institucion);
+    }
+    
+    public Institucion leerInstitucion(Long id) {
+        return institucionJPA.findInstitucion(id);
+    }
+    
+    public List<Institucion> leerListInstitucion() {
+        return institucionJPA.findInstitucionEntities();
+    }
+    
+    public void editarInstitucion(Institucion institucion) {
+        try {
+            institucionJPA.edit(institucion);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void eliminarInstitucion(Long id) {
+        try {
+            institucionJPA.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
