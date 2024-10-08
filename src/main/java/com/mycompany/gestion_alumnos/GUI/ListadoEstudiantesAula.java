@@ -415,30 +415,32 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (isNumber(txtCedulaBusqueda.getText())) {
-            Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
-            boolean isRegistered = true;
-            List<Estudiante> estudianteBusqueda = new ArrayList<>();
-            for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
-                if (estudiante.getId().equals(idEstudianteBusqueda)) {
-                    isRegistered = true;
-                    break;
-                } else {
-                    isRegistered = false;
+        if (!control.obtenerListaEstudiantesAula(idAula).isEmpty()) {
+            if (isNumber(txtCedulaBusqueda.getText())) {
+                Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
+                boolean isRegistered = true;
+                List<Estudiante> estudianteBusqueda = new ArrayList<>();
+                for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
+                    if (estudiante.getId().equals(idEstudianteBusqueda)) {
+                        isRegistered = true;
+                        break;
+                    } else {
+                        isRegistered = false;
+                    }
                 }
-            }
 
-            if (isRegistered) {
-                estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
-                tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
-                tblEstudianteEncontrado.setRowHeight(20);
+                if (isRegistered) {
+                    estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
+                    tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
+                    tblEstudianteEncontrado.setRowHeight(20);
+                } else {
+                    mostrarInformacion(this, "Estudiante no se encuentra registrado", "Error");
+                    tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
+                }
             } else {
-                mostrarInformacion(this, "Estudiante no se encuentra registrado", "Error");
-                tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
+                mostrarInformacion(this, "Solo se admiten numeros para buscar por cédula", "Error");
+                txtCedulaBusqueda.setText("");
             }
-        } else {
-            mostrarInformacion(this, "Solo se admiten numeros para buscar por cédula", "Error");
-            txtCedulaBusqueda.setText("");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -586,7 +588,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     }
 
     public final void cargarTablaEstudiantes() {
-        tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
+        tblEstudiantes.setModel(obtenerModeloTablaEstudiantesDetallado(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
         tblEstudiantes.setRowHeight(20);
     }
 

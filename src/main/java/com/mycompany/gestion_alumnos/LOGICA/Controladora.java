@@ -243,8 +243,8 @@ public class Controladora {
         estu.setEstadoMatricula();
         matricula.setEstado(estu.obtenerEstadoMatricula(true));
 
-        this.crearEstudiante(estu);
         this.crearMatricula(matricula);
+        this.crearEstudiante(estu);
         setEstadoMatricula(estu);
 
         Aula aula = this.obtenerAulaDeCurso(nombreAula, idCurso);
@@ -383,7 +383,6 @@ public class Controladora {
         estu.setMatricula(matricula);
         estu.setEstadoMatricula();
         matricula.setEstado(estu.obtenerEstadoMatricula(false));
-        System.out.println(estu.obtenerEstadoMatricula(false));
         matricula.setValor_pagado(valorMatricula);
         estu.setMatricula(matricula);
 
@@ -403,12 +402,9 @@ public class Controladora {
         Matricula matricula = this.leerMatricula(estu.getMatricula().getId());
         if (listPagos.size() >= 1) {
             int mesUltimoPago = obtenerMes(listPagos.get(listPagos.size() - 1).getMes());
-            System.out.println(mesUltimoPago);
             int mesActual = LocalDate.now().getMonthValue();
-            System.out.println(mesActual);
             if (mesUltimoPago < mesActual) {
                 matricula.setEstado(Estudiante.INACTIVA);
-                System.out.println("entro if if");
             } else {
                 estu.setEstadoMatricula();
                 matricula.setEstado(estu.obtenerEstadoMatricula(false));
@@ -417,7 +413,6 @@ public class Controladora {
         estu.setMatricula(matricula);
         this.editarEstudiante(estu);
         this.editarMatricula(matricula);
-        System.out.println("Se termino ");
     }
 
     private int obtenerMes(String mes) {
@@ -548,11 +543,10 @@ public class Controladora {
     public void crearInstitucion(String tipo, String nombre, String valorMatricula, Integer valorColegiatura,
             LocalDate inicioCiclo, LocalDate finalCiclo) {
         Institucion insti = new Institucion(1l,tipo, nombre, valorMatricula, valorColegiatura, inicioCiclo, finalCiclo);
-        if(this.leerListInstitucion().isEmpty()) {
-            this.crearInstitucion(insti);
-        } else {
-            this.editarInstitucion(insti);
+        if(!this.leerListInstitucion().isEmpty()) {
+            this.eliminarInstitucion(1l);
         }
+        this.crearInstitucion(insti);
     }
 
     public Institucion leerInstitucion(Long id) {

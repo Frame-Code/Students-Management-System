@@ -268,24 +268,37 @@ public class ListadoEstudiantesAnulados extends javax.swing.JPanel implements Me
     }//GEN-LAST:event_btnEliminarEstudianteActionPerformed
 
     private void eliminarEstudiante(JTable tbl) {
-        int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el estudiante permanentemente?", "Eliminar estudiante");
-        if (respuesta == SI) {
-            control.eliminarEstudianteAnulado((Long) tbl.getValueAt(tbl.getSelectedRow(), 0));
-            mostrarInformacion(this, "Estudiante eliminado correctamente", "Exito");
-            cargarTablaEstudiantes();
+        if (tblEstudiantes.getRowCount() > 0) {
+            if (tblEstudiantes.getSelectedRow() != -1) {
+                int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el estudiante permanentemente?", "Eliminar estudiante");
+                if (respuesta == SI) {
+                    control.eliminarEstudianteAnulado((Long) tbl.getValueAt(tbl.getSelectedRow(), 0));
+                    mostrarInformacion(this, "Estudiante eliminado correctamente", "Exito");
+                    cargarTablaEstudiantes();
+                }
+            } else {
+                mostrarInformacion(this, "Selecciona un estudiante", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }
 
     private void btnEliminarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTodosActionPerformed
-        int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar todos los estudiantes?", "Eliminar estudiantes");
-        int nElementosTabla = tblEstudiantes.getRowCount();
-        if (respuesta == SI) {
-            for (int i = 0; i < nElementosTabla; i++) {
-                control.eliminarEstudianteAnulado((Long) tblEstudiantes.getValueAt(i, 0));
-            }
-            mostrarInformacion(this, "Estudiantes eliminados correctamente", "Exito");
-            this.cargarTablaEstudiantes();
+        if (tblEstudiantes.getRowCount() > 0) {
+                int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar todos los estudiantes?", "Eliminar estudiantes");
+                int nElementosTabla = tblEstudiantes.getRowCount();
+                if (respuesta == SI) {
+                    for (int i = 0; i < nElementosTabla; i++) {
+                        control.eliminarEstudianteAnulado((Long) tblEstudiantes.getValueAt(i, 0));
+                    }
+                    mostrarInformacion(this, "Estudiantes eliminados correctamente", "Exito");
+                    this.cargarTablaEstudiantes();
+                }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
         }
+
 
     }//GEN-LAST:event_btnEliminarTodosActionPerformed
 

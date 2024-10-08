@@ -633,7 +633,11 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         txtNombresCompletos.setText(control.leerEstudiante(idEstudiante).getNombre());
         txtFechaMatriculacion.setText(fechaMatriculacion.getDayOfMonth() + " - " + fechaMatriculacion.getMonth() + " - " + fechaMatriculacion.getYear());
         txtFechaVencimiento.setText(fechaVencimientoMatricula.getDayOfMonth() + " - " + fechaVencimientoMatricula.getMonth() + " - " + fechaVencimientoMatricula.getYear());
-        txtEstadoMatricula.setText(control.obtenerEstadoMatricula(control.leerEstudiante(idEstudiante)));
+        if(control.leerEstudiante(idEstudiante).getListPago_colegiaturas().isEmpty()) {
+            txtEstadoMatricula.setText(control.obtenerEstadoMatricula(control.leerEstudiante(idEstudiante)) + "(Sin pagos)");
+        } else {
+            txtEstadoMatricula.setText(control.obtenerEstadoMatricula(control.leerEstudiante(idEstudiante)) + "(Con pagos)");
+        }
         modelValor.setValue(Integer.valueOf(control.leerEstudiante(idEstudiante).getMatricula().getValor_pagado()));
         spnValorPagado.setModel(modelValor);
 

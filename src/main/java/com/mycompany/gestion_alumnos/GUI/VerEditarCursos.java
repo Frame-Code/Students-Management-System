@@ -497,9 +497,9 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     }//GEN-LAST:event_btnCrearAulaActionPerformed
 
     private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
-        Long idAula = (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0);
         if (tblAulas.getRowCount() > 0) {
             if (tblAulas.getSelectedRow() != -1) {
+                Long idAula = (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0);
                 if (control.leerAula(idAula).getNumeroAsientosDisponibles() >= control.leerAula(idAula).getNumeroAsientosTotales()) {
                     int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la/s Aulas del curso?", "Confirmar");
                     if (respuesta == SI) {

@@ -30,7 +30,11 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
 
     public MatricularEstudianteExistente(Controladora control) {
         this.control = control;
-        this.idCurso = control.leerListCursos().get(0).getId();
+        if(control.leerListCursos().isEmpty()) {
+            this.idCurso = null;
+        } else {
+            this.idCurso = control.leerListCursos().get(0).getId();
+        }
         initComponents();
     }
 
@@ -487,37 +491,43 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (isNumber(txtCedulaBusqueda.getText())) {
-            Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
-            boolean isRegistered = true;
-            List<Estudiante> estudianteBusqueda = new ArrayList<>();
+        if(!control.leerListEstudiantes().isEmpty()) {
+            if (isNumber(txtCedulaBusqueda.getText())) {
+                Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
+                boolean isRegistered = false;
+                List<Estudiante> estudianteBusqueda = new ArrayList<>();
 
-            for (Estudiante estudiante : control.leerListEstudiantes()) {
-                if (estudiante.getAula() == null) {
-                    if (estudiante.getId().equals(idEstudianteBusqueda)) {
-                        isRegistered = true;
-                        break;
-                    } else {
-                        isRegistered = false;
+                for (Estudiante estudiante : control.leerListEstudiantes()) {
+                    System.out.println(estudiante.getAula());
+                    if (estudiante.getAula() == null) {
+                        System.out.println("entro nuelo");
+                        if (estudiante.getId().equals(idEstudianteBusqueda)) {
+                        System.out.println("entro registeres");
+                            isRegistered = true;
+                            break;
+                        } else {
+                            isRegistered = false;
+                        }
                     }
                 }
-            }
 
-            if (isRegistered) {
-                estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
-                tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
-                tblEstudianteEncontrado.setRowHeight(20);
-                this.habilitarOpcionesComprobacion();
-                this.cargarCmbCursos();
-                this.cargarCmbAulas();
+                if (isRegistered) {
+                    estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
+                    tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
+                    tblEstudianteEncontrado.setRowHeight(20);
+                    this.habilitarOpcionesComprobacion();
+                    this.cargarCmbCursos();
+                    this.cargarCmbAulas();
+                } else {
+                    mostrarInformacion(this, "Estudiante no se encuentra registrado o tiene matricula activa", "Error");
+                    tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
+                }
             } else {
-                mostrarInformacion(this, "Estudiante no se encuentra registrado o tiene matricula activa", "Error");
-                tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
+                mostrarInformacion(this, "Solo se admiten numeros para buscar por cédula", "Error");
+                txtCedulaBusqueda.setText("");
             }
         } else {
-            mostrarInformacion(this, "Solo se admiten numeros para buscar por cédula", "Error");
-            txtCedulaBusqueda.setText("");
-        }
+            mostrarInformacion(this, "No existe ningun estudiante registrado en la base de datos", "Error");        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnComprobarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadActionPerformed

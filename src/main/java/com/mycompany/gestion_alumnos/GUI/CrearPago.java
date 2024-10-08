@@ -8,7 +8,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author Frame-Code
  */
-public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensajes {
+public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensajes, Utils {
 
     private Controladora control;
     private Long idEstudiante;
@@ -42,7 +42,12 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
         jPanel4 = new javax.swing.JPanel();
         lblMatricula3 = new javax.swing.JLabel();
         lblMatricula4 = new javax.swing.JLabel();
-        SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 70, 1);
+        int valorInicialModelPago = 1;
+        if (!control.leerListInstitucion().isEmpty()) {
+            valorInicialModelPago = Integer.valueOf(control.leerInstitucion(ID_INSTITUCION).getCostoColegiatura());
+        }
+
+        SpinnerNumberModel model = new SpinnerNumberModel(valorInicialModelPago, 1, 70, 1);
         spnMontoPagar = new javax.swing.JSpinner(model);
         jLabel13 = new javax.swing.JLabel();
         String meses[] = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
@@ -82,6 +87,9 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
         cmbMes.setBackground(new java.awt.Color(180, 180, 180));
         cmbMes.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
+        if (!control.leerListInstitucion().isEmpty()) {
+            cmbMes.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getMonthValue()));
+        }
         cmbMes.setBorder(null);
         cmbMes.setOpaque(false);
         cmbMes.addActionListener(new java.awt.event.ActionListener() {

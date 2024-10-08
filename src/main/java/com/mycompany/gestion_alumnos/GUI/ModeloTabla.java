@@ -1,6 +1,7 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
+import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
@@ -14,8 +15,10 @@ import javax.swing.table.TableModel;
  * @author artist-code
  */
 public interface ModeloTabla {
+
+    public Controladora controladora = new Controladora();
     public static final String TITULOS_PAGOS[] = {"ID", "MES", "MONTO"};
-    
+
     default DefaultTableModel modeloTablaBasico() {
         return new DefaultTableModel() {
             @Override
@@ -41,7 +44,7 @@ public interface ModeloTabla {
             }
         };
     }
-    
+
     default DefaultTableModel borrarFilas(TableModel modeloTabla, int rowCount) {
         DefaultTableModel modelo = (DefaultTableModel) modeloTabla;
         modelo.setRowCount(0);
@@ -104,6 +107,7 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
+
     default DefaultTableModel obtenerModeloTablaAulasConEstudiante(String titulos[], List<Aula> listAulas) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -123,17 +127,33 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-    
+
     default DefaultTableModel obtenerModeloTablaEstudiantes(String titulos[], List<Estudiante> listEstudiantes) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
         for (Estudiante estudiante : listEstudiantes) {
-            Object object[] = {0+estudiante.getId(), estudiante.getNombre(), estudiante.getEdad(), estudiante.getMatricula().getEstado()};
+            Object object[] = {0 + estudiante.getId(), estudiante.getNombre(), estudiante.getEdad(), estudiante.getMatricula().getEstado()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;
     }
-    
+
+    default DefaultTableModel obtenerModeloTablaEstudiantesDetallado(String titulos[], List<Estudiante> listEstudiantes) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        String mensaje = "";
+            for (Estudiante estudiante : listEstudiantes) {
+                if (controladora.leerEstudiante(estudiante.getId()).getListPago_colegiaturas().isEmpty()) {
+                    mensaje = "(Sin pagos)";
+                } else {
+                    mensaje = "(Con pagos)";
+                }
+                Object object[] = {0 + estudiante.getId(), estudiante.getNombre(), estudiante.getEdad(), estudiante.getMatricula().getEstado() + mensaje};
+                modeloTabla.addRow(object);
+            }
+        return modeloTabla;
+    }
+
     default DefaultTableModel obtenerModeloTablaPagos(String titulos[], List<PagoColegiatura> listPagos) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -143,5 +163,5 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-    
+
 }
