@@ -469,15 +469,11 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
 
     private void btnAnularMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculasActionPerformed
         if (tblEstudianteEncontrado.getRowCount() > 0 || tblEstudiantes.getRowCount() > 0) {
-            if (tblEstudianteEncontrado.getSelectedRow() != -1 || tblEstudiantes.getSelectedRow() != -1) {
-                int respuesta = confirmarInformacion(this, "¿Seguro deseas anular todas las matriculas?", "Anular matriculas");
-                if (respuesta == SI) {
-                    control.anularMatriculas(idAula);
-                    mostrarInformacion(this, "Matriculas anuladas completamente", "Exito");
-                    cargarTablaEstudiantes();
-                }
-            } else {
-                mostrarInformacion(this, "Selecciona un estudiante", "Error");
+            int respuesta = confirmarInformacion(this, "¿Seguro deseas anular todas las matriculas?", "Anular matriculas");
+            if (respuesta == SI) {
+                control.anularMatriculas(idAula);
+                mostrarInformacion(this, "Matriculas anuladas completamente", "Exito");
+                cargarTablaEstudiantes();
             }
         } else {
             mostrarInformacion(this, "No hay estudiantes para anular matriculas", "Error");
