@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  *
  * @author Frame-Code
  */
-public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, Mensajes {
+public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, Mensajes, Utils {
 
     private Long idCurso;
     private Controladora control;

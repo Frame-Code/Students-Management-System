@@ -12,7 +12,7 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  *
  * @author Frame-Code
  */
-public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensajes, ModeloTabla {
+public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensajes, ModeloTabla, Utils {
 
     private Controladora control;
     private Long idAula;

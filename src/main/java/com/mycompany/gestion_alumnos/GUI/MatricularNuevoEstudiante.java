@@ -26,8 +26,9 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     public MatricularNuevoEstudiante(Controladora control) {
         this.control = control;
         if(!control.leerListInstitucion().isEmpty()) {
-             this.idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size()-1).getId();
+             this.idInstitucion = ID_INSTITUCION;
         }
+
         this.initComponents();
         if (!control.leerListAulas().isEmpty() && !control.leerListCursos().isEmpty()) {
             this.idCurso = control.leerListCursos().get(0).getId();
@@ -178,22 +179,12 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         txtApellidos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
         txtApellidos.setOpaque(false);
-        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidosActionPerformed(evt);
-            }
-        });
 
         cmbMesNacimiento.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesNacimiento.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMesNacimiento.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
         cmbMesNacimiento.setBorder(null);
         cmbMesNacimiento.setOpaque(false);
-        cmbMesNacimiento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMesNacimientoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -504,13 +495,35 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                 .addContainerGap(143, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
+        btnComprobarDisponibilidad.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
 
+    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
+        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
+
+    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
+        btnGenerarMatricula.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
+
+    private void btnGenerarMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseEntered
+        btnGenerarMatricula.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseEntered
+    
+    /*
+     * This is the listener of the button for check if the classroom have disponibility
+     * to register a new student.
+     * First check if the JComboBox of course and clasroom have information
+     * If that is true, check if the user entered information as id, name and lastname.
+     * and show a message of screen.
+     */
     private void btnComprobarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadActionPerformed
         if (cmbCursos.getSelectedItem() != null && cmbAulas.getSelectedItem() != null) {
             if (!(txtNombres.getText().equals("") && txtApellidos.getText().equals("") && txtCedula.getText().equals(""))) {
                 String nombreAula = String.valueOf(cmbAulas.getSelectedItem());
                 idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
-                //Condicional que puede cambiar
                 if (control.obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
                     mostrarInformacion(this, "Hay disponibilidad en el aula!", "Exito");
                     habilitarUltimasOpciones();
@@ -529,14 +542,12 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
     }//GEN-LAST:event_btnComprobarDisponibilidadActionPerformed
 
-    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
-        btnComprobarDisponibilidad.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
-
-    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
-        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
-
+    /*
+     * This listener from the button "Generar Matricula" first verify if the id entered is a number(Funcion obtened from the interface "Mensajes")
+     * Then check if the student is registered on the database, if this is false, calling the method crearEstudiante in the Class Controladora
+     * To persist the student on the DB.
+     * Otherwise just shows message for screen
+     */
     private void btnGenerarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaActionPerformed
         if (isNumber(txtCedula.getText())) {
             boolean isRegistered = true;
@@ -581,14 +592,10 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         }
     }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
 
-    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
-        btnGenerarMatricula.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
-
-    private void btnGenerarMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseEntered
-        btnGenerarMatricula.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnGenerarMatriculaMouseEntered
-
+    /**
+     * This listener of the JComboBox for the courses just upload the classroom related to the course selected on 
+     * the JComboBox of the classroom
+     */
     private void cmbCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursosActionPerformed
         String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
         cmbAulas.removeAllItems();
@@ -596,15 +603,10 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             cmbAulas.addItem(aula.getNombre());
         }
     }//GEN-LAST:event_cmbCursosActionPerformed
-
-    private void cmbMesNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesNacimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMesNacimientoActionPerformed
-
-    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidosActionPerformed
-
+    /**
+     * This method just upload the information of the database using the Class Controladora to read all the courses created previously
+     *
+     */
     public final void cargarCmbCursos() {
         if (isEmptyCombo(cmbCursos)) {
             for (Curso curso : control.leerListCursos()) {
@@ -612,7 +614,9 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             }
         }
     }
-
+    /**
+     * This method just clean all the components of the JPanel
+     */
     public final void limpiar() {
         txtApellidos.setText("");
         txtNombres.setText("");
@@ -632,6 +636,9 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
     }
     
+    /**
+     * Method to enable the options to register students in the case to the student isn't on the database
+     */
     private void habilitarUltimasOpciones() {
         lblFechaVencimiento.setForeground(new Color(23, 23, 23));
         lblValorPagado.setForeground(new Color(23, 23, 23));
@@ -643,9 +650,11 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         btnGenerarMatricula.setEnabled(true);
         btnGenerarMatricula.setBackground(new Color(63, 72, 100));
-
     }
 
+    /**
+     * Method to disable the options to register students in the case to the student is registered on the database
+     */
     private void bloquearUltimasOpciones() {
         lblFechaVencimiento.setForeground(new Color(71, 71, 71));
         lblValorPagado.setForeground(new Color(71, 71, 71));
@@ -657,14 +666,6 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
         btnGenerarMatricula.setEnabled(false);
         btnGenerarMatricula.setBackground(new Color(255, 255, 255));
-    }
-
-    private boolean isEmptyCombo(JComboBox cmb) {
-        int cantidadElementos = 0;
-        for (int i = 0; i < cmb.getItemCount(); i++) {
-            cantidadElementos++;
-        }
-        return (cantidadElementos == 0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

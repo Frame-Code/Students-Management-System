@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Frame-Code
  */
-public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Mensajes {
+public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Mensajes, Utils {
 
     private Controladora control;
 

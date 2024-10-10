@@ -2,6 +2,8 @@ package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import static java.awt.SystemColor.control;
+import java.awt.Component;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -68,5 +70,32 @@ public interface Utils {
             return 12;
         }
         return 0;
+    }
+
+    default boolean isString(String nombre, Component component) {
+        try {
+            Integer.valueOf(nombre);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
+    }
+    
+    default boolean isNumber(String number) {
+        try {
+            Long.valueOf(number);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    
+    default boolean isEmptyCombo(JComboBox cmb) {
+        int cantidadElementos = 0;
+        for (int i = 0; i < cmb.getItemCount(); i++) {
+            cantidadElementos++;
+        }
+        return (cantidadElementos == 0);
     }
 }

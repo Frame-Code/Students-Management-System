@@ -9,7 +9,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author Frame-Code
  */
-public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensajes {
+public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensajes, Utils {
 
     private Controladora control;
     private Long idCurso;

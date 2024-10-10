@@ -70,11 +70,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel6.setText("REGISTRAR - CONSULTAR MATERIAS");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jPanel2.setBackground(new java.awt.Color(63, 72, 100));
 
@@ -365,6 +360,83 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    /**
+     * This method hide all the panels and shows the panel required depending on button pressed
+     * 
+     * @param btnParaPintar
+     * @param pnlMostrar
+     */
+    private void inicializarPanel(JButton btnParaPintar, JPanel pnlMostrar) {
+        this.pnlMatricularNuevo.setVisible(false);
+        this.pnlMatricularExistente.setVisible(false);
+        this.pnlConsultarEstudiantes.setVisible(false);
+        this.pnlRegistroConsultaCursos.setVisible(false);
+        this.pnlRegistroConsultarMaterias.setVisible(false);
+        this.pnlDatosGenerales.setVisible(false);
+        this.pnlPrincipalData.removeAll();
+
+        pintarBtn(btnParaPintar);
+        pnlPrincipalData.add(pnlMostrar);
+        pnlMostrar.setVisible(true);
+        resetFrame();
+    }
+
+
+    /**
+     * The method paint the background of the button selected with a darker color 
+     * @param btnPintar
+     */
+    private void pintarBtn(JButton btnPintar) {
+        for (JButton btn : BOTONES) {
+            if (btn == btnPintar) {
+                btn.setBackground(new java.awt.Color(39, 44, 62));
+                btn.setOpaque(true);
+                btn.setSelected(true);
+            } else {
+                btn.setBackground(new java.awt.Color(147, 147, 147));
+                btn.setOpaque(false);
+                btn.setSelected(false);
+            }
+        }
+    }
+
+    /**
+     *  This method is called when the cursor is on the button and exited of the button,
+     *  maintaining the color previosly mentioned
+     * @param btn
+     * @param color
+     */
+    private void pintarBtnSelectExited(JButton btn, Color color) {
+        if (btn.isSelected()) {
+            btn.setBackground(new java.awt.Color(39, 44, 62));
+        } else {
+            btn.setBackground(color);
+        }
+        btn.setOpaque(true);
+    }
+
+    /*
+     * The method update on the corner the name and the type of the institution 
+     * registered previosly
+     */
+    private void cargarNombre() {
+        if(!control.leerListInstitucion().isEmpty()) {
+            Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size()-1).getId();
+            lblNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
+            lblTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
+        }
+    }
+    
+    /*
+     * This method change the size of this frame to show correctly the panel 
+     */
+    private void resetFrame() {
+        this.setSize(1079, 719);
+        this.setSize(1080, 720);
+    }
+
+    /*The following methods are the listeners of the buttons to call the methods created previously */
     private void btnMatricularNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularNuevoActionPerformed
         inicializarPanel(btnMatricularNuevo, pnlMatricularNuevo);
         if (!control.leerListCursos().isEmpty() && !control.leerListAulas().isEmpty()) {
@@ -392,10 +464,6 @@ public class Principal extends javax.swing.JFrame {
     private void btnRegistrarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMateriasActionPerformed
         inicializarPanel(btnRegistrarMaterias, pnlRegistroConsultarMaterias);
     }//GEN-LAST:event_btnRegistrarMateriasActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
-    }//GEN-LAST:event_formWindowOpened
 
     private void btnMatricularNuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatricularNuevoMouseEntered
         pintarBtnSelectExited(btnMatricularNuevo, new Color(78, 90, 126));
@@ -454,57 +522,6 @@ public class Principal extends javax.swing.JFrame {
         btnMatricularNuevo.setOpaque(true);
     }//GEN-LAST:event_btnMatricularNuevoMouseClicked
 
-    private void inicializarPanel(JButton btnParaPintar, JPanel pnlMostrar) {
-        this.pnlMatricularNuevo.setVisible(false);
-        this.pnlMatricularExistente.setVisible(false);
-        this.pnlConsultarEstudiantes.setVisible(false);
-        this.pnlRegistroConsultaCursos.setVisible(false);
-        this.pnlRegistroConsultarMaterias.setVisible(false);
-        this.pnlDatosGenerales.setVisible(false);
-        this.pnlPrincipalData.removeAll();
-
-        pintarBtn(btnParaPintar);
-        pnlPrincipalData.add(pnlMostrar);
-        pnlMostrar.setVisible(true);
-        resetFrame();
-    }
-
-    private void pintarBtn(JButton btnPintar) {
-        for (JButton btn : BOTONES) {
-            if (btn == btnPintar) {
-                btn.setBackground(new java.awt.Color(39, 44, 62));
-                btn.setOpaque(true);
-                btn.setSelected(true);
-            } else {
-                btn.setBackground(new java.awt.Color(147, 147, 147));
-                btn.setOpaque(false);
-                btn.setSelected(false);
-            }
-        }
-    }
-
-    private void pintarBtnSelectExited(JButton btn, Color color) {
-        if (btn.isSelected()) {
-            btn.setBackground(new java.awt.Color(39, 44, 62));
-        } else {
-            btn.setBackground(color);
-
-        }
-        btn.setOpaque(true);
-    }
-
-    private void cargarNombre() {
-        if(!control.leerListInstitucion().isEmpty()) {
-            Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size()-1).getId();
-            lblNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
-            lblTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
-        }
-    }
-    
-    private void resetFrame() {
-        this.setSize(1079, 719);
-        this.setSize(1080, 720);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultaEstudiantes;
