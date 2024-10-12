@@ -614,14 +614,6 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         }
     }
 
-    private boolean isEmptyCombo(JComboBox cmb) {
-        int cantidadElementos = 0;
-        for (int i = 0; i < cmb.getItemCount(); i++) {
-            cantidadElementos++;
-        }
-        return (cantidadElementos == 0);
-    }
-
     private void habilitarOpcionesComprobacion() {
         lblCurso.setForeground(new Color(23, 23, 23));
         lblAula.setForeground(new Color(23, 23, 23));
