@@ -18,8 +18,6 @@ public interface CursoDAO extends GenericDAO<Curso>{
 
     <T> boolean verificarNombreDisponible(String nombre, List<T> lista, Function<T, String> obtenerNombre);
 
-    boolean verificarNombreDisponible(String nombre);
-
     <T> List<T> obtenerListasDelCurso(List<T> objeto, List<T> listRetornar);
 
     List<Materia> obtenerListMateriasDeCurso(Long id);

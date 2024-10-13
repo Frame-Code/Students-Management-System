@@ -97,15 +97,6 @@ public class Controladora {
         return true;
     }
 
-    public boolean verificarNombreDisponible(String nombre) {
-        List<Curso> listCursos = leerListCursos();
-        for (Curso curso : listCursos) {
-            if (curso.getNombre().equals(nombre)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     //Metodo que retorna una lista de Aulas o Materias de cierto curso
     public <T> List<T> obtenerListasDelCurso(List<T> objeto, List<T> listRetornar) {

@@ -1,6 +1,7 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -327,7 +328,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         if (materias.isEmpty()) {
             mostrarInformacion(this, "Selecciona al menos una materia", "Error");
         } else {
-            if (verificarCantidadAsientos(asientosPorAula) && control.verificarNombreDisponible(txtNombreCurso.getText())) {
+            if (verificarCantidadAsientos(asientosPorAula) && control.verificarNombreDisponible(txtNombreCurso.getText(), control.leerListCursos(), Curso::getNombre)) {
                 control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), asientosPorAula, materias);
                 mostrarInformacion(this, "Curso creado correctamente", "Crear curso");
                 reiniciarDatos();
@@ -354,7 +355,7 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         if (txtNombreCurso.getText().equals("")) {
             mostrarInformacion(this, "Escribe el nombre del curso", "Error");
         } else {
-            if (control.verificarNombreDisponible(txtNombreCurso.getText())) {
+            if (control.verificarNombreDisponible(txtNombreCurso.getText(), control.leerListCursos(), Curso::getNombre)) {
                 String respuestaString;
                 asientosPorAula = new int[(int) spnNumeroAulas.getValue()];
                 char letraAula = 'A';

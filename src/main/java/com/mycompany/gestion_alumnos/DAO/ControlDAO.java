@@ -15,15 +15,17 @@ public class ControlDAO {
     private MatriculaImpl matriculaI;
     private MateriaImpl materiaI;
     private PagoColegiaturaImpl pagoI;
+    private InstitucionImpl institucionI;
 
     public ControlDAO(AulaImpl aulaI, CursoImpl curso) {
         this.persistencia = new ControladoraPersistencia();
         this.aulaI = new AulaImpl(persistencia, this );
         this.cursoI = new CursoImpl(persistencia, this);
-        this.estudianteI = new EstudianteImpl(persistencia);
-        this.matriculaI = new MatriculaImpl(persistencia);
-        this.materiaI = new MateriaImpl(persistencia);
-        this.pagoI = new PagoColegiaturaImpl(persistencia);
+        this.estudianteI = new EstudianteImpl(persistencia, this);
+        this.matriculaI = new MatriculaImpl(persistencia, this);
+        this.materiaI = new MateriaImpl(persistencia, this);
+        this.pagoI = new PagoColegiaturaImpl(persistencia, this);
+        this.institucionI = new InstitucionImpl(persistencia, this);
     }
 
     public AulaImpl getAulaI() {
@@ -73,8 +75,14 @@ public class ControlDAO {
     public void setPagoI(PagoColegiaturaImpl pagoI) {
         this.pagoI = pagoI;
     }
-    
-    
+
+    public InstitucionImpl getInstitucionI() {
+        return institucionI;
+    }
+
+    public void setInstitucionI(InstitucionImpl institucionI) {
+        this.institucionI = institucionI;
+    }
     
 
 }

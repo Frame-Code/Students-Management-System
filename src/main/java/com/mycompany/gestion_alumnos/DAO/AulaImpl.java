@@ -29,14 +29,14 @@ public class AulaImpl implements AulaDAO {
         aula.setNombre(nombre);
         aula.setNumeroAsientosTotales(cantidadAsientosTotales);
         aula.setNumeroAsientosDisponibles(cantidadAsientosTotales);
-        this.crear(aula);
+        crear(aula);
     }
 
     @Override
     public void cambiarNombreAula(Long idAula, String nombre) {
         Aula aula = this.leerEntidad(idAula);
         aula.setNombre(nombre);
-        this.editar(aula);
+        editar(aula);
     }
 
     @Override
