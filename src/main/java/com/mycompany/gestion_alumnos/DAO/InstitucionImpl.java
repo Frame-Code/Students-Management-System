@@ -20,8 +20,8 @@ public class InstitucionImpl implements InstitucionDAO {
     /**
      * This method is used to register a new Institution to show certain aspects in the aplication e.g: 
      * the name and the type of the institution, the value by default of the cost registration,
-     * 
-     * 
+     * the value by default of the tuition cost and the date by default end of the cycle, that is 
+     * the date by default of the expiry of registration.
      * @param tipo
      * @param nombre
      * @param valorMatricula

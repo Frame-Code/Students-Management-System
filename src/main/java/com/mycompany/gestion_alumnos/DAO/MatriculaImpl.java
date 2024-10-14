@@ -6,18 +6,16 @@ import java.util.List;
 
 /**
  *
- * Created by Frame-Code, September 2024
+ * Created by Frame-Code, October 2024
  */
 public class MatriculaImpl implements MatriculaDAO {
-
-    private final ControlDAO control;
     private final ControladoraPersistencia persistencia;
 
-    public MatriculaImpl(ControladoraPersistencia persistencia, ControlDAO control) {
+    public MatriculaImpl(ControladoraPersistencia persistencia) {
         this.persistencia = persistencia;
-        this.control = control;
     }
-
+    
+    //--------Basic CRUD methods----//
     @Override
     public void crear(Matricula object) {
         persistencia.crearMatricula(object);

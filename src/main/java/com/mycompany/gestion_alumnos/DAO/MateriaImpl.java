@@ -8,18 +8,17 @@ import java.util.List;
 
 /**
  *
- * Created by Frame-Code, September 2024
+ * Created by Frame-Code, October 2024
  */
 public class MateriaImpl implements MateriaDAO {
 
-    private final ControlDAO control;
     private final ControladoraPersistencia persistencia;
 
-    public MateriaImpl(ControladoraPersistencia persistencia, ControlDAO control) {
+    public MateriaImpl(ControladoraPersistencia persistencia) {
         this.persistencia = persistencia;
-        this.control = control;
     }
-
+    
+    //Method to create a new Subject by his name
     @Override
     public void crearMateria(String nombre) {
         List<Curso> listCurso = new ArrayList<>();
@@ -27,6 +26,7 @@ public class MateriaImpl implements MateriaDAO {
         persistencia.crearMateria(materia);
     }
 
+    //Method to edit the name of a Subject by id
     @Override
     public void editarMateria(String nombre, long id) {
         Materia materia = leerEntidad(id);
@@ -34,6 +34,7 @@ public class MateriaImpl implements MateriaDAO {
         persistencia.editarMateria(materia);
     }
 
+    //--------Basic CRUD methods----//
     @Override
     public void crear(Materia object) {
         persistencia.crearMateria(object);
@@ -42,7 +43,6 @@ public class MateriaImpl implements MateriaDAO {
     @Override
     public Materia leerEntidad(Long id) {
         return persistencia.leerMateria(id);
-
     }
 
     @Override

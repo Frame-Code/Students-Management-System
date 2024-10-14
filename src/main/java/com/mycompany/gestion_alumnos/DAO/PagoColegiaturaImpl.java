@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * Created by Frame-Code, September 2024
+ * Created by Frame-Code, October 2024
  */
 public class PagoColegiaturaImpl implements PagoColegiaturaDAO {
 
@@ -17,7 +17,8 @@ public class PagoColegiaturaImpl implements PagoColegiaturaDAO {
         this.persistencia = persistencia;
         this.control = control;
     }
-
+    
+    //This method is used to create a new payment of tuition from a Student
     @Override
     public void crearPago(int pago, String mes, Long idEstudiante) {
         PagoColegiatura pagoColegiatura = new PagoColegiatura();
@@ -28,6 +29,7 @@ public class PagoColegiaturaImpl implements PagoColegiaturaDAO {
         crear(pagoColegiatura);
     }
 
+    //This method is used to delete a selected payment from a Student
     @Override
     public void eliminarPagosEstudiante(Long idEstudiante) {
         for (PagoColegiatura pago : control.getEstudianteI().leerEntidad(idEstudiante).getListPago_colegiaturas()) {
@@ -36,6 +38,7 @@ public class PagoColegiaturaImpl implements PagoColegiaturaDAO {
         control.getEstudianteI().leerEntidad(idEstudiante).getListPago_colegiaturas().clear();
     }
 
+    //--------Basic CRUD methods----//
     @Override
     public void crear(PagoColegiatura object) {
         persistencia.crearPago(object);

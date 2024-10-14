@@ -12,9 +12,9 @@ public class ControlDAO {
     private final AulaImpl aulaI;
     private final CursoImpl cursoI;
     private final EstudianteImpl estudianteI;
-    private final MatriculaImpl matriculaI;
-    private final MateriaImpl materiaI;
     private final PagoColegiaturaImpl pagoI;
+    private final MateriaImpl materiaI;
+    private final MatriculaImpl matriculaI;
     private final InstitucionImpl institucionI;
 
     public ControlDAO(AulaImpl aulaI, CursoImpl curso) {
@@ -22,9 +22,9 @@ public class ControlDAO {
         this.aulaI = new AulaImpl(persistencia, this );
         this.cursoI = new CursoImpl(persistencia, this);
         this.estudianteI = new EstudianteImpl(persistencia, this);
-        this.matriculaI = new MatriculaImpl(persistencia, this);
-        this.materiaI = new MateriaImpl(persistencia, this);
         this.pagoI = new PagoColegiaturaImpl(persistencia, this);
+        this.matriculaI = new MatriculaImpl(persistencia);
+        this.materiaI = new MateriaImpl(persistencia);
         this.institucionI = new InstitucionImpl(persistencia);
     }
 
