@@ -1,6 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, Mensajes {
 
-    private Controladora control;
+    private ControlDAO control;
     private Long idCurso;
     private List<Materia> listMateriasDelCurso;
     private VerEditarCursos verEditarCurso;
@@ -21,14 +21,14 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
         initComponents();
     }
 
-    public AgregarMaterias(Controladora control, Long idCurso, List<Materia> listMateriasDelCurso, VerEditarCursos verEditarCurso) {
+    public AgregarMaterias(ControlDAO control, Long idCurso, List<Materia> listMateriasDelCurso, VerEditarCursos verEditarCurso) {
         this.control = control;
         this.idCurso = idCurso;
         this.listMateriasDelCurso = listMateriasDelCurso;
         this.verEditarCurso = verEditarCurso;
         this.setResizable(false);
         this.initComponents();
-        if(!control.leerListMaterias().isEmpty()) {
+        if(!control.getMateriaI().leerListEntidad().isEmpty()) {
             this.cargarNombre();
             this.cargarTablaMaterias();
         }
@@ -248,7 +248,9 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Listener of the button "Agregar materias al curso"
+    //In a list saved the subjects selectd from the jtable "tblMaterias" and set that list to the classroom previous selected
     private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMateriasActionPerformed
         List<Materia> materias = new ArrayList<>();
 
@@ -256,14 +258,14 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
             for (int i = 0; i < tblMaterias.getRowCount(); i++) {
                 boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
                 if (seleccionado) {
-                    materias.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
+                    materias.add(control.getMateriaI().leerEntidad((long) tblMaterias.getValueAt(i, 1)));
                 }
             }
             if (materias.isEmpty()) {
                 mostrarInformacion(this, "Selecciona al menos una materia", "Error");
             } else {
-                control.asignarMateriasAlCurso(materias, idCurso);
-                mostrarInformacion(this, "Materias agregadas al curso '" + control.leerCurso(idCurso).getNombre() + "' correctamente", "Agregar Materias");
+                control.getCursoI().asignarMateriasAlCurso(materias, idCurso);
+                mostrarInformacion(this, "Materias agregadas al curso '" + control.getCursoI().leerEntidad(idCurso).getNombre() + "' correctamente", "Agregar Materias");
                 this.dispose();
                 verEditarCurso.cargarTablaMaterias();
             }
@@ -273,7 +275,18 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
 
 
     }//GEN-LAST:event_btnAgregarMateriasActionPerformed
+        
+    //Method to upload the name of the course to the JPanel
+    private void cargarNombre() {
+        lblCursoNombre.setText(control.getCursoI().leerEntidad(idCurso).getNombre());
+    }
 
+    //Method to upload to a JTable "tblMaterias" to list of subject non-selected
+    private void cargarTablaMaterias() {
+        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.getMateriaI().leerListEntidad(), listMateriasDelCurso));
+        tblMaterias.setRowHeight(20);
+    }
+    
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -293,16 +306,6 @@ public class AgregarMaterias extends javax.swing.JFrame implements ModeloTabla, 
     private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
         btnRegresar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegresarMouseExited
-
-    private void cargarNombre() {
-        lblCursoNombre.setText(control.leerCurso(idCurso).getNombre());
-    }
-
-    private void cargarTablaMaterias() {
-        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.leerListMaterias(), listMateriasDelCurso));
-        tblMaterias.setRowHeight(20);
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMaterias;

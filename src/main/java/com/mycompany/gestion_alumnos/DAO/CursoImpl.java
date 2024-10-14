@@ -44,7 +44,8 @@ public class CursoImpl implements CursoDAO {
             letraAula++;
         }
     }
-
+    
+    //Method to change the name of the course
     @Override
     public void cambiarNombreCurso(Long idCurso, String nombre) {
         Curso curso = leerEntidad(idCurso);

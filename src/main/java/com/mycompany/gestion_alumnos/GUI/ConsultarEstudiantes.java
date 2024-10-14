@@ -1,17 +1,17 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.table.TableColumn;
 
 /**
  *
- * @author artist-code
+ * @author Frame-Code
  */
 public final class ConsultarEstudiantes extends javax.swing.JPanel implements ModeloTabla, Mensajes {
 
-    private Controladora control;
+    private ControlDAO control;
     private ListadoEstudiantesAula estudiantes;
     private ListadoEstudiantesAnulados anulados;
     private Principal principal;
@@ -21,11 +21,11 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
         cargarTablaCursos();
     }
 
-    public ConsultarEstudiantes(Controladora control, Principal principal) {
+    public ConsultarEstudiantes(ControlDAO control, Principal principal) {
         this.control = control;
         this.principal = principal;
         this.initComponents();
-        if(!control.leerListCursos().isEmpty()) {
+        if (!control.getCursoI().leerListEntidad().isEmpty()) {
             this.cargarTablaCursos();
         }
     }
@@ -286,58 +286,25 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
                 .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //This method is used to upload the everything information to JTables "tblCursos" and "tblAulas"
+    //(The list of all Courses and the list of all Clasrooms)
     public void cargarTablaCursos() {
-        tblCursos.setModel(obtenerModeloTablaCursos(new String[]{"ID", "CURSO"}, control.leerListCursos()));
+        tblCursos.setModel(obtenerModeloTablaCursos(new String[]{"ID", "CURSO"}, control.getCursoI().leerListEntidad()));
         tblAulas.setModel(obtenerModeloTablaAulas(new String[]{"ID", "AULA", "# Estudiantes", "# Asientos disponibles"}, new ArrayList<>()));
         tblCursos.setRowHeight(20);
     }
-
+    
+    //This method is used to upload all the classroom to the JTable "tblAulas" when the user selected the course
     private void cargarAulasCurso(Long idCurso) {
-        tblAulas.setModel(obtenerModeloTablaAulasConEstudiante(new String[]{"ID", "AULA", "# Estudiantes", "# Asientos disponibles"}, control.obtenerListAulasDeCurso(idCurso)));
+        tblAulas.setModel(obtenerModeloTablaAulasConEstudiante(new String[]{"ID", "AULA", "# Estudiantes", "# Asientos disponibles"}, control.getCursoI().obtenerListAulasDeCurso(idCurso)));
         TableColumn columnaID = tblAulas.getColumnModel().getColumn(0);
         columnaID.setPreferredWidth(8);
         tblAulas.setRowHeight(20);
     }
-
-    private void btnVerEstudiantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesMouseEntered
-        btnVerEstudiantes.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnVerEstudiantesMouseEntered
-
-    private void btnVerEstudiantesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesMouseExited
-        btnVerEstudiantes.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnVerEstudiantesMouseExited
-
-    private void btnVerEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesActionPerformed
-        mostrarEstudiantes();
-    }//GEN-LAST:event_btnVerEstudiantesActionPerformed
-
-    private void tblCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCursosMouseClicked
-        cargarAulasCurso((Long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0));
-    }//GEN-LAST:event_tblCursosMouseClicked
-
-    private void tblAulasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAulasMouseClicked
-        if(evt.getClickCount() == 2) {
-            mostrarEstudiantes();
-        }
-    }//GEN-LAST:event_tblAulasMouseClicked
-
-    private void btnVerEstudiantesAnuladosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseEntered
-        btnVerEstudiantesAnulados.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseEntered
-
-    private void btnVerEstudiantesAnuladosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseExited
-        btnVerEstudiantesAnulados.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseExited
-
-    private void btnVerEstudiantesAnuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosActionPerformed
-        anulados = new ListadoEstudiantesAnulados(control, this, principal);
-        principal.pnlPrincipalData.add(anulados);
-        anulados.setVisible(true);
-        anulados.cargarTablaEstudiantes();
-        this.setVisible(false);
-    }//GEN-LAST:event_btnVerEstudiantesAnuladosActionPerformed
-
+    
+    //This method is called for the listerner of the button "btnVerEstudiantes" or the double-click in a row of the JTable "tblAulas"
+    //Is used to show the JFrame "ListadoEstudiantesAula" with all students of the clasroom selected
     private void mostrarEstudiantes() {
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1 && tblAulas.getSelectedRow() != -1) {
@@ -353,6 +320,47 @@ public final class ConsultarEstudiantes extends javax.swing.JPanel implements Mo
             mostrarInformacion(this, "No hay tablas cargadas", "Error");
         }
     }
+    
+    //The listener of the button "verEstudiantesAnulados" to show the JFrame "ListadoEstudiantesAnulados"
+    //with all the students with type registration cancelled (Anulada)
+    private void btnVerEstudiantesAnuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosActionPerformed
+        anulados = new ListadoEstudiantesAnulados(control, this, principal);
+        principal.pnlPrincipalData.add(anulados);
+        anulados.setVisible(true);
+        anulados.cargarTablaEstudiantes();
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVerEstudiantesAnuladosActionPerformed
+    
+    //--------Listeners-----//
+    private void tblAulasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAulasMouseClicked
+        if (evt.getClickCount() == 2) {
+            mostrarEstudiantes();
+        }
+    }//GEN-LAST:event_tblAulasMouseClicked
+
+    private void btnVerEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstudiantesActionPerformed
+        mostrarEstudiantes();
+    }//GEN-LAST:event_btnVerEstudiantesActionPerformed
+
+    private void tblCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCursosMouseClicked
+        cargarAulasCurso((Long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0));
+    }//GEN-LAST:event_tblCursosMouseClicked
+
+    private void btnVerEstudiantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesMouseEntered
+        btnVerEstudiantes.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnVerEstudiantesMouseEntered
+
+    private void btnVerEstudiantesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesMouseExited
+        btnVerEstudiantes.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnVerEstudiantesMouseExited
+
+    private void btnVerEstudiantesAnuladosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseEntered
+        btnVerEstudiantesAnulados.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseEntered
+
+    private void btnVerEstudiantesAnuladosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEstudiantesAnuladosMouseExited
+        btnVerEstudiantesAnulados.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnVerEstudiantesAnuladosMouseExited
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVerEstudiantes;

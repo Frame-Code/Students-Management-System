@@ -1,7 +1,7 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import java.awt.Color;
 import javax.swing.SpinnerNumberModel;
 
@@ -11,7 +11,7 @@ import javax.swing.SpinnerNumberModel;
  */
 public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensajes, Utils {
 
-    private Controladora control;
+    private ControlDAO control;
     private Long idCurso;
     private VerEditarCursos verEditarCurso;
 
@@ -19,13 +19,13 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         initComponents();
     }
 
-    public CrearAula(Controladora control, Long idCurso, VerEditarCursos verEditarCurso) {
+    public CrearAula(ControlDAO control, Long idCurso, VerEditarCursos verEditarCurso) {
         this.control = control;
         this.idCurso = idCurso;
         this.verEditarCurso = verEditarCurso;
         this.setResizable(false);
         this.initComponents();
-        if(!control.leerListCursos().isEmpty()) {
+        if (!control.getCursoI().leerListEntidad().isEmpty()) {
             this.cargarNombre();
         }
     }
@@ -231,15 +231,16 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Listener to the 
     private void btnAgregarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAulaActionPerformed
         if (!txtNombreAula.getText().equals("")) {
             if (isString(txtNombreAula.getText(), this)) {
-                if (control.verificarNombreDisponible(txtNombreAula.getText(), control.leerListAulas(), Aula::getNombre)) {
+                if (control.getCursoI().verificarNombreDisponible(txtNombreAula.getText(), control.getAulaI().leerListEntidad(), Aula::getNombre)) {
                     int cantidadAsientos;
                     try {
                         cantidadAsientos = (int) spnCantidadAulas.getValue();
-                        control.crearAula(txtNombreAula.getText(), cantidadAsientos, idCurso);
+                        control.getAulaI().crearAula(txtNombreAula.getText(), cantidadAsientos, idCurso);
                         mostrarInformacion(this, "Aula agregada al curso correctamente", "Exito");
                         txtNombreAula.setText("");
                         spnCantidadAulas.setValue((int) 1);
@@ -255,6 +256,11 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         }
     }//GEN-LAST:event_btnAgregarAulaActionPerformed
 
+    private void cargarNombre() {
+        lblCursoNombre.setText(control.getCursoI().leerEntidad(idCurso).getNombre());
+    }
+
+    //-----------Listeners---------//
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
         verEditarCurso.cargarTablaAulas();
@@ -275,10 +281,6 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
     private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
         btnRegresar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegresarMouseExited
-
-    private void cargarNombre() {
-        lblCursoNombre.setText(control.leerCurso(idCurso).getNombre());
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAula;

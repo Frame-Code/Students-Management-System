@@ -1,3 +1,4 @@
+
 package com.mycompany.gestion_alumnos.LOGICA;
 
 import com.mycompany.gestion_alumnos.PERSISTENCIA.ControladoraPersistencia;
@@ -21,7 +22,7 @@ public class Controladora {
 
     /*--------------------------METHODS CRUD-------------------------*/
  /*--------------------------AULA-------------------------*/
-    public void crearAula(Aula aula) {
+  /*  public void crearAula(Aula aula) {
         persistencia.crearAula(aula);
     }
 
@@ -57,7 +58,7 @@ public class Controladora {
     }
 
     /*--------------------------CURSO-------------------------*/
-    public void cambiarNombreCurso(Long idCurso, String nombre) {
+   /* public void cambiarNombreCurso(Long idCurso, String nombre) {
         Curso curso = this.leerCurso(idCurso);
         curso.setNombre(nombre);
         this.editarCurso(curso);
@@ -220,7 +221,7 @@ public class Controladora {
     }
 
     /*--------------------------ESTUDIANTE-------------------------*/
-    public void crearEstudiante(Estudiante estudiante) {
+    /*public void crearEstudiante(Estudiante estudiante) {
         persistencia.crearEstudiante(estudiante);
     }
 
@@ -436,7 +437,7 @@ public class Controladora {
     }
 
     /*--------------------------MATERIA-------------------------*/
-    public void crearMateria(Materia materia) {
+    /*public void crearMateria(Materia materia) {
         persistencia.crearMateria(materia);
     }
 
@@ -469,7 +470,7 @@ public class Controladora {
     }
 
     /*--------------------------MATRICULA-------------------------*/
-    public void crearMatricula(Matricula matricula) {
+    /*public void crearMatricula(Matricula matricula) {
         persistencia.crearMatricula(matricula);
     }
 
@@ -490,7 +491,7 @@ public class Controladora {
     }
 
     /*--------------------------PAGO_COLEGIATURA-------------------------*/
-    public void crearPago(PagoColegiatura pago) {
+   /* public void crearPago(PagoColegiatura pago) {
         persistencia.crearPago(pago);
     }
 
@@ -527,7 +528,7 @@ public class Controladora {
     }
 
     /*--------------------------INSTITUCION-------------------------*/
-    public void crearInstitucion(Institucion institucion) {
+    /*public void crearInstitucion(Institucion institucion) {
         persistencia.crearInstitucion(institucion);
     }
     
@@ -555,5 +556,5 @@ public class Controladora {
     public void eliminarInstitucion(Long id) {
         persistencia.eliminarInstitucion(id);
     }
-
+*/
 }

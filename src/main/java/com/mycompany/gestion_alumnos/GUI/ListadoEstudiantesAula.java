@@ -1,6 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  */
 public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensajes, ModeloTabla, Utils {
 
-    private Controladora control;
+    private ControlDAO control;
     private Long idAula;
     private ConsultarEstudiantes consultarEstudiantes;
     private Principal principal;
@@ -24,13 +24,13 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         initComponents();
     }
 
-    public ListadoEstudiantesAula(Controladora control, Long idAula, ConsultarEstudiantes consultarEstudiantes, Principal principal) {
+    public ListadoEstudiantesAula(ControlDAO control, Long idAula, ConsultarEstudiantes consultarEstudiantes, Principal principal) {
         this.control = control;
         this.idAula = idAula;
         this.consultarEstudiantes = consultarEstudiantes;
         this.principal = principal;
         this.initComponents();
-        if (!control.leerListEstudiantes().isEmpty()) {
+        if (!control.getEstudianteI().leerListEntidad().isEmpty()) {
             this.cargarTablaEstudiantes();
             this.cargarNombre();
             this.cargarEstadoMatricula();

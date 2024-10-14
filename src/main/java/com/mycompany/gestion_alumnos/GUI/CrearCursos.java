@@ -1,6 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
@@ -14,21 +14,21 @@ import javax.swing.SpinnerNumberModel;
  */
 public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloTabla {
 
-    private Controladora control;
+    private ControlDAO control;
     private RegistrarConsultarCursos panelInicial;
     private int asientosPorAula[];
-    private final SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(1,1,8,1);
+    private final SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(1, 1, 8, 1);
 
     public CrearCursos() {
         initComponents();
     }
 
-    public CrearCursos(Controladora control, RegistrarConsultarCursos panelInicial) {
+    public CrearCursos(ControlDAO control, RegistrarConsultarCursos panelInicial) {
         this.control = control;
         this.panelInicial = panelInicial;
         this.initComponents();
         this.setResizable(false);
-        if(!control.leerListMaterias().isEmpty()) {
+        if (!control.getMateriaI().leerListEntidad().isEmpty()) {
             cargarTabla();
         }
     }
@@ -73,11 +73,6 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
 
         txtNombreCurso.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
         txtNombreCurso.setOpaque(false);
-        txtNombreCurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreCursoActionPerformed(evt);
-            }
-        });
 
         spnNumeroAulas.setBorder(null);
         spnNumeroAulas.setOpaque(false);
@@ -315,6 +310,39 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean verificarCantidadAsientos(int cantidadAsientos[]) {
+        //Verificar si la cantidad de asientos por cada aula es distinta de 0 para mostrar mensaje de que se obtuvieron valores correctamente
+        int contador;
+        for (contador = 0; contador < cantidadAsientos.length; contador++) {
+            if (cantidadAsientos[contador] == 0) {
+                break;
+            }
+        }
+        //Si el contador es igual al largo del vector significa que cada elemento del vector es distinto de cero lo cual es correcto
+        return contador == cantidadAsientos.length;
+    }
+
+    private void reiniciarDatos() {
+        cargarTabla();
+        txtNombreCurso.setText("");
+        spnNumeroAulas.setModel(modeloSpinner);
+        for (int i = 0; i < asientosPorAula.length; i++) {
+            asientosPorAula[i] = 0;
+        }
+    }
+
+    private void cargarTabla() {
+        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.getMateriaI().leerListEntidad()));
+        tblMaterias.setRowHeight(20);
+
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        panelInicial.recargarDatos();
+    }
+
     private void btnCrearCursoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoActionPerformed
         // TODO add your handling code here:
         List<Materia> materias = new ArrayList<>();
@@ -322,14 +350,14 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         for (int i = 0; i < tblMaterias.getRowCount(); i++) {
             boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
             if (seleccionado) {
-                materias.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
+                materias.add(control.getMateriaI().leerEntidad((long) tblMaterias.getValueAt(i, 1)));
             }
         }
         if (materias.isEmpty()) {
             mostrarInformacion(this, "Selecciona al menos una materia", "Error");
         } else {
-            if (verificarCantidadAsientos(asientosPorAula) && control.verificarNombreDisponible(txtNombreCurso.getText(), control.leerListCursos(), Curso::getNombre)) {
-                control.crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), asientosPorAula, materias);
+            if (verificarCantidadAsientos(asientosPorAula) && control.getCursoI().verificarNombreDisponible(txtNombreCurso.getText(), control.getCursoI().leerListEntidad(), Curso::getNombre)) {
+                control.getCursoI().crearCurso(txtNombreCurso.getText(), (int) spnNumeroAulas.getValue(), asientosPorAula, materias);
                 mostrarInformacion(this, "Curso creado correctamente", "Crear curso");
                 reiniciarDatos();
             } else {
@@ -338,24 +366,12 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         }
     }//GEN-LAST:event_btnCrearCursoNuevoActionPerformed
 
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        this.dispose();
-        panelInicial.recargarDatos();
-
-    }//GEN-LAST:event_btnRegresarActionPerformed
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        panelInicial.recargarDatos();
-    }
-
     private void btnRellenarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRellenarAsientosActionPerformed
         // TODO add your handling code here:
         if (txtNombreCurso.getText().equals("")) {
             mostrarInformacion(this, "Escribe el nombre del curso", "Error");
         } else {
-            if (control.verificarNombreDisponible(txtNombreCurso.getText(), control.leerListCursos(), Curso::getNombre)) {
+            if (control.getCursoI().verificarNombreDisponible(txtNombreCurso.getText(), control.getCursoI().leerListEntidad(), Curso::getNombre)) {
                 String respuestaString;
                 asientosPorAula = new int[(int) spnNumeroAulas.getValue()];
                 char letraAula = 'A';
@@ -395,66 +411,34 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         }
     }//GEN-LAST:event_btnRellenarAsientosActionPerformed
 
-    private void txtNombreCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreCursoActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.dispose();
+        panelInicial.recargarDatos();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRellenarAsientosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRellenarAsientosMouseEntered
-        // TODO add your handling code here:
         btnRellenarAsientos.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnRellenarAsientosMouseEntered
 
     private void btnRellenarAsientosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRellenarAsientosMouseExited
-        // TODO add your handling code here:
         btnRellenarAsientos.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRellenarAsientosMouseExited
 
     private void btnCrearCursoNuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoMouseEntered
-        // TODO add your handling code here:
         btnCrearCursoNuevo.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnCrearCursoNuevoMouseEntered
 
     private void btnCrearCursoNuevoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoMouseExited
-        // TODO add your handling code here:
         btnCrearCursoNuevo.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnCrearCursoNuevoMouseExited
 
     private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
-        // TODO add your handling code here:
         btnRegresar.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnRegresarMouseEntered
 
     private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
-        // TODO add your handling code here:
         btnRegresar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegresarMouseExited
-
-    private boolean verificarCantidadAsientos(int cantidadAsientos[]) {
-        //Verificar si la cantidad de asientos por cada aula es distinta de 0 para mostrar mensaje de que se obtuvieron valores correctamente
-        int contador;
-        for (contador = 0; contador < cantidadAsientos.length; contador++) {
-            if (cantidadAsientos[contador] == 0) {
-                break;
-            }
-        }
-        //Si el contador es igual al largo del vector significa que cada elemento del vector es distinto de cero lo cual es correcto
-        return contador == cantidadAsientos.length;
-    }
-
-    private void reiniciarDatos() {
-        cargarTabla();
-        txtNombreCurso.setText("");
-        spnNumeroAulas.setModel(modeloSpinner);
-        for (int i = 0; i < asientosPorAula.length; i++) {
-            asientosPorAula[i] = 0;
-        }
-    }
-
-    private void cargarTabla() {
-        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.leerListMaterias()));
-        tblMaterias.setRowHeight(20);
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCursoNuevo;
