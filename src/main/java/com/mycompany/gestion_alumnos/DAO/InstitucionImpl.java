@@ -7,18 +7,28 @@ import java.util.List;
 
 /**
  *
- * Created by Frame-Code
+ * Created by Frame-Code, October 2024
  */
 public class InstitucionImpl implements InstitucionDAO {
 
-    private final ControlDAO control;
     private final ControladoraPersistencia persistencia;
 
-    public InstitucionImpl(ControladoraPersistencia persistencia, ControlDAO control) {
+    public InstitucionImpl(ControladoraPersistencia persistencia) {
         this.persistencia = persistencia;
-        this.control = control;
     }
-
+    
+    /**
+     * This method is used to register a new Institution to show certain aspects in the aplication e.g: 
+     * the name and the type of the institution, the value by default of the cost registration,
+     * 
+     * 
+     * @param tipo
+     * @param nombre
+     * @param valorMatricula
+     * @param valorColegiatura
+     * @param inicioCiclo
+     * @param finalCiclo
+     */
     @Override
     public void crearInstitucion(String tipo, String nombre, String valorMatricula, Integer valorColegiatura, LocalDate inicioCiclo, LocalDate finalCiclo) {
         Institucion insti = new Institucion(1l, tipo, nombre, valorMatricula, valorColegiatura, inicioCiclo, finalCiclo);
@@ -28,6 +38,7 @@ public class InstitucionImpl implements InstitucionDAO {
         crear(insti);
     }
 
+    //--------Basic CRUD methods----//
     @Override
     public void crear(Institucion object) {
         persistencia.crearInstitucion(object);

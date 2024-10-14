@@ -232,4 +232,3 @@ public class CursoImpl implements CursoDAO {
         persistencia.crearCurso(object);
     }
 
-}
