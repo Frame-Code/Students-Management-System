@@ -309,19 +309,23 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //This method check the count of sits of the classroom to verify if the user registered count sits to the course
+    //Return true if the user registered correctly the count of sits, otherwise return false
     private boolean verificarCantidadAsientos(int cantidadAsientos[]) {
-        //Verificar si la cantidad de asientos por cada aula es distinta de 0 para mostrar mensaje de que se obtuvieron valores correctamente
+        //Verify if the count of sits for each classroom if difference of 0 
         int contador;
         for (contador = 0; contador < cantidadAsientos.length; contador++) {
             if (cantidadAsientos[contador] == 0) {
                 break;
             }
         }
-        //Si el contador es igual al largo del vector significa que cada elemento del vector es distinto de cero lo cual es correcto
+        //If the counter is equals to the length of the array is to the each element of the array is difference to 0, that is 
+        //The user registered the count of sits correctly
         return contador == cantidadAsientos.length;
     }
-
+    
+    //Method to reset the data charged of this JFrame when the window is opened or a new Course had created correctly
     private void reiniciarDatos() {
         cargarTabla();
         txtNombreCurso.setText("");
@@ -331,28 +335,32 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
         }
     }
 
+    //Method to upload the JTable "tblMaterias" with the all subjects from the data base
     private void cargarTabla() {
         tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.getMateriaI().leerListEntidad()));
         tblMaterias.setRowHeight(20);
 
     }
-
+    
     @Override
     public void dispose() {
         super.dispose();
         panelInicial.recargarDatos();
     }
-
+    
+    //Listener of the button "btnCrearCursoNuevo", that is used to create a new Course 
     private void btnCrearCursoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoNuevoActionPerformed
-        // TODO add your handling code here:
         List<Materia> materias = new ArrayList<>();
-
+        
+        //First saves in a list te subjects selected for the user in the JTable
         for (int i = 0; i < tblMaterias.getRowCount(); i++) {
             boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
             if (seleccionado) {
                 materias.add(control.getMateriaI().leerEntidad((long) tblMaterias.getValueAt(i, 1)));
             }
         }
+        
+        //Verify if the previous List is empty, is if that is false be created a new Course
         if (materias.isEmpty()) {
             mostrarInformacion(this, "Selecciona al menos una materia", "Error");
         } else {
@@ -365,9 +373,9 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
             }
         }
     }//GEN-LAST:event_btnCrearCursoNuevoActionPerformed
-
+    
+    //Listener of the button "btnRellenarAsientos" to get the count of sits for each classroom selected by the user
     private void btnRellenarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRellenarAsientosActionPerformed
-        // TODO add your handling code here:
         if (txtNombreCurso.getText().equals("")) {
             mostrarInformacion(this, "Escribe el nombre del curso", "Error");
         } else {
@@ -410,7 +418,8 @@ public class CrearCursos extends javax.swing.JFrame implements Mensajes, ModeloT
 
         }
     }//GEN-LAST:event_btnRellenarAsientosActionPerformed
-
+    
+    //-------Listeners------//
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
         panelInicial.recargarDatos();

@@ -1,6 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import java.awt.Color;
 import javax.swing.SpinnerNumberModel;
 
@@ -10,7 +10,7 @@ import javax.swing.SpinnerNumberModel;
  */
 public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensajes, Utils {
 
-    private Controladora control;
+    private ControlDAO control;
     private Long idEstudiante;
     private VerEditarEstudiante verEditarEstudiante;
 
@@ -18,7 +18,7 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
         initComponents();
     }
 
-    public CrearPago(Controladora control, Long idEstudiante, VerEditarEstudiante verEditarEstudiante) {
+    public CrearPago(ControlDAO control, Long idEstudiante, VerEditarEstudiante verEditarEstudiante) {
         this.control = control;
         this.idEstudiante = idEstudiante;
         this.verEditarEstudiante = verEditarEstudiante;
@@ -43,8 +43,8 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
         lblMatricula3 = new javax.swing.JLabel();
         lblMatricula4 = new javax.swing.JLabel();
         int valorInicialModelPago = 1;
-        if (!control.leerListInstitucion().isEmpty()) {
-            valorInicialModelPago = Integer.valueOf(control.leerInstitucion(ID_INSTITUCION).getCostoColegiatura());
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            valorInicialModelPago = Integer.valueOf(control.getInstitucionI().leerEntidad(ID_INSTITUCION).getCostoColegiatura());
         }
 
         SpinnerNumberModel model = new SpinnerNumberModel(valorInicialModelPago, 1, 70, 1);
@@ -87,16 +87,11 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
         cmbMes.setBackground(new java.awt.Color(180, 180, 180));
         cmbMes.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
-        if (!control.leerListInstitucion().isEmpty()) {
-            cmbMes.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getMonthValue()));
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            cmbMes.setSelectedItem(obtenerMesPorNumero(control.getInstitucionI().leerEntidad(ID_INSTITUCION).getFechaFinalCiclo().getMonthValue()));
         }
         cmbMes.setBorder(null);
         cmbMes.setOpaque(false);
-        cmbMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMesActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -258,19 +253,10 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGenerarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPagoActionPerformed
-        int montoColegiatura = (int) spnMontoPagar.getValue();
-        control.crearPago(montoColegiatura, (String) cmbMes.getSelectedItem(), idEstudiante);
-        control.verificarEstadoMatricula(idEstudiante);
-        mostrarInformacion(this, "Pago generado correctamente", "Exito");
-        this.dispose();
-        verEditarEstudiante.cargarDatos();
-    }//GEN-LAST:event_btnGenerarPagoActionPerformed
-
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        this.dispose();
-        verEditarEstudiante.cargarDatos();
-    }//GEN-LAST:event_btnRegresarActionPerformed
+    //Method to upload the name of the Student selected
+    private void cargarNombre() {
+        lblEstudiante.setText(control.getEstudianteI().leerEntidad(idEstudiante).getNombre());
+    }
 
     @Override
     public void dispose() {
@@ -278,6 +264,22 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
         verEditarEstudiante.cargarDatos();
     }
     
+    //Listener of the button "btnGenerarPago" to create a new tuition to a student
+    private void btnGenerarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPagoActionPerformed
+        int montoColegiatura = (int) spnMontoPagar.getValue();
+        control.getPagoI().crearPago(montoColegiatura, (String) cmbMes.getSelectedItem(), idEstudiante);
+        control.getEstudianteI().verificarEstadoMatricula(idEstudiante);
+        mostrarInformacion(this, "Pago generado correctamente", "Exito");
+        this.dispose();
+        verEditarEstudiante.cargarDatos();
+    }//GEN-LAST:event_btnGenerarPagoActionPerformed
+    
+    //--------Listeners------//
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.dispose();
+        verEditarEstudiante.cargarDatos();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     private void btnGenerarPagoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarPagoMouseEntered
         btnGenerarPago.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnGenerarPagoMouseEntered
@@ -293,14 +295,6 @@ public class CrearPago extends javax.swing.JFrame implements ModeloTabla, Mensaj
     private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
         btnRegresar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegresarMouseExited
-
-    private void cmbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMesActionPerformed
-
-    private void cargarNombre() {
-        lblEstudiante.setText(control.leerEstudiante(idEstudiante).getNombre());
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenerarPago;

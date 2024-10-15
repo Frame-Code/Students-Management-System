@@ -1,7 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.LOGICA.Controladora;
-import static java.awt.SystemColor.control;
 import java.awt.Component;
 import javax.swing.JComboBox;
 

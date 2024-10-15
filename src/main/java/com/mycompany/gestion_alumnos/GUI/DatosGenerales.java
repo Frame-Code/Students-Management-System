@@ -1,6 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import java.awt.Color;
 import java.time.LocalDate;
 import javax.swing.SpinnerNumberModel;
@@ -9,16 +9,16 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author Frame-Code
  */
-public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Utils{
+public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Utils {
 
-    private Controladora control;
+    private ControlDAO control;
     private Principal principal;
 
     public DatosGenerales() {
         initComponents();
     }
 
-    public DatosGenerales(Controladora control, Principal principal) {
+    public DatosGenerales(ControlDAO control, Principal principal) {
         this.control = control;
         this.principal = principal;
         this.initComponents();
@@ -110,11 +110,6 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Util
 
         txtNombreInstitucion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(64, 64, 64), 1, true));
         txtNombreInstitucion.setOpaque(false);
-        txtNombreInstitucion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreInstitucionActionPerformed(evt);
-            }
-        });
 
         lblValorPagado.setBackground(new java.awt.Color(0, 0, 0));
         lblValorPagado.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -166,11 +161,6 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Util
         cmbMesInicioCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
         cmbMesInicioCiclo.setBorder(null);
         cmbMesInicioCiclo.setOpaque(false);
-        cmbMesInicioCiclo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMesInicioCicloActionPerformed(evt);
-            }
-        });
 
         spnAnioInicioCiclo.setBorder(null);
         spnAnioInicioCiclo.setOpaque(false);
@@ -479,6 +469,28 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Util
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public final void cargarDatos() {
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            Long idInstitucion = control.getInstitucionI().leerListEntidad().get(control.getInstitucionI().leerListEntidad().size() - 1).getId();
+            LocalDate inicioCiclo = control.getInstitucionI().leerEntidad(idInstitucion).getFechaInicioCiclo();
+            LocalDate finalCiclo = control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo();
+
+            txtNombreInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getNombreInstitucion());
+            txtTipoInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getTipoInstitucion());
+            spnValorMatricula.setValue(Integer.valueOf(control.getInstitucionI().leerEntidad(idInstitucion).getCostoMatricula()));
+            spnValorColegiatura.setValue(control.getInstitucionI().leerEntidad(idInstitucion).getCostoColegiatura());
+
+            spnDiaInicioCiclo.setValue(control.getInstitucionI().leerEntidad(idInstitucion).getFechaInicioCiclo().getDayOfMonth());
+            spnAnioInicioCiclo.setValue(control.getInstitucionI().leerEntidad(idInstitucion).getFechaInicioCiclo().getYear());
+            cmbMesInicioCiclo.setSelectedItem(obtenerMesPorNumero(control.getInstitucionI().leerEntidad(idInstitucion).getFechaInicioCiclo().getMonthValue()));
+
+            spnDiaFinalCiclo.setValue(control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getDayOfMonth());
+            cmbMesFinalCiclo.setSelectedItem(obtenerMesPorNumero(control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getMonthValue()));
+            spnAnioFinalCiclo.setValue(control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getYear());
+
+        }
+    }
+
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         LocalDate inicioCiclo = LocalDate.of((int) spnAnioInicioCiclo.getValue(),
                 obtenerMes(String.valueOf(cmbMesInicioCiclo.getSelectedItem())),
@@ -486,41 +498,17 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Util
         LocalDate finalCiclo = LocalDate.of((int) spnAnioFinalCiclo.getValue(),
                 obtenerMes(String.valueOf(cmbMesFinalCiclo.getSelectedItem())),
                 (int) spnDiaFinalCiclo.getValue());
-        control.crearInstitucion(txtTipoInstitucion.getText(), txtNombreInstitucion.getText(), String.valueOf(spnValorMatricula.getValue()), (Integer) spnValorColegiatura.getValue(), inicioCiclo, finalCiclo);
+        control.getInstitucionI().crearInstitucion(txtTipoInstitucion.getText(), txtNombreInstitucion.getText(),
+                String.valueOf(spnValorMatricula.getValue()), (Integer) spnValorColegiatura.getValue(), inicioCiclo, finalCiclo);
         mostrarInformacion(this, "Datos registrados correctamente", "Exito");
-        Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size() - 1).getId();
-        principal.lblNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
-        principal.lblTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
+        Long idInstitucion = control.getInstitucionI().leerListEntidad().get(control.getInstitucionI().leerListEntidad().size() - 1).getId();
+        principal.lblNombreInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getNombreInstitucion());
+        principal.lblTipoInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getTipoInstitucion());
         this.cargarDatos();
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    public final void cargarDatos() {
-        if (!control.leerListInstitucion().isEmpty()) {
-            Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size() - 1).getId();
-            LocalDate inicioCiclo = control.leerInstitucion(idInstitucion).getFechaInicioCiclo();
-            LocalDate finalCiclo = control.leerInstitucion(idInstitucion).getFechaFinalCiclo();
-            
-            txtNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
-            txtTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
-            spnValorMatricula.setValue(Integer.valueOf(control.leerInstitucion(idInstitucion).getCostoMatricula()));
-            spnValorColegiatura.setValue(control.leerInstitucion(idInstitucion).getCostoColegiatura());
-            
-            spnDiaInicioCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaInicioCiclo().getDayOfMonth());
-            spnAnioInicioCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaInicioCiclo().getYear());
-            cmbMesInicioCiclo.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaInicioCiclo().getMonthValue()));
-            
-            spnDiaFinalCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth());
-            cmbMesFinalCiclo.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue()));
-            spnAnioFinalCiclo.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear());
-        
-        }
-    }
-
-    private void txtNombreInstitucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreInstitucionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreInstitucionActionPerformed
-
+    
+    //--------Listeners------//
     private void btnRegistrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseEntered
         btnRegistrar.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnRegistrarMouseEntered
@@ -528,10 +516,6 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Util
     private void btnRegistrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseExited
         btnRegistrar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegistrarMouseExited
-
-    private void cmbMesInicioCicloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesInicioCicloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMesInicioCicloActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
