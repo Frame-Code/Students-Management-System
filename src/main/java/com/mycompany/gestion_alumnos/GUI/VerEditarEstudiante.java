@@ -1,6 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import javax.swing.SpinnerNumberModel;
 public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes, ModeloTabla {
 
     private Long idEstudiante;
-    private Controladora control;
+    private ControlDAO control;
     private ListadoEstudiantesAula listadoEstudiantesAula;
     private SpinnerNumberModel modelValor;
     private CrearPago crearPago;
@@ -22,7 +22,7 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         initComponents();
     }
 
-    public VerEditarEstudiante(Long idEstudiante, Controladora control, ListadoEstudiantesAula listadoEstudiantesAula) {
+    public VerEditarEstudiante(Long idEstudiante, ControlDAO control, ListadoEstudiantesAula listadoEstudiantesAula) {
         this.modelValor = new SpinnerNumberModel(1, 1, 500, 1);
         this.idEstudiante = idEstudiante;
         this.control = control;

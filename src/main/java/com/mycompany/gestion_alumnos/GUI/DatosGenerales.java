@@ -468,12 +468,11 @@ public class DatosGenerales extends javax.swing.JPanel implements Mensajes, Util
                 .addContainerGap(61, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Method to upload the data of the institution created from the data base
     public final void cargarDatos() {
         if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
             Long idInstitucion = control.getInstitucionI().leerListEntidad().get(control.getInstitucionI().leerListEntidad().size() - 1).getId();
-            LocalDate inicioCiclo = control.getInstitucionI().leerEntidad(idInstitucion).getFechaInicioCiclo();
-            LocalDate finalCiclo = control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo();
 
             txtNombreInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getNombreInstitucion());
             txtTipoInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getTipoInstitucion());

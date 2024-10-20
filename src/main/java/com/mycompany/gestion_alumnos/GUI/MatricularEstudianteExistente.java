@@ -1,7 +1,7 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -18,7 +17,7 @@ import javax.swing.SpinnerNumberModel;
  */
 public class MatricularEstudianteExistente extends javax.swing.JPanel implements ModeloTabla, Mensajes, Utils {
 
-    private Controladora control;
+    private ControlDAO control;
     private Long idCurso;
     private final LocalDate fechaActual = LocalDate.now();
     private final int anioActual = fechaActual.getYear();
@@ -28,12 +27,12 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         initComponents();
     }
 
-    public MatricularEstudianteExistente(Controladora control) {
+    public MatricularEstudianteExistente(ControlDAO control) {
         this.control = control;
-        if(control.leerListCursos().isEmpty()) {
+        if(control.getCursoI().leerListEntidad().isEmpty()) {
             this.idCurso = null;
         } else {
-            this.idCurso = control.leerListCursos().get(0).getId();
+            this.idCurso = control.getCursoI().leerListEntidad().get(0).getId();
         }
         initComponents();
     }
@@ -68,8 +67,8 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         lblMatricula = new javax.swing.JLabel();
         lblFechaVencimiento = new javax.swing.JLabel();
         int valorInicialModelDia = 1;
-        if (!control.leerListInstitucion().isEmpty()) {
-            valorInicialModelDia = control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getDayOfMonth();
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            valorInicialModelDia = control.getInstitucionI().leerEntidad(ID_INSTITUCION).getFechaFinalCiclo().getDayOfMonth();
         }
 
         SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(valorInicialModelDia, 1, 31, 1);
@@ -77,16 +76,16 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         int valorInicialModelAnio = anioActual;
-        if (!control.leerListInstitucion().isEmpty()) {
-            valorInicialModelAnio = control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getYear();
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            valorInicialModelAnio = control.getInstitucionI().leerEntidad(ID_INSTITUCION).getFechaFinalCiclo().getYear();
         }
         modelAnioVencimiento.setValue(valorInicialModelAnio);
         spnAnioMatricula = new javax.swing.JSpinner(modelAnioVencimiento);
         jLabel19 = new javax.swing.JLabel();
         lblValorPagado = new javax.swing.JLabel();
         int valorInicialModelPago = 1;
-        if (!control.leerListInstitucion().isEmpty()) {
-            valorInicialModelPago = Integer.valueOf(control.leerInstitucion(ID_INSTITUCION).getCostoMatricula());
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            valorInicialModelPago = Integer.valueOf(control.getInstitucionI().leerEntidad(ID_INSTITUCION).getCostoMatricula());
         }
 
         SpinnerNumberModel modelPago = new SpinnerNumberModel(valorInicialModelPago, 1, 500, 1);
@@ -334,8 +333,8 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         cmbMesMatricula.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesMatricula.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMesMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
-        if (!control.leerListInstitucion().isEmpty()) {
-            cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(ID_INSTITUCION).getFechaFinalCiclo().getMonthValue()));
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.getInstitucionI().leerEntidad(ID_INSTITUCION).getFechaFinalCiclo().getMonthValue()));
         }
         cmbMesMatricula.setBorder(null);
         cmbMesMatricula.setEnabled(false);
@@ -491,13 +490,13 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if(!control.leerListEstudiantes().isEmpty()) {
+        if(!control.getEstudianteI().leerListEntidad().isEmpty()) {
             if (isNumber(txtCedulaBusqueda.getText())) {
                 Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
                 boolean isRegistered = false;
                 List<Estudiante> estudianteBusqueda = new ArrayList<>();
 
-                for (Estudiante estudiante : control.leerListEstudiantes()) {
+                for (Estudiante estudiante : control.getEstudianteI().leerListEntidad()) {
                     System.out.println(estudiante.getAula());
                     if (estudiante.getAula() == null) {
                         System.out.println("entro nuelo");
@@ -512,7 +511,7 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
                 }
 
                 if (isRegistered) {
-                    estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
+                    estudianteBusqueda.add(control.getEstudianteI().leerEntidad(idEstudianteBusqueda));
                     tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
                     tblEstudianteEncontrado.setRowHeight(20);
                     this.habilitarOpcionesComprobacion();
@@ -533,10 +532,9 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
     private void btnComprobarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadActionPerformed
         if (cmbCursos.getSelectedItem() != null && cmbAulas.getSelectedItem() != null) {
             String nombreAula = String.valueOf(cmbAulas.getSelectedItem());
-            idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
+            idCurso = control.getCursoI().leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
 
-            //Condicional que puede cambiar
-            if (control.obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
+            if (control.getCursoI().obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
                 mostrarInformacion(this, "Hay disponibilidad en el aula!", "Exito");
                 habilitarOpcionesGenerarMatricula();
             } else {
@@ -553,20 +551,20 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
     private void cmbCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursosActionPerformed
         String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
         cmbAulas.removeAllItems();
-        for (Aula aula : control.obtenerListAulasDeCurso(control.leerCurso(nombreCurso).getId())) {
+        for (Aula aula : control.getCursoI().obtenerListAulasDeCurso(control.getCursoI().leerCurso(nombreCurso).getId())) {
             cmbAulas.addItem(aula.getNombre());
         }
     }//GEN-LAST:event_cmbCursosActionPerformed
 
     private void btnGenerarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaActionPerformed
         Long idEstudiante = (Long) tblEstudianteEncontrado.getValueAt(0, 0);
-        idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
+        idCurso = control.getCursoI().leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
         LocalDate fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(),
                 obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
                 (int) spnDiaMatricula.getValue());
         System.out.println(fechaVencimiento);
 
-        control.matricularEstudianteExistente(idEstudiante, idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento, String.valueOf(spnCantidadPagado.getValue()));
+        control.getEstudianteI().matricularEstudianteExistente(idEstudiante, idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento, String.valueOf(spnCantidadPagado.getValue()));
         mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
         this.limpiar();
         this.bloquearUltimasOpciones();
@@ -598,7 +596,7 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
 
     public final void cargarCmbCursos() {
         if (isEmptyCombo(cmbCursos)) {
-            for (Curso curso : control.leerListCursos()) {
+            for (Curso curso : control.getCursoI().leerListEntidad()) {
                 cmbCursos.addItem(curso.getNombre());
             }
         }
@@ -608,7 +606,7 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         if (isEmptyCombo(cmbAulas)) {
             String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
             cmbAulas.removeAllItems();
-            for (Aula aula : control.obtenerListAulasDeCurso(control.leerCurso(nombreCurso).getId())) {
+            for (Aula aula : control.getCursoI().obtenerListAulasDeCurso(control.getCursoI().leerCurso(nombreCurso).getId())) {
                 cmbAulas.addItem(aula.getNombre());
             }
         }

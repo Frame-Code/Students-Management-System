@@ -95,11 +95,6 @@ public class ListadoEstudiantesAnulados extends javax.swing.JPanel implements Me
         );
 
         jPanel6.setBackground(new java.awt.Color(180, 180, 180));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel6MouseEntered(evt);
-            }
-        });
 
         btnRegresar.setBackground(new java.awt.Color(63, 72, 100));
         btnRegresar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -253,7 +248,39 @@ public class ListadoEstudiantesAnulados extends javax.swing.JPanel implements Me
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    //Method to be called when is necessary delete a student or delete all students
+      private void eliminarEstudiante(JTable tbl) {
+        if (tblEstudiantes.getRowCount() > 0) {
+            if (tblEstudiantes.getSelectedRow() != -1) {
+                int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el estudiante permanentemente?", "Eliminar estudiante");
+                if (respuesta == SI) {
+                    control.getEstudianteI().eliminarEstudianteAnulado((Long) tbl.getValueAt(tbl.getSelectedRow(), 0));
+                    mostrarInformacion(this, "Estudiante eliminado correctamente", "Exito");
+                    cargarTablaEstudiantes();
+                }
+            } else {
+                mostrarInformacion(this, "Selecciona un estudiante", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "Tabla vacia", "Error");
+        }
+    }
+    
+      //Method to show the frame "openFrameEditarEstudiante"
+    private void openFrameEditarEstudiante(JTable tbl) {
+        verAnulado = new VerEstudianteAnulado((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
+        verAnulado.setLocationRelativeTo(this);
+        verAnulado.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+    
+    //Method to upload the list of students
+    public final void cargarTablaEstudiantes() {
+        tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.getEstudianteI().obtenerListaEstudiantesAnulados()));
+        tblEstudiantes.setRowHeight(20);
+    }
 
+    //Listener from the button "btnEliminarEstudiante" to call the method "eliminarEstudiante" to delete a student
     private void btnEliminarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEstudianteActionPerformed
         if (tblEstudiantes.getRowCount() > 0) {
             if (tblEstudiantes.getSelectedRow() != -1) {
@@ -265,42 +292,27 @@ public class ListadoEstudiantesAnulados extends javax.swing.JPanel implements Me
             mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarEstudianteActionPerformed
-
-    private void eliminarEstudiante(JTable tbl) {
-        if (tblEstudiantes.getRowCount() > 0) {
-            if (tblEstudiantes.getSelectedRow() != -1) {
-                int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el estudiante permanentemente?", "Eliminar estudiante");
-                if (respuesta == SI) {
-                    control.eliminarEstudianteAnulado((Long) tbl.getValueAt(tbl.getSelectedRow(), 0));
-                    mostrarInformacion(this, "Estudiante eliminado correctamente", "Exito");
-                    cargarTablaEstudiantes();
-                }
-            } else {
-                mostrarInformacion(this, "Selecciona un estudiante", "Error");
-            }
-        } else {
-            mostrarInformacion(this, "Tabla vacia", "Error");
-        }
-    }
-
+    
+    //Listener from the button "btnEliminarTodos"  to delete all students
     private void btnEliminarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTodosActionPerformed
         if (tblEstudiantes.getRowCount() > 0) {
-                int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar todos los estudiantes?", "Eliminar estudiantes");
-                int nElementosTabla = tblEstudiantes.getRowCount();
-                if (respuesta == SI) {
-                    for (int i = 0; i < nElementosTabla; i++) {
-                        control.eliminarEstudianteAnulado((Long) tblEstudiantes.getValueAt(i, 0));
-                    }
-                    mostrarInformacion(this, "Estudiantes eliminados correctamente", "Exito");
-                    this.cargarTablaEstudiantes();
+            int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar todos los estudiantes?", "Eliminar estudiantes");
+            int nElementosTabla = tblEstudiantes.getRowCount();
+            if (respuesta == SI) {
+                for (int i = 0; i < nElementosTabla; i++) {
+                    control.getEstudianteI().eliminarEstudianteAnulado((Long) tblEstudiantes.getValueAt(i, 0));
                 }
+                mostrarInformacion(this, "Estudiantes eliminados correctamente", "Exito");
+                this.cargarTablaEstudiantes();
+            }
         } else {
             mostrarInformacion(this, "Tabla vacia", "Error");
         }
 
 
     }//GEN-LAST:event_btnEliminarTodosActionPerformed
-
+    
+    //Listener to the button "btnRegresar" to go back 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.setVisible(false);
         principal.pnlPrincipalData.removeAll();
@@ -308,7 +320,8 @@ public class ListadoEstudiantesAnulados extends javax.swing.JPanel implements Me
         consultarEstudiantes.setVisible(true);
         consultarEstudiantes.cargarTablaCursos();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+    
+    //Listener to the button "btnVerEditarEstudiante" to show the frame "VerEditarEstudiante"
     private void btnVerEditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteActionPerformed
         if (tblEstudiantes.getRowCount() > 0) {
             if (tblEstudiantes.getSelectedRow() != -1) {
@@ -321,18 +334,15 @@ public class ListadoEstudiantesAnulados extends javax.swing.JPanel implements Me
         }
     }//GEN-LAST:event_btnVerEditarEstudianteActionPerformed
 
+    //listener to the Jtable "tblEstudiante" to show the fram "VerEditarEstudiante" when a row from the table
+    //is clicked 2 times
     private void tblEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstudiantesMouseClicked
         if (evt.getClickCount() == 2) {
             openFrameEditarEstudiante(tblEstudiantes);
         }
-
     }//GEN-LAST:event_tblEstudiantesMouseClicked
-
-
-    private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel6MouseEntered
-
+    
+    //------Listeners------//
     private void btnVerEditarEstudianteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteMouseExited
         btnVerEditarEstudiante.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnVerEditarEstudianteMouseExited
@@ -364,17 +374,6 @@ public class ListadoEstudiantesAnulados extends javax.swing.JPanel implements Me
     private void btnEliminarTodosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarTodosMouseExited
         btnEliminarTodos.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnEliminarTodosMouseExited
-
-    private void openFrameEditarEstudiante(JTable tbl) {
-        verAnulado = new VerEstudianteAnulado((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
-        verAnulado.setLocationRelativeTo(this);
-        verAnulado.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    }
-
-    public final void cargarTablaEstudiantes() {
-        tblEstudiantes.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAnulados()));
-        tblEstudiantes.setRowHeight(20);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarEstudiante;

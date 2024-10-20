@@ -237,11 +237,6 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         );
 
         jPanel6.setBackground(new java.awt.Color(180, 180, 180));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel6MouseEntered(evt);
-            }
-        });
 
         btnRegresar.setBackground(new java.awt.Color(63, 72, 100));
         btnRegresar.setFont(new java.awt.Font("Waree", 1, 12)); // NOI18N
@@ -413,14 +408,53 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    //This method is used to delete a student from the data base 
+    private void eliminarEstudiante(JTable tbl) {
+        int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el estudiante permanentemente?", "Eliminar estudiante");
+        if (respuesta == SI) {
+            control.getEstudianteI().eliminar((Long) tbl.getValueAt(tbl.getSelectedRow(), 0));
+            mostrarInformacion(this, "Estudiante eliminado correctamente", "Exito");
+            cargarTablaEstudiantes();
+        }
+    }
+    
+    //This method is used to show the frame "VerEditarEstudiante"
+    private void openFrameEditarEstudiante(JTable tbl) {
+        verEditarEstudiante = new VerEditarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
+        verEditarEstudiante.setVisible(true);
+        verEditarEstudiante.setLocationRelativeTo(this);
+        verEditarEstudiante.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+    
+    //This method is used to upload at the JTable "tblEstudiante" the list of student of a classroom
+    public final void cargarTablaEstudiantes() {
+        tblEstudiantes.setModel(obtenerModeloTablaEstudiantesDetallado(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.getEstudianteI().obtenerListaEstudiantesAula(idAula)));
+        tblEstudiantes.setRowHeight(20);
+    }
+    
+    //This method is used to upload the state of registration from each student to show it at the column
+    //"Estado" from the JTable
+    public final void cargarEstadoMatricula() {
+        for (Estudiante estudiante : control.getEstudianteI().obtenerListaEstudiantesAula(idAula)) {
+            control.getEstudianteI().verificarEstadoMatricula(estudiante.getId());
+        }
+    }
 
+    //This method upload the name of the classroom on this JPanel
+    private void cargarNombre() {
+        lblAula.setText(control.getAulaI().leerEntidad(idAula).getNombre());
+    }
+    
+    //Listener to the button "btnBuscar" is used when the user want search a student using his id
+    //To show it on the JTable "tblEstudianteEncontrado"
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (!control.obtenerListaEstudiantesAula(idAula).isEmpty()) {
+        if (!control.getEstudianteI().obtenerListaEstudiantesAula(idAula).isEmpty()) {
             if (isNumber(txtCedulaBusqueda.getText())) {
                 Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
                 boolean isRegistered = true;
                 List<Estudiante> estudianteBusqueda = new ArrayList<>();
-                for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
+                for (Estudiante estudiante : control.getEstudianteI().obtenerListaEstudiantesAula(idAula)) {
                     if (estudiante.getId().equals(idEstudianteBusqueda)) {
                         isRegistered = true;
                         break;
@@ -430,7 +464,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
                 }
 
                 if (isRegistered) {
-                    estudianteBusqueda.add(control.leerEstudiante(idEstudianteBusqueda));
+                    estudianteBusqueda.add(control.getEstudianteI().leerEntidad(idEstudianteBusqueda));
                     tblEstudianteEncontrado.setModel(obtenerModeloTablaEstudiantes(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, estudianteBusqueda));
                     tblEstudianteEncontrado.setRowHeight(20);
                 } else {
@@ -443,7 +477,8 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    
+    //Listener to the button "btnEliminarEstudiante" to delete a student select on the JTable
     private void btnEliminarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEstudianteActionPerformed
         if (tblEstudianteEncontrado.getRowCount() > 0 || tblEstudiantes.getRowCount() > 0) {
             if (tblEstudianteEncontrado.getSelectedRow() != -1) {
@@ -457,21 +492,13 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarEstudianteActionPerformed
-
-    private void eliminarEstudiante(JTable tbl) {
-        int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el estudiante permanentemente?", "Eliminar estudiante");
-        if (respuesta == SI) {
-            control.eliminarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0));
-            mostrarInformacion(this, "Estudiante eliminado correctamente", "Exito");
-            cargarTablaEstudiantes();
-        }
-    }
-
+    
+    //Listener to the button "btnAnularMatriculas" to annul all registration from the all students of a classroo
     private void btnAnularMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculasActionPerformed
         if (tblEstudianteEncontrado.getRowCount() > 0 || tblEstudiantes.getRowCount() > 0) {
             int respuesta = confirmarInformacion(this, "¿Seguro deseas anular todas las matriculas?", "Anular matriculas");
             if (respuesta == SI) {
-                control.anularMatriculas(idAula);
+                control.getEstudianteI().anularMatriculas(idAula);
                 mostrarInformacion(this, "Matriculas anuladas completamente", "Exito");
                 cargarTablaEstudiantes();
             }
@@ -480,6 +507,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         }
     }//GEN-LAST:event_btnAnularMatriculasActionPerformed
 
+    //Listener to the button "btnRegresar" to go back
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.setVisible(false);
         principal.pnlPrincipalData.removeAll();
@@ -488,6 +516,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         consultarEstudiantes.cargarTablaCursos();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    //Listener to the button "btnVerEditarEstudiante" to show the frame "VerEditarEstudiante"
     private void btnVerEditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteActionPerformed
         if (tblEstudianteEncontrado.getRowCount() > 0 || tblEstudiantes.getRowCount() > 0) {
             if (tblEstudianteEncontrado.getSelectedRow() != -1) {
@@ -502,6 +531,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
         }
     }//GEN-LAST:event_btnVerEditarEstudianteActionPerformed
 
+    //Listener to the JTable "tblEstudiantes" to show the frame "VerEditarEstudiante" when a row is clicked 2 times
     private void tblEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstudiantesMouseClicked
         if (tblEstudianteEncontrado.getRowCount() > 0) {
             if (tblEstudianteEncontrado.getRowCount() != -1) {
@@ -514,6 +544,7 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
 
     }//GEN-LAST:event_tblEstudiantesMouseClicked
 
+    //Listener to the JTable "tblEstudianteEncontrado" to show the frame "VerEditarEstudiante" when a row is clicked 2 times
     private void tblEstudianteEncontradoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstudianteEncontradoMouseClicked
         if (tblEstudiantes.getRowCount() > 0) {
             if (tblEstudiantes.getRowCount() != -1) {
@@ -524,14 +555,8 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
             openFrameEditarEstudiante(tblEstudianteEncontrado);
         }
     }//GEN-LAST:event_tblEstudianteEncontradoMouseClicked
-
-    public final void cargarEstadoMatricula() {
-        for (Estudiante estudiante : control.obtenerListaEstudiantesAula(idAula)) {
-            control.verificarEstadoMatricula(estudiante.getId());
-        }
-    }
-
-
+    
+    //----------Listeners----------
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnBuscarMouseEntered
@@ -539,10 +564,6 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
         btnBuscar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnBuscarMouseExited
-
-    private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel6MouseEntered
 
     private void btnVerEditarEstudianteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarEstudianteMouseExited
         btnVerEditarEstudiante.setBackground(new Color(63, 72, 100));
@@ -575,22 +596,6 @@ public class ListadoEstudiantesAula extends javax.swing.JPanel implements Mensaj
     private void btnAnularMatriculasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculasMouseExited
         btnAnularMatriculas.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnAnularMatriculasMouseExited
-
-    private void openFrameEditarEstudiante(JTable tbl) {
-        verEditarEstudiante = new VerEditarEstudiante((Long) tbl.getValueAt(tbl.getSelectedRow(), 0), control, this);
-        verEditarEstudiante.setVisible(true);
-        verEditarEstudiante.setLocationRelativeTo(this);
-        verEditarEstudiante.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    }
-
-    public final void cargarTablaEstudiantes() {
-        tblEstudiantes.setModel(obtenerModeloTablaEstudiantesDetallado(new String[]{"CÉDULA", "NOMBRES", "EDAD", "ESTADO_MATRÍCULA"}, control.obtenerListaEstudiantesAula(idAula)));
-        tblEstudiantes.setRowHeight(20);
-    }
-
-    private void cargarNombre() {
-        lblAula.setText(control.leerAula(idAula).getNombre());
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnularMatriculas;
