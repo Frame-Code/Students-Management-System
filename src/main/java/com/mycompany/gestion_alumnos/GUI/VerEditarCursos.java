@@ -478,6 +478,8 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         frameAgregarMaterias.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnAgregarMateriasActionPerformed
 
+    //Listener to the button "btnEliminarMateria" to delete of the Course selected 
+    //a list of subjetcs selected at the table "tblMaterias"
     private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
         List<Materia> listMateria = new ArrayList<>();
 
@@ -502,7 +504,8 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
             mostrarInformacion(this, "No existen materias para agregar", "Error");
         }
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
-
+    
+    //Listener to the button "btnCrearAula" to show the Frame "CrearAula" to create a new Classroom to this Course selected
     private void btnCrearAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAulaActionPerformed
         CrearAula crearAula = new CrearAula(control, idCurso, this);
         crearAula.setVisible(true);
@@ -512,6 +515,8 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         consultarCursos.recargarDatos();
     }//GEN-LAST:event_btnCrearAulaActionPerformed
 
+    //Listener to the button "btnEliminarAula" to delete a classroom of this Course selected
+    //Just is deleted the classroom ifd the classroom selected haven't students registered of that
     private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
         if (tblAulas.getRowCount() > 0) {
             if (tblAulas.getSelectedRow() != -1) {
@@ -533,12 +538,14 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
             mostrarInformacion(this, "No existen Aulas para eliminar", "Error");
         }
     }//GEN-LAST:event_btnEliminarAulaActionPerformed
-
+    
+    //Listener to the button "btnRegresar" to go back
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
         consultarCursos.recargarDatos();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    //Listener to the button "btnCambiarNombre" to change the name of this Course selected
     private void btnCambiarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarNombreActionPerformed
         String nombre = obtenerInformacion(this, "Escribe el nuevo nombre", "Nuevo nombre");
         if (!nombre.equals(CANCELADO)) {
@@ -558,6 +565,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         cargarNombre();
     }//GEN-LAST:event_btnCambiarNombreActionPerformed
 
+    //Listener to the button "btnCambiarNombreAula" to change the name of the a Classroom selected
     private void btnCambiarNombreAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaActionPerformed
         if (tblAulas.getRowCount() > 0) {
             if (tblAulas.getSelectedRow() != -1) {
@@ -585,6 +593,15 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         cargarTablaAulas();
     }//GEN-LAST:event_btnCambiarNombreAulaActionPerformed
 
+   //Listener to the button "btnActualizar" to update the information of the name, the table of subjects and 
+    //the table of the classrooms
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        cargarNombre();
+        cargarTablaMaterias();
+        cargarTablaAulas();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+    
+    //---------------Listeners----------//
     private void btnAgregarMateriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMateriasMouseEntered
         btnAgregarMaterias.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnAgregarMateriasMouseEntered
@@ -640,13 +657,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
         btnActualizar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnActualizarMouseExited
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        cargarNombre();
-        cargarTablaAulas();
-        cargarTablaMaterias();
-    }//GEN-LAST:event_btnActualizarActionPerformed
-
+    
     private void btnCambiarNombreAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaMouseEntered
         btnCambiarNombreAula.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnCambiarNombreAulaMouseEntered
