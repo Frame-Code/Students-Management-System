@@ -1,18 +1,18 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
  *
- * @author frame-code
+ * @author Frame-Code
  */
-public class Principal extends javax.swing.JFrame {
+public class Principal extends javax.swing.JFrame implements Utils{
 
     private JButton BOTONES[];
-    private Controladora control;
+    private ControlDAO control;
     private MatricularNuevoEstudiante pnlMatricularNuevo;
     private MatricularEstudianteExistente pnlMatricularExistente;
     private ConsultarEstudiantes pnlConsultarEstudiantes;
@@ -24,7 +24,7 @@ public class Principal extends javax.swing.JFrame {
         this.initComponents();
     }
 
-    public Principal(Controladora control) {
+    public Principal(ControlDAO control) {
         this.initComponents();
         this.control = control;
         this.BOTONES = new JButton[]{btnMatricularNuevo, btnMatricularExistente, btnConsultaEstudiantes, btnRegistrarCursos, btnRegistrarMaterias, btnRegistrarDatos};
@@ -403,7 +403,7 @@ public class Principal extends javax.swing.JFrame {
 
     /**
      *  This method is called when the cursor is on the button and exited of the button,
-     *  maintaining the color previosly mentioned
+     *  maintaining the color previously mentioned
      * @param btn
      * @param color
      */
@@ -421,10 +421,10 @@ public class Principal extends javax.swing.JFrame {
      * registered previosly
      */
     private void cargarNombre() {
-        if(!control.leerListInstitucion().isEmpty()) {
-            Long idInstitucion = control.leerListInstitucion().get(control.leerListInstitucion().size()-1).getId();
-            lblNombreInstitucion.setText(control.leerInstitucion(idInstitucion).getNombreInstitucion());
-            lblTipoInstitucion.setText(control.leerInstitucion(idInstitucion).getTipoInstitucion());
+        if(!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            Long idInstitucion = ID_INSTITUCION;
+            lblNombreInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getNombreInstitucion());
+            lblTipoInstitucion.setText(control.getInstitucionI().leerEntidad(idInstitucion).getTipoInstitucion());
         }
     }
     
@@ -439,7 +439,7 @@ public class Principal extends javax.swing.JFrame {
     /*The following methods are the listeners of the buttons to call the methods created previously */
     private void btnMatricularNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularNuevoActionPerformed
         inicializarPanel(btnMatricularNuevo, pnlMatricularNuevo);
-        if (!control.leerListCursos().isEmpty() && !control.leerListAulas().isEmpty()) {
+        if (!control.getCursoI().leerListEntidad().isEmpty() && !control.getCursoI().leerListEntidad().isEmpty()) {
             pnlMatricularNuevo.cargarCmbCursos();
             pnlMatricularNuevo.limpiar();
         }
@@ -521,7 +521,6 @@ public class Principal extends javax.swing.JFrame {
         btnMatricularNuevo.setBackground(new java.awt.Color(39, 44, 62));
         btnMatricularNuevo.setOpaque(true);
     }//GEN-LAST:event_btnMatricularNuevoMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultaEstudiantes;

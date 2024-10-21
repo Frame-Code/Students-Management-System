@@ -1,6 +1,6 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import java.awt.Component;
 import javax.swing.JComboBox;
 
@@ -9,8 +9,8 @@ import javax.swing.JComboBox;
  * @author artist-code
  */
 public interface Utils {
-    public Controladora controladora = new Controladora();
-    public Long ID_INSTITUCION = controladora.leerListInstitucion().get(controladora.leerListInstitucion().size()-1).getId();
+    public ControlDAO controladora = new ControlDAO();
+    public Long ID_INSTITUCION = controladora.getInstitucionI().leerListEntidad().get(controladora.getInstitucionI().leerListEntidad().size()-1).getId();
     
     
     default String obtenerMesPorNumero(int mes) {

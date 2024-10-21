@@ -1,7 +1,7 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, Mensajes, Utils {
 
     private Long idCurso;
-    private Controladora control;
+    private ControlDAO control;
     private AgregarMaterias frameAgregarMaterias;
     private RegistrarConsultarCursos consultarCursos;
 
@@ -25,16 +25,16 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         frameAgregarMaterias = new AgregarMaterias();
     }
 
-    public VerEditarCursos(Controladora control, Long idCurso, RegistrarConsultarCursos consultarCursos) {
+    public VerEditarCursos(ControlDAO control, Long idCurso, RegistrarConsultarCursos consultarCursos) {
         this.control = control;
         this.idCurso = idCurso;
         this.consultarCursos = consultarCursos;
         this.initComponents();
         this.cargarNombre();
-        if(!control.leerListAulas().isEmpty()) {   
+        if(!control.getAulaI().leerListEntidad().isEmpty()) {   
             this.cargarTablaAulas();
         }
-        if(!control.leerListMaterias().isEmpty()) {
+        if(!control.getMateriaI().leerListEntidad().isEmpty()) {
             this.cargarTablaMaterias();
         }
     }
@@ -452,24 +452,40 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    //Method to upload the name of the Course
+    private void cargarNombre() {
+        lblNombreCurso.setText(control.getCursoI().leerEntidad(idCurso).getNombre());
+    }
+    
+    //Method to upload at the JTable "tblMaterias" the list of subjects from the Course selected
+    public final void cargarTablaMaterias() {
+        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.getCursoI().obtenerListMateriasDeCurso(idCurso)));
+        tblMaterias.setRowHeight(20);
+    }
 
+    //Method to upload at the JTable "tblAulas" the list of classrooms from the Course selected
+    public final void cargarTablaAulas() {
+        tblAulas.setModel(obtenerModeloTablaAulas(new String[]{"ID", "AULA", "#Asientos", "#Asientos disponibles"}, control.getCursoI().obtenerListAulasDeCurso(idCurso)));
+        tblAulas.setRowHeight(20);
+    }
+    
+    //Listener of the button "btnAgregarMaterias" to show the frame "AgregarMaterias"
     private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMateriasActionPerformed
-
-        frameAgregarMaterias = new AgregarMaterias(control, idCurso, control.obtenerListMateriasDeCurso(idCurso), this);
+        frameAgregarMaterias = new AgregarMaterias(control, idCurso, control.getCursoI().obtenerListMateriasDeCurso(idCurso), this);
         frameAgregarMaterias.setVisible(true);
         frameAgregarMaterias.setLocationRelativeTo(null);
         frameAgregarMaterias.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnAgregarMateriasActionPerformed
 
     private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
-        // TODO add your handling code here:
         List<Materia> listMateria = new ArrayList<>();
 
         if (tblMaterias.getRowCount() > 0) {
             for (int i = 0; i < tblMaterias.getRowCount(); i++) {
                 boolean seleccionado = (boolean) tblMaterias.getValueAt(i, 0);
                 if (seleccionado) {
-                    listMateria.add(control.leerMateria((long) tblMaterias.getValueAt(i, 1)));
+                    listMateria.add(control.getMateriaI().leerEntidad((long) tblMaterias.getValueAt(i, 1)));
                 }
             }
             if (listMateria.isEmpty()) {
@@ -477,7 +493,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
             } else {
                 int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la o las materias seleccionadas del curso?", "Confirmar");
                 if (respuesta == SI) {
-                    control.eliminarMateriasDeCurso(listMateria, idCurso, control.obtenerListMateriasDeCurso(idCurso));
+                    control.getCursoI().eliminarMateriasDeCurso(listMateria, idCurso, control.getCursoI().obtenerListMateriasDeCurso(idCurso));
                     mostrarInformacion(this, "Materia/s eliminada/s correctamente", "Materia/s eliminada/s!");
                     cargarTablaMaterias();
                 }
@@ -500,10 +516,10 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         if (tblAulas.getRowCount() > 0) {
             if (tblAulas.getSelectedRow() != -1) {
                 Long idAula = (Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0);
-                if (control.leerAula(idAula).getNumeroAsientosDisponibles() >= control.leerAula(idAula).getNumeroAsientosTotales()) {
+                if (control.getAulaI().leerEntidad(idAula).getNumeroAsientosDisponibles() >= control.getAulaI().leerEntidad(idAula).getNumeroAsientosTotales()) {
                     int respuesta = confirmarInformacion(this, "¿Realmente deseas borrar la/s Aulas del curso?", "Confirmar");
                     if (respuesta == SI) {
-                        control.eliminarAula(idAula);
+                        control.getAulaI().eliminar(idAula);
                         mostrarInformacion(this, "Aula eliminada correctamente", "Aula eliminada!");
                         cargarTablaAulas();
                     }
@@ -529,11 +545,11 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
             if (nombre.equals("")) {
                 mostrarInformacion(this, "No pueden haber campos vacios", "Error");
             } else {
-                if (isString(nombre, this) && control.verificarNombreDisponible(nombre, control.leerListCursos(), Curso::getNombre)) {
-                    control.cambiarNombreCurso(idCurso, nombre);
+                if (isString(nombre, this) && control.getCursoI().verificarNombreDisponible(nombre, control.getCursoI().leerListEntidad(), Curso::getNombre)) {
+                    control.getCursoI().cambiarNombreCurso(idCurso, nombre);
                     mostrarInformacion(this, "Nombre cambiado correctamente", "Cambio de nombre existoso");
                 } else {
-                    if (!control.verificarNombreDisponible(nombre, control.leerListCursos(), Curso::getNombre)) {
+                    if (!control.getCursoI().verificarNombreDisponible(nombre, control.getCursoI().leerListEntidad(), Curso::getNombre)) {
                         mostrarInformacion(this, "El curso " + nombre + " ya existe", "Error");
                     }
                 }
@@ -541,6 +557,33 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         }
         cargarNombre();
     }//GEN-LAST:event_btnCambiarNombreActionPerformed
+
+    private void btnCambiarNombreAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaActionPerformed
+        if (tblAulas.getRowCount() > 0) {
+            if (tblAulas.getSelectedRow() != -1) {
+                String nombre = obtenerInformacion(this, "Escribe el nuevo nombre", "Nuevo nombre");
+                if (!nombre.equals(CANCELADO)) {
+                    if (nombre.equals("")) {
+                        mostrarInformacion(this, "No pueden haber campos vacios", "Error");
+                    } else {
+                        if (isString(nombre, this) && control.getCursoI().verificarNombreDisponible(nombre, control.getAulaI().leerListEntidad(), Aula::getNombre)) {
+                            control.getAulaI().cambiarNombreAula((Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), nombre);
+                            mostrarInformacion(this, "Nombre cambiado correctamente", "Cambio de nombre existoso");
+                        } else {
+                            if (!control.getCursoI().verificarNombreDisponible(nombre, control.getAulaI().leerListEntidad(), Aula::getNombre)) {
+                                mostrarInformacion(this, "El aula " + nombre + " ya existe", "Error");
+                            }
+                        }
+                    }
+                }
+            } else {
+                mostrarInformacion(this, "Selecciona un aula por favor", "Error");
+            }
+        } else {
+            mostrarInformacion(this, "No existen Aulas para eliminar", "Error");
+        }
+        cargarTablaAulas();
+    }//GEN-LAST:event_btnCambiarNombreAulaActionPerformed
 
     private void btnAgregarMateriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMateriasMouseEntered
         btnAgregarMaterias.setBackground(new Color(78, 90, 126));
@@ -611,49 +654,6 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
     private void btnCambiarNombreAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaMouseExited
         btnCambiarNombreAula.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnCambiarNombreAulaMouseExited
-
-    private void btnCambiarNombreAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarNombreAulaActionPerformed
-
-        if (tblAulas.getRowCount() > 0) {
-            if (tblAulas.getSelectedRow() != -1) {
-                String nombre = obtenerInformacion(this, "Escribe el nuevo nombre", "Nuevo nombre");
-                if (!nombre.equals(CANCELADO)) {
-                    if (nombre.equals("")) {
-                        mostrarInformacion(this, "No pueden haber campos vacios", "Error");
-                    } else {
-                        if (isString(nombre, this) && control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
-                            control.cambiarNombreAula((Long) tblAulas.getValueAt(tblAulas.getSelectedRow(), 0), nombre);
-                            mostrarInformacion(this, "Nombre cambiado correctamente", "Cambio de nombre existoso");
-                        } else {
-                            if (!control.verificarNombreDisponible(nombre, control.leerListAulas(), Aula::getNombre)) {
-                                mostrarInformacion(this, "El aula " + nombre + " ya existe", "Error");
-                            }
-                        }
-                    }
-                }
-            } else {
-                mostrarInformacion(this, "Selecciona un aula por favor", "Error");
-            }
-        } else {
-            mostrarInformacion(this, "No existen Aulas para eliminar", "Error");
-        }
-        cargarTablaAulas();
-    }//GEN-LAST:event_btnCambiarNombreAulaActionPerformed
-
-    private void cargarNombre() {
-        lblNombreCurso.setText(control.leerCurso(idCurso).getNombre());
-    }
-
-    public final void cargarTablaMaterias() {
-        tblMaterias.setModel(obtenerModeloTablaMateriasSeleccion(new String[]{"SELECCIONAR", "ID", "MATERIA"}, control.obtenerListMateriasDeCurso(idCurso)));
-        tblMaterias.setRowHeight(20);
-    }
-
-    public final void cargarTablaAulas() {
-        tblAulas.setModel(obtenerModeloTablaAulas(new String[]{"ID", "AULA", "#Asientos", "#Asientos disponibles"}, control.obtenerListAulasDeCurso(idCurso)));
-        tblAulas.setRowHeight(20);
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

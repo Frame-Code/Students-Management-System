@@ -29,7 +29,7 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
 
     public MatricularEstudianteExistente(ControlDAO control) {
         this.control = control;
-        if(control.getCursoI().leerListEntidad().isEmpty()) {
+        if (control.getCursoI().leerListEntidad().isEmpty()) {
             this.idCurso = null;
         } else {
             this.idCurso = control.getCursoI().leerListEntidad().get(0).getId();
@@ -489,19 +489,124 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Method to upload the options of the JComboBox "cmbCursos" with the Courses from the data base
+    public final void cargarCmbCursos() {
+        if (isEmptyCombo(cmbCursos)) {
+            for (Curso curso : control.getCursoI().leerListEntidad()) {
+                cmbCursos.addItem(curso.getNombre());
+            }
+        }
+    }
+
+    //Method to upload the option of the JComboBox "cmbAulas" with the Classroom from the data base
+    public final void cargarCmbAulas() {
+        if (isEmptyCombo(cmbAulas)) {
+            String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
+            cmbAulas.removeAllItems();
+            for (Aula aula : control.getCursoI().obtenerListAulasDeCurso(control.getCursoI().leerCurso(nombreCurso).getId())) {
+                cmbAulas.addItem(aula.getNombre());
+            }
+        }
+    }
+    
+    //This method is used to enable graphically the option to choose a Course and a Classroom
+    private void habilitarOpcionesComprobacion() {
+        lblCurso.setForeground(new Color(23, 23, 23));
+        lblAula.setForeground(new Color(23, 23, 23));
+
+        cmbCursos.setEnabled(true);
+        cmbAulas.setEnabled(true);
+
+        btnComprobarDisponibilidad.setEnabled(true);
+        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
+    }
+
+    //This method is used to enable graphically the options to registration the student
+    private void habilitarOpcionesGenerarMatricula() {
+        lblFechaVencimiento.setForeground(new Color(23, 23, 23));
+        lblMatricula.setForeground(new Color(23, 23, 23));
+        lblValorPagado.setForeground(new Color(23, 23, 23));
+        lblMatricula2.setForeground(new Color(23, 23, 23));
+
+        spnDiaMatricula.setEnabled(true);
+        cmbMesMatricula.setEnabled(true);
+        spnAnioMatricula.setEnabled(true);
+        spnCantidadPagado.setEnabled(true);
+
+        btnGenerarMatricula.setEnabled(true);
+        btnGenerarMatricula.setBackground(new Color(63, 72, 100));
+    }
+    
+    //This method is used to disable graphically the options to registration the student
+    private void bloquearOpcionesGenerarMatricula() {
+        lblFechaVencimiento.setForeground(new Color(60, 63, 65));
+        lblMatricula.setForeground(new Color(60, 63, 65));
+        lblValorPagado.setForeground(new Color(60, 63, 65));
+        lblMatricula2.setForeground(new Color(60, 63, 65));
+
+        spnDiaMatricula.setEnabled(false);
+        cmbMesMatricula.setEnabled(false);
+        spnAnioMatricula.setEnabled(false);
+        spnCantidadPagado.setEnabled(false);
+
+        btnGenerarMatricula.setEnabled(false);
+        btnGenerarMatricula.setBackground(new Color(60, 63, 65));
+    }
+    
+    //This method disable graphically the options to choose a course and classroom and
+    //The options to registration a student
+    public void bloquearUltimasOpciones() {
+        lblCurso.setForeground(new Color(60, 63, 65));
+        lblAula.setForeground(new Color(60, 63, 65));
+        lblMatricula.setForeground(new Color(60, 63, 65));
+        lblFechaVencimiento.setForeground(new Color(60, 63, 65));
+        lblValorPagado.setForeground(new Color(60, 63, 65));
+
+        spnDiaMatricula.setEnabled(false);
+        cmbMesMatricula.setEnabled(false);
+        spnAnioMatricula.setEnabled(false);
+        spnCantidadPagado.setEnabled(false);
+
+        cmbCursos.setEnabled(false);
+        cmbAulas.setEnabled(false);
+
+        btnComprobarDisponibilidad.setEnabled(false);
+        btnGenerarMatricula.setEnabled(false);
+        btnComprobarDisponibilidad.setBackground(new Color(60, 63, 65));
+        btnGenerarMatricula.setBackground(new Color(60, 63, 65));
+    }
+    
+    //This method is used to clean the options in this JPanel
+    public final void limpiar() {
+        txtCedulaBusqueda.setText("");
+        tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
+        spnAnioMatricula.setModel(modelAnioVencimiento);
+        this.bloquearUltimasOpciones();
+
+    }
+    
+    //This method is to paint the button necessary graphically
+    private void pintarBtnSelectExited(JButton btn, Color color) {
+        if (btn.isEnabled()) {
+            btn.setBackground(color);
+        } else {
+            btn.setBackground(new java.awt.Color(60, 63, 65));
+
+        }
+        btn.setOpaque(true);
+    }
+    
+    //Listener of the button "btnBuscar" is used to find a student using his id and show it at the JTable "tblEstudianteEncontrado"
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if(!control.getEstudianteI().leerListEntidad().isEmpty()) {
+        if (!control.getEstudianteI().leerListEntidad().isEmpty()) {
             if (isNumber(txtCedulaBusqueda.getText())) {
                 Long idEstudianteBusqueda = Long.valueOf(txtCedulaBusqueda.getText());
                 boolean isRegistered = false;
                 List<Estudiante> estudianteBusqueda = new ArrayList<>();
 
                 for (Estudiante estudiante : control.getEstudianteI().leerListEntidad()) {
-                    System.out.println(estudiante.getAula());
                     if (estudiante.getAula() == null) {
-                        System.out.println("entro nuelo");
                         if (estudiante.getId().equals(idEstudianteBusqueda)) {
-                        System.out.println("entro registeres");
                             isRegistered = true;
                             break;
                         } else {
@@ -526,9 +631,12 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
                 txtCedulaBusqueda.setText("");
             }
         } else {
-            mostrarInformacion(this, "No existe ningun estudiante registrado en la base de datos", "Error");        }
+            mostrarInformacion(this, "No existe ningun estudiante registrado en la base de datos", "Error");
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    
+    //This listener is used to check the disponibility of the classrooom selected 
+    //Using the total of sits of the classroom and the total of the students registered in that
     private void btnComprobarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadActionPerformed
         if (cmbCursos.getSelectedItem() != null && cmbAulas.getSelectedItem() != null) {
             String nombreAula = String.valueOf(cmbAulas.getSelectedItem());
@@ -548,6 +656,7 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
 
     }//GEN-LAST:event_btnComprobarDisponibilidadActionPerformed
 
+    //This listener is used to upload the classrooms of the Course selected in the JComboBox "cmbCursos"
     private void cmbCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursosActionPerformed
         String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
         cmbAulas.removeAllItems();
@@ -555,7 +664,8 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
             cmbAulas.addItem(aula.getNombre());
         }
     }//GEN-LAST:event_cmbCursosActionPerformed
-
+    
+    //This listener is used to register a new Student using the information given
     private void btnGenerarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaActionPerformed
         Long idEstudiante = (Long) tblEstudianteEncontrado.getValueAt(0, 0);
         idCurso = control.getCursoI().leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
@@ -569,7 +679,8 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         this.limpiar();
         this.bloquearUltimasOpciones();
     }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
-
+    
+    //-----------Listeners----------//
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnBuscarMouseEntered
@@ -593,104 +704,6 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
     private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
         pintarBtnSelectExited(btnGenerarMatricula, new Color(63, 72, 100));
     }//GEN-LAST:event_btnGenerarMatriculaMouseExited
-
-    public final void cargarCmbCursos() {
-        if (isEmptyCombo(cmbCursos)) {
-            for (Curso curso : control.getCursoI().leerListEntidad()) {
-                cmbCursos.addItem(curso.getNombre());
-            }
-        }
-    }
-
-    public final void cargarCmbAulas() {
-        if (isEmptyCombo(cmbAulas)) {
-            String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
-            cmbAulas.removeAllItems();
-            for (Aula aula : control.getCursoI().obtenerListAulasDeCurso(control.getCursoI().leerCurso(nombreCurso).getId())) {
-                cmbAulas.addItem(aula.getNombre());
-            }
-        }
-    }
-
-    private void habilitarOpcionesComprobacion() {
-        lblCurso.setForeground(new Color(23, 23, 23));
-        lblAula.setForeground(new Color(23, 23, 23));
-
-        cmbCursos.setEnabled(true);
-        cmbAulas.setEnabled(true);
-
-        btnComprobarDisponibilidad.setEnabled(true);
-        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
-    }
-
-    private void habilitarOpcionesGenerarMatricula() {
-        lblFechaVencimiento.setForeground(new Color(23, 23, 23));
-        lblMatricula.setForeground(new Color(23, 23, 23));
-        lblValorPagado.setForeground(new Color(23, 23, 23));
-        lblMatricula2.setForeground(new Color(23, 23, 23));
-
-        spnDiaMatricula.setEnabled(true);
-        cmbMesMatricula.setEnabled(true);
-        spnAnioMatricula.setEnabled(true);
-        spnCantidadPagado.setEnabled(true);
-
-        btnGenerarMatricula.setEnabled(true);
-        btnGenerarMatricula.setBackground(new Color(63, 72, 100));
-    }
-
-    private void bloquearOpcionesGenerarMatricula() {
-        lblFechaVencimiento.setForeground(new Color(60, 63, 65));
-        lblMatricula.setForeground(new Color(60, 63, 65));
-        lblValorPagado.setForeground(new Color(60, 63, 65));
-        lblMatricula2.setForeground(new Color(60, 63, 65));
-
-        spnDiaMatricula.setEnabled(false);
-        cmbMesMatricula.setEnabled(false);
-        spnAnioMatricula.setEnabled(false);
-        spnCantidadPagado.setEnabled(false);
-
-        btnGenerarMatricula.setEnabled(false);
-        btnGenerarMatricula.setBackground(new Color(60, 63, 65));
-    }
-
-    public void bloquearUltimasOpciones() {
-        lblCurso.setForeground(new Color(60, 63, 65));
-        lblAula.setForeground(new Color(60, 63, 65));
-        lblMatricula.setForeground(new Color(60, 63, 65));
-        lblFechaVencimiento.setForeground(new Color(60, 63, 65));
-        lblValorPagado.setForeground(new Color(60, 63, 65));
-
-        spnDiaMatricula.setEnabled(false);
-        cmbMesMatricula.setEnabled(false);
-        spnAnioMatricula.setEnabled(false);
-        spnCantidadPagado.setEnabled(false);
-
-        cmbCursos.setEnabled(false);
-        cmbAulas.setEnabled(false);
-
-        btnComprobarDisponibilidad.setEnabled(false);
-        btnGenerarMatricula.setEnabled(false);
-        btnComprobarDisponibilidad.setBackground(new Color(60, 63, 65));
-        btnGenerarMatricula.setBackground(new Color(60, 63, 65));
-    }
-
-    public final void limpiar() {
-        txtCedulaBusqueda.setText("");
-        tblEstudianteEncontrado.setModel(borrarFilas(tblEstudianteEncontrado.getModel(), tblEstudianteEncontrado.getRowCount()));
-        spnAnioMatricula.setModel(modelAnioVencimiento);
-        this.bloquearUltimasOpciones();
-
-    }
-
-    private void pintarBtnSelectExited(JButton btn, Color color) {
-        if (btn.isEnabled()) {
-            btn.setBackground(color);
-        } else {
-            btn.setBackground(new java.awt.Color(60, 63, 65));
-
-        }
-        btn.setOpaque(true);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

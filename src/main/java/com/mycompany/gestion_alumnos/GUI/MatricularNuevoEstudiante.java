@@ -1,12 +1,11 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
 import java.time.LocalDate;
-import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -15,7 +14,7 @@ import javax.swing.SpinnerNumberModel;
  */
 public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Mensajes, Utils {
 
-    private Controladora control;
+    private ControlDAO control;
     private Long idCurso;
     private Long idInstitucion;
 
@@ -23,15 +22,15 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         initComponents();
     }
 
-    public MatricularNuevoEstudiante(Controladora control) {
+    public MatricularNuevoEstudiante(ControlDAO control) {
         this.control = control;
-        if(!control.leerListInstitucion().isEmpty()) {
-             this.idInstitucion = ID_INSTITUCION;
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            this.idInstitucion = ID_INSTITUCION;
         }
 
         this.initComponents();
-        if (!control.leerListAulas().isEmpty() && !control.leerListCursos().isEmpty()) {
-            this.idCurso = control.leerListCursos().get(0).getId();
+        if (!control.getAulaI().leerListEntidad().isEmpty() && !control.getCursoI().leerListEntidad().isEmpty()) {
+            this.idCurso = control.getCursoI().leerListEntidad().get(0).getId();
             this.cargarCmbCursos();
             this.limpiar();
         }
@@ -79,8 +78,8 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         jPanel3 = new javax.swing.JPanel();
         lblFechaVencimiento = new javax.swing.JLabel();
         int valorInicialModelDia = 1;
-        if (!control.leerListInstitucion().isEmpty()) {
-            valorInicialModelDia = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth();
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            valorInicialModelDia = control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getDayOfMonth();
         }
 
         SpinnerNumberModel modelDiaMatricula = new SpinnerNumberModel(valorInicialModelDia, 1, 31, 1);
@@ -88,8 +87,8 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         int valorInicialModelAnio = anioActual;
-        if (!control.leerListInstitucion().isEmpty()) {
-            valorInicialModelAnio = control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear();
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            valorInicialModelAnio = control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getYear();
         }
 
         SpinnerNumberModel modelAnioVencimiento = new SpinnerNumberModel(valorInicialModelAnio, anioActual, anioActual+100 , 1);
@@ -97,8 +96,8 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         jLabel12 = new javax.swing.JLabel();
         lblValorPagado = new javax.swing.JLabel();
         int valorInicialModelPago = 1;
-        if (!control.leerListInstitucion().isEmpty()) {
-            valorInicialModelPago = Integer.valueOf(control.leerInstitucion(idInstitucion).getCostoMatricula());
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            valorInicialModelPago = Integer.valueOf(control.getInstitucionI().leerEntidad(idInstitucion).getCostoMatricula());
         }
 
         SpinnerNumberModel modelPago = new SpinnerNumberModel(valorInicialModelPago, 1, 500, 1);
@@ -383,8 +382,8 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         cmbMesMatricula.setBackground(new java.awt.Color(180, 180, 180));
         cmbMesMatricula.setFont(new java.awt.Font("Waree", 0, 12)); // NOI18N
         cmbMesMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
-        if (!control.leerListInstitucion().isEmpty()) {
-            cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue()));
+        if (!control.getInstitucionI().leerListEntidad().isEmpty()) {
+            cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getMonthValue()));
         }
         cmbMesMatricula.setBorder(null);
         cmbMesMatricula.setEnabled(false);
@@ -495,23 +494,75 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
                 .addContainerGap(143, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
-        btnComprobarDisponibilidad.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
+     
+    /**
+     * This method just upload all the Courses of the database at the JComboBox
+     * "cmbCursos"
+     */
+    public final void cargarCmbCursos() {
+        if (isEmptyCombo(cmbCursos)) {
+            for (Curso curso : control.getCursoI().leerListEntidad()) {
+                cmbCursos.addItem(curso.getNombre());
+            }
+        }
+    }
 
-    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
-        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
+    /**
+     * This method just clean all the components of the JPanel
+     */
+    public final void limpiar() {
+        txtApellidos.setText("");
+        txtNombres.setText("");
+        txtCedula.setText("");
+        spnDiaNacimiento.setValue(1);
+        cmbMesNacimiento.setSelectedIndex(0);
+        spnAnioNacimiento.setValue(2005);
+        if (!(isEmptyCombo(cmbAulas) && isEmptyCombo(cmbAulas))) {
+            cmbCursos.setSelectedIndex(0);
+            cmbAulas.setSelectedIndex(0);
+        }
+        bloquearUltimasOpciones();
+        spnDiaMatricula.setValue(control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getDayOfMonth());
+        cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getMonthValue()));
+        spnAnioMatricula.setValue(control.getInstitucionI().leerEntidad(idInstitucion).getFechaFinalCiclo().getYear());
+        spnCantidadPagado.setValue(Integer.valueOf(control.getInstitucionI().leerEntidad(idInstitucion).getCostoMatricula()));
 
-    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
+    }
+
+    /**
+     * Method to enable the options to register students in the case to the
+     * student isn't on the database
+     */
+    private void habilitarUltimasOpciones() {
+        lblFechaVencimiento.setForeground(new Color(23, 23, 23));
+        lblValorPagado.setForeground(new Color(23, 23, 23));
+
+        spnDiaMatricula.setEnabled(true);
+        cmbMesMatricula.setEnabled(true);
+        spnAnioMatricula.setEnabled(true);
+        spnCantidadPagado.setEnabled(true);
+
+        btnGenerarMatricula.setEnabled(true);
         btnGenerarMatricula.setBackground(new Color(63, 72, 100));
-    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
+    }
 
-    private void btnGenerarMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseEntered
-        btnGenerarMatricula.setBackground(new Color(78, 90, 126));
-    }//GEN-LAST:event_btnGenerarMatriculaMouseEntered
-    
+    /**
+     * Method to disable the options to register students in the case to the
+     * student is registered on the database
+     */
+    private void bloquearUltimasOpciones() {
+        lblFechaVencimiento.setForeground(new Color(71, 71, 71));
+        lblValorPagado.setForeground(new Color(71, 71, 71));
+
+        spnDiaMatricula.setEnabled(false);
+        cmbMesMatricula.setEnabled(false);
+        spnAnioMatricula.setEnabled(false);
+        spnCantidadPagado.setEnabled(false);
+
+        btnGenerarMatricula.setEnabled(false);
+        btnGenerarMatricula.setBackground(new Color(255, 255, 255));
+    }
+
     /*
      * This is the listener of the button for check if the classroom have disponibility
      * to register a new student.
@@ -523,8 +574,8 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
         if (cmbCursos.getSelectedItem() != null && cmbAulas.getSelectedItem() != null) {
             if (!(txtNombres.getText().equals("") && txtApellidos.getText().equals("") && txtCedula.getText().equals(""))) {
                 String nombreAula = String.valueOf(cmbAulas.getSelectedItem());
-                idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
-                if (control.obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
+                idCurso = control.getCursoI().leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
+                if (control.getCursoI().obtenerAulaDeCurso(nombreAula, idCurso).getNumeroAsientosDisponibles() != 0) {
                     mostrarInformacion(this, "Hay disponibilidad en el aula!", "Exito");
                     habilitarUltimasOpciones();
                 } else {
@@ -553,12 +604,12 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
             boolean isRegistered = true;
             String nombreAula = "";
             Long numeroCedula = Long.valueOf(txtCedula.getText());
-            idCurso = control.leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
+            idCurso = control.getCursoI().leerCurso(String.valueOf(cmbCursos.getSelectedItem())).getId();
 
-            if (control.leerListEstudiantes().isEmpty()) {
+            if (control.getEstudianteI().leerListEntidad().isEmpty()) {
                 isRegistered = false;
             } else {
-                for (Estudiante estudiante : control.leerListEstudiantes()) {
+                for (Estudiante estudiante : control.getEstudianteI().leerListEntidad()) {
                     if (estudiante.getId().equals(numeroCedula)) {
                         nombreAula = estudiante.getAula().getNombre();
                         isRegistered = true;
@@ -571,16 +622,16 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
 
             if (isRegistered == false) {
                 LocalDate fechaNacimiento = LocalDate.of((int) spnAnioNacimiento.getValue(),
-                    obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())),
-                    (int) spnDiaNacimiento.getValue());
+                        obtenerMes(String.valueOf(cmbMesNacimiento.getSelectedItem())),
+                        (int) spnDiaNacimiento.getValue());
                 LocalDate fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(),
-                    obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
-                    (int) spnDiaMatricula.getValue());
+                        obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
+                        (int) spnDiaMatricula.getValue());
 
-                control.crearEstudiante(txtNombres.getText(), txtApellidos.getText(),
-                    numeroCedula, fechaNacimiento,
-                    idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento,
-                    String.valueOf(spnCantidadPagado.getValue()));
+                control.getEstudianteI().crearEstudiante(txtNombres.getText(), txtApellidos.getText(),
+                        numeroCedula, fechaNacimiento,
+                        idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento,
+                        String.valueOf(spnCantidadPagado.getValue()));
 
                 mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");
                 limpiar();
@@ -593,81 +644,33 @@ public class MatricularNuevoEstudiante extends javax.swing.JPanel implements Men
     }//GEN-LAST:event_btnGenerarMatriculaActionPerformed
 
     /**
-     * This listener of the JComboBox for the courses just upload the classroom related to the course selected on 
-     * the JComboBox of the classroom
+     * This listener of the JComboBox for the courses just upload the classroom
+     * related to the course selected on the JComboBox of the classroom
      */
     private void cmbCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursosActionPerformed
         String nombreCurso = String.valueOf(cmbCursos.getSelectedItem());
         cmbAulas.removeAllItems();
-        for (Aula aula : control.obtenerListAulasDeCurso(control.leerCurso(nombreCurso).getId())) {
+        for (Aula aula : control.getCursoI().obtenerListAulasDeCurso(control.getCursoI().leerCurso(nombreCurso).getId())) {
             cmbAulas.addItem(aula.getNombre());
         }
     }//GEN-LAST:event_cmbCursosActionPerformed
-    /**
-     * This method just upload the information of the database using the Class Controladora to read all the courses created previously
-     *
-     */
-    public final void cargarCmbCursos() {
-        if (isEmptyCombo(cmbCursos)) {
-            for (Curso curso : control.leerListCursos()) {
-                cmbCursos.addItem(curso.getNombre());
-            }
-        }
-    }
-    /**
-     * This method just clean all the components of the JPanel
-     */
-    public final void limpiar() {
-        txtApellidos.setText("");
-        txtNombres.setText("");
-        txtCedula.setText("");
-        spnDiaNacimiento.setValue(1);
-        cmbMesNacimiento.setSelectedIndex(0);
-        spnAnioNacimiento.setValue(2005);
-        if (!(isEmptyCombo(cmbAulas) && isEmptyCombo(cmbAulas))) {
-            cmbCursos.setSelectedIndex(0);
-            cmbAulas.setSelectedIndex(0);
-        }
-        bloquearUltimasOpciones();
-        spnDiaMatricula.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getDayOfMonth());
-        cmbMesMatricula.setSelectedItem(obtenerMesPorNumero(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getMonthValue()));
-        spnAnioMatricula.setValue(control.leerInstitucion(idInstitucion).getFechaFinalCiclo().getYear());
-        spnCantidadPagado.setValue(Integer.valueOf(control.leerInstitucion(idInstitucion).getCostoMatricula()));
 
-    }
-    
-    /**
-     * Method to enable the options to register students in the case to the student isn't on the database
-     */
-    private void habilitarUltimasOpciones() {
-        lblFechaVencimiento.setForeground(new Color(23, 23, 23));
-        lblValorPagado.setForeground(new Color(23, 23, 23));
+    private void btnComprobarDisponibilidadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseEntered
+        btnComprobarDisponibilidad.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseEntered
 
-        spnDiaMatricula.setEnabled(true);
-        cmbMesMatricula.setEnabled(true);
-        spnAnioMatricula.setEnabled(true);
-        spnCantidadPagado.setEnabled(true);
+    private void btnComprobarDisponibilidadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprobarDisponibilidadMouseExited
+        btnComprobarDisponibilidad.setBackground(new Color(63, 72, 100));
+    }//GEN-LAST:event_btnComprobarDisponibilidadMouseExited
 
-        btnGenerarMatricula.setEnabled(true);
+    private void btnGenerarMatriculaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseExited
         btnGenerarMatricula.setBackground(new Color(63, 72, 100));
-    }
+    }//GEN-LAST:event_btnGenerarMatriculaMouseExited
 
-    /**
-     * Method to disable the options to register students in the case to the student is registered on the database
-     */
-    private void bloquearUltimasOpciones() {
-        lblFechaVencimiento.setForeground(new Color(71, 71, 71));
-        lblValorPagado.setForeground(new Color(71, 71, 71));
-
-        spnDiaMatricula.setEnabled(false);
-        cmbMesMatricula.setEnabled(false);
-        spnAnioMatricula.setEnabled(false);
-        spnCantidadPagado.setEnabled(false);
-
-        btnGenerarMatricula.setEnabled(false);
-        btnGenerarMatricula.setBackground(new Color(255, 255, 255));
-    }
-
+    private void btnGenerarMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMatriculaMouseEntered
+        btnGenerarMatricula.setBackground(new Color(78, 90, 126));
+    }//GEN-LAST:event_btnGenerarMatriculaMouseEntered
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComprobarDisponibilidad;
     private javax.swing.JButton btnGenerarMatricula;

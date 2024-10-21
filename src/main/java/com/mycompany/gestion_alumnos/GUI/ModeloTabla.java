@@ -1,7 +1,7 @@
 package com.mycompany.gestion_alumnos.GUI;
 
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Aula;
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
 import com.mycompany.gestion_alumnos.LOGICA.Curso;
 import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
@@ -11,12 +11,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
- * @author artist-code
+ *  This interface is used to get a different type of defaultTableModel when is necessary used at the difference JFrame and JPanel
+ * @author Frame-Code
  */
 public interface ModeloTabla {
 
-    public Controladora controladora = new Controladora();
+    public ControlDAO controladora = new ControlDAO();
     public static final String TITULOS_PAGOS[] = {"ID", "MES", "MONTO"};
 
     default DefaultTableModel modeloTablaBasico() {
@@ -35,6 +35,7 @@ public interface ModeloTabla {
                 return column == 0;
             }
 
+            @Override
             public Class<?> getColumnClass(int column) {
                 // La primera columna tendrá CheckBoxes, por lo tanto tipo Boolean
                 if (column == 0) {
@@ -44,19 +45,23 @@ public interface ModeloTabla {
             }
         };
     }
-
+    
+    //Method to delete all rows of a JTable
     default DefaultTableModel borrarFilas(TableModel modeloTabla, int rowCount) {
         DefaultTableModel modelo = (DefaultTableModel) modeloTabla;
         modelo.setRowCount(0);
         return modelo;
     }
-
+    
+    //Method to get a defaultTableModel basic within rows, just te title
     default DefaultTableModel obtenerModeloTablaBasico(String titulos[]) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
         return modeloTabla;
     }
-
+    
+    //Method to get a defaultTableModel where his rows are a list of subjects
+    //And his rows can be selected
     default DefaultTableModel obtenerModeloTablaMateriasSeleccion(String titulos[], List<Materia> listMaterias) {
         DefaultTableModel modeloTabla = modeloTablaSeleccion();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -66,9 +71,20 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
+    
+    //Method to get a defaultTableModel where his rows are a list of subjects
+    default DefaultTableModel obtenerModeloTablaMaterias(String titulos[], List<Materia> listMaterias) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (Materia materia : listMaterias) {
+            Object object[] = {false, materia.getId(), materia.getNombre()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
 
-    //Retorna un modelo de tabla donde las filas que se muestran son de las materias que no son parte del curso
-    //Solo muestra las materias que no son parte del curso para poder seleccionarlas
+    //Method to get a defaultTableModel where the rows are a list of subjects to aren't part of a Course
+    //And the rows can be selected
     default DefaultTableModel obtenerModeloTablaMateriasSeleccion(String titulos[], List<Materia> listCompletaMaterias, List<Materia> listSeleccionadasMaterias) {
         DefaultTableModel modeloTabla = modeloTablaSeleccion();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -87,7 +103,9 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-
+    
+    //Method to get a defaultTableModel where his rows are a list of Classrooms
+    //And the rows can be selected
     default DefaultTableModel obtenerModeloTablaAulasSeleccion(String titulos[], List<Aula> listAulas) {
         DefaultTableModel modeloTabla = modeloTablaSeleccion();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -97,7 +115,8 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-
+    
+    //Method to get a defaultTableModel where his rows are a list of Classrooms
     default DefaultTableModel obtenerModeloTablaAulas(String titulos[], List<Aula> listAulas) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -107,7 +126,9 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-
+    
+    //Method to get a defaultTableModel where his rows are a list of Classroom with a column to show
+    //The total of students registered in that clasroomn
     default DefaultTableModel obtenerModeloTablaAulasConEstudiante(String titulos[], List<Aula> listAulas) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -117,7 +138,8 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
-
+    
+    //Method to get a defaultTableModel where his rows are a list of Courses
     default DefaultTableModel obtenerModeloTablaCursos(String titulos[], List<Curso> listCursos) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -127,7 +149,20 @@ public interface ModeloTabla {
         }
         return modeloTabla;
     }
+    
+    //Method to get a defaultTableModel where his rows are a list of Courses more detailed 
+    default DefaultTableModel obtenerModeloTablaCursosDetallado(String titulos[], List<Curso> listCursos) {
+        DefaultTableModel modeloTabla = modeloTablaBasico();
+        modeloTabla.setColumnIdentifiers(titulos);
+        for (Curso curso : listCursos) {
+            Object object[] = {curso.getId(), curso.getNombre(),  curso.getListMaterias().size(), curso.getListAulas().size()};
+            modeloTabla.addRow(object);
+        }
+        return modeloTabla;
+    }
 
+    
+    //Method to get a defaultTableModel where his rows are a list of students
     default DefaultTableModel obtenerModeloTablaEstudiantes(String titulos[], List<Estudiante> listEstudiantes) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
@@ -138,12 +173,14 @@ public interface ModeloTabla {
         return modeloTabla;
     }
 
+    
+    //Method to get a defaultTableModel where his rows are a list of students with details of he
     default DefaultTableModel obtenerModeloTablaEstudiantesDetallado(String titulos[], List<Estudiante> listEstudiantes) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
         String mensaje = "";
             for (Estudiante estudiante : listEstudiantes) {
-                if (controladora.leerEstudiante(estudiante.getId()).getListPago_colegiaturas().isEmpty()) {
+                if (controladora.getEstudianteI().leerEntidad(estudiante.getId()).getListPago_colegiaturas().isEmpty()) {
                     mensaje = "(Sin pagos)";
                 } else {
                     mensaje = "(Con pagos)";
@@ -153,7 +190,8 @@ public interface ModeloTabla {
             }
         return modeloTabla;
     }
-
+    
+    //Method to get a defaultTableModel where his rows are a list of payments
     default DefaultTableModel obtenerModeloTablaPagos(String titulos[], List<PagoColegiatura> listPagos) {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);

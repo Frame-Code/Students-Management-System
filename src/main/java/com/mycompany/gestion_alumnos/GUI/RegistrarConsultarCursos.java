@@ -1,20 +1,16 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
-import com.mycompany.gestion_alumnos.LOGICA.Curso;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mensajes {
+public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mensajes, ModeloTabla {
 
-    private Controladora control;
+    private ControlDAO control;
     private VerEditarCursos frameVerEditar;
     private CrearCursos frameCrearCursos;
 
@@ -22,10 +18,10 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
         initComponents();
     }
 
-    public RegistrarConsultarCursos(Controladora control) {
+    public RegistrarConsultarCursos(ControlDAO control) {
         this.control = control;
         this.initComponents();
-        if (!control.leerListCursos().isEmpty()) {
+        if (!control.getCursoI().leerListEntidad().isEmpty()) {
             this.cargarTabla();
         }
     }
@@ -184,9 +180,6 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnCrearCursoMouseExited(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnCrearCursoMousePressed(evt);
-            }
         });
         btnCrearCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,7 +243,29 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
                 .addContainerGap(176, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Method to show the frame "VerEditarCurso"
+    private void openVerEditarCurso() {
+        Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
+        frameVerEditar = new VerEditarCursos(control, idCurso, this);
+        frameVerEditar.setVisible(true);
+        frameVerEditar.setLocationRelativeTo(null);
+        frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameVerEditar.setResizable(false);
+    }
+    
+    //Interface public to re upload the data
+    public void recargarDatos() {
+        cargarTabla();
+    }
+    
+    //Method to upload the JTable "tblCurso" with the courses from the data base
+    private void cargarTabla() {
+        tblCursos.setModel(obtenerModeloTablaCursosDetallado(new String[]{"ID", "NOMBRE_CURSO", "CANTIDAD_MATERIAS", "CANTIDAD_AULAS"}, control.getCursoI().leerListEntidad()));
+        tblCursos.setRowHeight(20);
+    }
+    
+    //Listener to the button "btnVerEditarCurso" to call the method "operVerEditarCurso" and show the corresponding frame
     private void btnVerEditarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEditarCursoActionPerformed
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1) {
@@ -263,19 +278,18 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
         }
 
     }//GEN-LAST:event_btnVerEditarCursoActionPerformed
-
+    
+    //Listener to the button "btnELiminarCurso" to delete a course seletec
     private void btnEliminarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCursoActionPerformed
-        // TODO add your handling code here:
         if (tblCursos.getRowCount() > 0) {
             if (tblCursos.getSelectedRow() != -1) {
-
-                if (control.isDisponibleParaBorrar((long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0))) {
+                if (control.getCursoI().isDisponibleParaBorrar((long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0))) {
                     Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
                     int respuesta = confirmarInformacion(this, "Deseas eliminar el curso: "
                             + String.valueOf(tblCursos.getValueAt(tblCursos.getSelectedRow(), 1)),
                             "Advertencia");
                     if (respuesta == SI) {
-                        control.eliminarCurso(idCurso);
+                        control.getCursoI().eliminar(idCurso);
                         mostrarInformacion(this, "Cuso eliminado", "Advertencia");
                     }
                     recargarDatos();
@@ -289,60 +303,49 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
             mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarCursoActionPerformed
-
+    
+    //Listener to the button "btnCrearCurso" to show the frame "CrearCursos"
     private void btnCrearCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoActionPerformed
         frameCrearCursos = new CrearCursos(control, RegistrarConsultarCursos.this);
         frameCrearCursos.setVisible(true);
         frameCrearCursos.setLocationRelativeTo(null);
         frameCrearCursos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnCrearCursoActionPerformed
-
+    
+    //----------Listeners---------//
     private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
-        // TODO add your handling code here:
         recargarDatos();
     }//GEN-LAST:event_btnActualizarDatosActionPerformed
 
     private void btnVerEditarCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarCursoMouseEntered
-        // TODO add your handling code here:
         btnVerEditarCurso.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnVerEditarCursoMouseEntered
 
     private void btnVerEditarCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerEditarCursoMouseExited
-        // TODO add your handling code here:
         btnVerEditarCurso.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnVerEditarCursoMouseExited
 
-    private void btnCrearCursoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCrearCursoMousePressed
-
     private void btnCrearCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMouseEntered
-        // TODO add your handling code here:
         btnCrearCurso.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnCrearCursoMouseEntered
 
     private void btnCrearCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCursoMouseExited
-        // TODO add your handling code here:
         btnCrearCurso.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnCrearCursoMouseExited
 
     private void btnActualizarDatosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarDatosMouseEntered
-        // TODO add your handling code here:
         btnActualizarDatos.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnActualizarDatosMouseEntered
 
     private void btnActualizarDatosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarDatosMouseExited
-        // TODO add your handling code here:
         btnActualizarDatos.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnActualizarDatosMouseExited
 
     private void btnEliminarCursoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCursoMouseEntered
-        // TODO add your handling code here:
         btnEliminarCurso.setBackground(new Color(201, 119, 119));
     }//GEN-LAST:event_btnEliminarCursoMouseEntered
 
     private void btnEliminarCursoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCursoMouseExited
-        // TODO add your handling code here:
         btnEliminarCurso.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnEliminarCursoMouseExited
 
@@ -351,41 +354,6 @@ public class RegistrarConsultarCursos extends javax.swing.JPanel implements Mens
             openVerEditarCurso();
         }
     }//GEN-LAST:event_tblCursosMouseClicked
-
-    private void openVerEditarCurso() {
-        Long idCurso = (long) tblCursos.getValueAt(tblCursos.getSelectedRow(), 0);
-        frameVerEditar = new VerEditarCursos(control, idCurso, this);
-        frameVerEditar.setVisible(true);
-        frameVerEditar.setLocationRelativeTo(null);
-        frameVerEditar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frameVerEditar.setResizable(false);
-    }
-
-    public void recargarDatos() {
-        cargarTabla();
-    }
-
-    //Factorizar este metodo
-    private void cargarTabla() {
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        String titulos[] = {"ID", "NOMBRE_CURSO", "CANTIDAD_MATERIAS", "CANTIDAD_AULAS"};
-        modeloTabla.setColumnIdentifiers(titulos);
-
-        List<Curso> cursos = new ArrayList<>(control.leerListCursos());
-        for (Curso curso : cursos) {
-            Object object[] = {curso.getId(), curso.getNombre(), curso.getListMaterias().size(), curso.getListAulas().size()};
-            modeloTabla.addRow(object);
-        }
-        tblCursos.setModel(modeloTabla);
-        tblCursos.setRowHeight(20);
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarDatos;

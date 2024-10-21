@@ -17,7 +17,7 @@ public class ControlDAO {
     private final MatriculaImpl matriculaI;
     private final InstitucionImpl institucionI;
 
-    public ControlDAO(AulaImpl aulaI, CursoImpl curso) {
+    public ControlDAO() {
         this.persistencia = new ControladoraPersistencia();
         this.aulaI = new AulaImpl(persistencia, this );
         this.cursoI = new CursoImpl(persistencia, this);

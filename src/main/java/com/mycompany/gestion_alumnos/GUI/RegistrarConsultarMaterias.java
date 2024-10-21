@@ -1,31 +1,28 @@
 package com.mycompany.gestion_alumnos.GUI;
 
-import com.mycompany.gestion_alumnos.LOGICA.Controladora;
+import com.mycompany.gestion_alumnos.DAO.ControlDAO;
 import com.mycompany.gestion_alumnos.LOGICA.Materia;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Frame-Code
  */
-public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Mensajes, Utils {
+public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Mensajes, Utils, ModeloTabla {
 
-    private Controladora control;
+    private final ControlDAO control;
 
     public RegistrarConsultarMaterias() {
-        this.control = new Controladora();
+        this.control = new ControlDAO();
         initComponents();
         cargarTabla();
     }
 
-    public RegistrarConsultarMaterias(Controladora control) {
+    public RegistrarConsultarMaterias(ControlDAO control) {
         this.control = control;
         this.initComponents();
-        if(!control.leerListMaterias().isEmpty()) {
-            this.cargarTabla();  
+        if (!control.getMateriaI().leerListEntidad().isEmpty()) {
+            this.cargarTabla();
         }
     }
 
@@ -241,6 +238,13 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Method to upload the JTable "tblMaterias" with all subjects from the data base
+    private void cargarTabla() {
+        tblMaterias.setModel(obtenerModeloTablaMaterias(new String[]{"ID", "MATERIA"}, control.getMateriaI().leerListEntidad()));
+        tblMaterias.setRowHeight(20);
+    }
+    
+    //Listener of the button "btnRegistrarMateria" to create a new Subject
     private void btnRegistrarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaActionPerformed
         String nombreMateria;
         do {
@@ -250,11 +254,11 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                     mostrarInformacion(this, "No pueden haber campos vacios", "Error");
                     nombreMateria = null;
                 } else {
-                    if (isString(nombreMateria, this) && control.verificarNombreDisponible(nombreMateria, control.leerListMaterias(), Materia::getNombre)) {
-                        control.crearMateria(nombreMateria);
+                    if (isString(nombreMateria, this) && control.getCursoI().verificarNombreDisponible(nombreMateria, control.getMateriaI().leerListEntidad(), Materia::getNombre)) {
+                        control.getMateriaI().crearMateria(nombreMateria);
                         mostrarInformacion(this, "Materia guardada correctamente", "Registro de materia exitoso");
                     } else {
-                        if (!control.verificarNombreDisponible(nombreMateria, control.leerListMaterias(), Materia::getNombre)) {
+                        if (!control.getCursoI().verificarNombreDisponible(nombreMateria, control.getMateriaI().leerListEntidad(), Materia::getNombre)) {
                             mostrarInformacion(this, "La materia " + nombreMateria + " ya existe", "Error");
                         }
                         nombreMateria = null;
@@ -267,8 +271,8 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
         cargarTabla();
     }//GEN-LAST:event_btnRegistrarMateriaActionPerformed
 
+    //Listener of the button "btnEditarMateria" to edit the name of a subject selected
     private void btnEditarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarMateriaActionPerformed
-        // TODO add your handling code here:
         String nuevoNombre;
         if (tblMaterias.getRowCount() > 0) {
             if (tblMaterias.getSelectedRow() != -1) {
@@ -281,7 +285,7 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
                         } else {
                             if (isString(nuevoNombre, this)) {
                                 long idAntiguoNombre = (long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0);
-                                control.editarMateria(nuevoNombre, idAntiguoNombre);
+                                control.getMateriaI().editarMateria(nuevoNombre, idAntiguoNombre);
                                 mostrarInformacion(this, "Materia editada correctamente", "Editar materia ");
                                 cargarTabla();
                             } else {
@@ -299,15 +303,15 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
             mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEditarMateriaActionPerformed
-
+    
+    //Listener of the button "btnEliminarMateria" to delete a subject selected
     private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMateriaActionPerformed
-        // TODO add your handling code here:
         if (tblMaterias.getRowCount() > 0) {
             if (tblMaterias.getSelectedRow() != -1) {
                 int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar la materia?", "Eliminar materia");
                 if (respuesta == SI) {
                     long idMateria = (long) tblMaterias.getValueAt(tblMaterias.getSelectedRow(), 0);
-                    control.eliminarMateria(idMateria);
+                    control.getMateriaI().eliminar(idMateria);
                     mostrarInformacion(this, "Materia eliminada correctamente", "Materia eliminada!");
                 }
                 cargarTabla();
@@ -318,72 +322,43 @@ public class RegistrarConsultarMaterias extends javax.swing.JPanel implements Me
             mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
-
+    
+    //----------Listeners -----------
     private void btnRegistrarMateriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaMouseEntered
-        // TODO add your handling code here:
         btnRegistrarMateria.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnRegistrarMateriaMouseEntered
 
     private void btnRegistrarMateriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMateriaMouseExited
-        // TODO add your handling code here:
         btnRegistrarMateria.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegistrarMateriaMouseExited
 
     private void btnEditarMateriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMateriaMouseEntered
-        // TODO add your handling code here:
         btnEditarMateria.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnEditarMateriaMouseEntered
 
     private void btnEditarMateriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMateriaMouseExited
-        // TODO add your handling code here:
         btnEditarMateria.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnEditarMateriaMouseExited
 
     private void btnEliminarMateriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMateriaMouseEntered
-        // TODO add your handling code here:
         btnEliminarMateria.setBackground(new Color(201, 119, 119));
     }//GEN-LAST:event_btnEliminarMateriaMouseEntered
 
     private void btnEliminarMateriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMateriaMouseExited
-        // TODO add your handling code here:
         btnEliminarMateria.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnEliminarMateriaMouseExited
 
     private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
-        // TODO add your handling code here:
         btnEditarMateria.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnActualizarMouseEntered
 
     private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
-        // TODO add your handling code here:
         btnEditarMateria.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnActualizarMouseExited
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
         cargarTabla();
     }//GEN-LAST:event_btnActualizarActionPerformed
-
-    private void cargarTabla() {
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        String titulos[] = {"ID", "MATERIA"};
-        modeloTabla.setColumnIdentifiers(titulos);
-
-        List<Materia> materias = new ArrayList<>(control.leerListMaterias());
-        for (Materia materia : materias) {
-            Object object[] = {materia.getId(), materia.getNombre()};
-            modeloTabla.addRow(object);
-        }
-        tblMaterias.setModel(modeloTabla);
-        tblMaterias.setRowHeight(20);
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
