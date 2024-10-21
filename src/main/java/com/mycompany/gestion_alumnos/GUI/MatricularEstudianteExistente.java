@@ -672,7 +672,6 @@ public class MatricularEstudianteExistente extends javax.swing.JPanel implements
         LocalDate fechaVencimiento = LocalDate.of((int) spnAnioMatricula.getValue(),
                 obtenerMes(String.valueOf(cmbMesMatricula.getSelectedItem())),
                 (int) spnDiaMatricula.getValue());
-        System.out.println(fechaVencimiento);
 
         control.getEstudianteI().matricularEstudianteExistente(idEstudiante, idCurso, String.valueOf(cmbAulas.getSelectedItem()), fechaVencimiento, String.valueOf(spnCantidadPagado.getValue()));
         mostrarInformacion(this, "Estudiante matriculado correctamente", "Exito");

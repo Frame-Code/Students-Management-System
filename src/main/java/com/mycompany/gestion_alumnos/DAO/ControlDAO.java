@@ -1,10 +1,11 @@
 package com.mycompany.gestion_alumnos.DAO;
 
 import com.mycompany.gestion_alumnos.PERSISTENCIA.ControladoraPersistencia;
+import java.time.LocalDate;
 
 /**
- * This class is used to share the information between the difference implement-class through the getters 
- * Created by Frame-Code, October 2024
+ * This class is used to share the information between the difference
+ * implement-class through the getters Created by Frame-Code, October 2024
  */
 public class ControlDAO {
 
@@ -19,13 +20,19 @@ public class ControlDAO {
 
     public ControlDAO() {
         this.persistencia = new ControladoraPersistencia();
-        this.aulaI = new AulaImpl(persistencia, this );
+        this.aulaI = new AulaImpl(persistencia, this);
         this.cursoI = new CursoImpl(persistencia, this);
         this.estudianteI = new EstudianteImpl(persistencia, this);
         this.pagoI = new PagoColegiaturaImpl(persistencia, this);
         this.matriculaI = new MatriculaImpl(persistencia);
         this.materiaI = new MateriaImpl(persistencia);
         this.institucionI = new InstitucionImpl(persistencia);
+    }
+
+    public void inicializar() {
+        if (getInstitucionI().leerListEntidad().isEmpty()) {
+            getInstitucionI().crearInstitucion("Example", "Example", "1", 1, LocalDate.now(), LocalDate.now());
+        }
     }
 
     public AulaImpl getAulaI() {
@@ -55,7 +62,5 @@ public class ControlDAO {
     public InstitucionImpl getInstitucionI() {
         return institucionI;
     }
-    
-    
 
 }

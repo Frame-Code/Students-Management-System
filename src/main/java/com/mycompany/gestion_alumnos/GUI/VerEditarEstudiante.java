@@ -1,14 +1,13 @@
 package com.mycompany.gestion_alumnos.GUI;
 
 import com.mycompany.gestion_alumnos.DAO.ControlDAO;
-import com.mycompany.gestion_alumnos.LOGICA.Estudiante;
 import java.awt.Color;
 import java.time.LocalDate;
 import javax.swing.SpinnerNumberModel;
 
 /**
  *
- * @author artist-code
+ * @author Frame-Code
  */
 public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes, ModeloTabla {
 
@@ -264,9 +263,6 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         btnRegresar.setText("<-- Regresar");
         btnRegresar.setBorder(null);
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegresarMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRegresarMouseEntered(evt);
             }
@@ -286,9 +282,6 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         btnEliminarPago.setText("Eliminar pago");
         btnEliminarPago.setBorder(null);
         btnEliminarPago.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarPagoMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEliminarPagoMouseEntered(evt);
             }
@@ -308,12 +301,6 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         btnGuardarInformacion.setText("Guardar informacion");
         btnGuardarInformacion.setBorder(null);
         btnGuardarInformacion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGuardarInformacionMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnGuardarInformacionMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnGuardarInformacionMouseExited(evt);
             }
@@ -330,9 +317,6 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         btnRegistrarPago.setText("Registrar nuevo pago colegiatura");
         btnRegistrarPago.setBorder(null);
         btnRegistrarPago.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegistrarPagoMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRegistrarPagoMouseEntered(evt);
             }
@@ -352,9 +336,6 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
         btnAnularMatricula.setText("Anular Matricula");
         btnAnularMatricula.setBorder(null);
         btnAnularMatricula.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAnularMatriculaMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAnularMatriculaMouseEntered(evt);
             }
@@ -511,13 +492,48 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    //This method is used to upload all the data of the student selected from the data base 
+    public final void cargarDatos() {
+        txtCedula.setText("0" + String.valueOf(control.getEstudianteI().leerEntidad(idEstudiante).getId()));
+        txtEdad.setText(String.valueOf(control.getEstudianteI().leerEntidad(idEstudiante).getEdad()));
+        LocalDate fechaNacimiento = control.getEstudianteI().leerEntidad(idEstudiante).getFecha_nacimiento();
+        LocalDate fechaMatriculacion = control.getEstudianteI().leerEntidad(idEstudiante).getMatricula().getFecha_matriculacion();
+        LocalDate fechaVencimientoMatricula = control.getEstudianteI().leerEntidad(idEstudiante).getMatricula().getFecha_vencimiento();
+        txtFechaNacimiento.setText(fechaNacimiento.getDayOfMonth() + " - " + fechaNacimiento.getMonth() + " - " + fechaNacimiento.getYear());
+        txtNombresCompletos.setText(control.getEstudianteI().leerEntidad(idEstudiante).getNombre());
+        txtFechaMatriculacion.setText(fechaMatriculacion.getDayOfMonth() + " - " + fechaMatriculacion.getMonth() + " - " + fechaMatriculacion.getYear());
+        txtFechaVencimiento.setText(fechaVencimientoMatricula.getDayOfMonth() + " - " + fechaVencimientoMatricula.getMonth() + " - " + fechaVencimientoMatricula.getYear());
+        if (control.getEstudianteI().leerEntidad(idEstudiante).getListPago_colegiaturas().isEmpty()) {
+            txtEstadoMatricula.setText(control.getEstudianteI().obtenerEstadoMatricula(control.getEstudianteI().leerEntidad(idEstudiante)) + "(Sin pagos)");
+        } else {
+            txtEstadoMatricula.setText(control.getEstudianteI().obtenerEstadoMatricula(control.getEstudianteI().leerEntidad(idEstudiante)) + "(Con pagos)");
+        }
+        modelValor.setValue(Integer.valueOf(control.getEstudianteI().leerEntidad(idEstudiante).getMatricula().getValor_pagado()));
+        spnValorPagado.setModel(modelValor);
 
+        tblColegiatura.setModel(obtenerModeloTablaBasico(TITULOS_PAGOS));
+        if (!control.getEstudianteI().leerEntidad(idEstudiante).getListPago_colegiaturas().isEmpty()) {
+            tblColegiatura.setModel(obtenerModeloTablaPagos(TITULOS_PAGOS, control.getEstudianteI().leerEntidad(idEstudiante).getListPago_colegiaturas()));
+        } else {
+            mostrarInformacion(this, "No existen pagos para mostrar", "Aviso");
+        }
+
+    }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        listadoEstudiantesAula.cargarTablaEstudiantes();
+    }
+    
+    //Listener of the button "btnEliminarPago" to delete a pension payment of this student seletec
     private void btnEliminarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPagoActionPerformed
         if (tblColegiatura.getRowCount() > 0) {
             if (tblColegiatura.getSelectedRow() != -1) {
                 int respuesta = confirmarInformacion(this, "¿Seguro deseas eliminar el pago?", "Eliminar pago");
                 if (respuesta == SI) {
-                    control.eliminarPago((Long) tblColegiatura.getValueAt(tblColegiatura.getSelectedRow(), 0));
+                    control.getPagoI().eliminar((Long) tblColegiatura.getValueAt(tblColegiatura.getSelectedRow(), 0));
                     mostrarInformacion(this, "Pago eliminado correctamene", "Exito");
                     cargarDatos();
                 }
@@ -528,70 +544,56 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
             mostrarInformacion(this, "Tabla vacia", "Error");
         }
     }//GEN-LAST:event_btnEliminarPagoActionPerformed
-
+    
+    //Listener of the button "btnRegistrarPago" is used to show the frame "CrearPago" to register a new payment
     private void btnRegistrarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPagoActionPerformed
         crearPago = new CrearPago(control, idEstudiante, this);
         crearPago.setVisible(true);
         crearPago.setLocationRelativeTo(this);
         crearPago.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnRegistrarPagoActionPerformed
-
+    
+    //Listener of the button "btnRegresar" to go back
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
         listadoEstudiantesAula.cargarTablaEstudiantes();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+    
+    //Listener of the button "btnGuardarInformacion" to save the information changed
     private void btnGuardarInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarInformacionActionPerformed
-        control.editarEstudiante(idEstudiante, txtNombresCompletos.getText(), String.valueOf(spnValorPagado.getValue()));
+        control.getEstudianteI().editarEstudiante(idEstudiante, txtNombresCompletos.getText(), String.valueOf(spnValorPagado.getValue()));
         mostrarInformacion(this, "Informacion guardada correctamente", "Exito");
     }//GEN-LAST:event_btnGuardarInformacionActionPerformed
-
+    
+    //Listener of the button "btnAnularMatricular" to cancel the registration of a student
+    //In this case the state of registration be "Anulada" and the student don't will not be a classroom
     private void btnAnularMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularMatriculaActionPerformed
         int respuesta = confirmarInformacion(this, "¿Seguro deseas anular la matricula? El estudiante no estara matriculado en ninguna aula", "Anular Matricula");
         if (respuesta == SI) {
-            control.anularMatricula(idEstudiante);
+            control.getEstudianteI().anularMatricula(idEstudiante);
             mostrarInformacion(this, "Matricula Anulada correctamente", "Exito");
             this.dispose();
             listadoEstudiantesAula.cargarTablaEstudiantes();
 
         }
     }//GEN-LAST:event_btnAnularMatriculaActionPerformed
-
-    private void btnRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseClicked
-
-    }//GEN-LAST:event_btnRegistrarPagoMouseClicked
-
+    
+    //------------Listeners----------------//
     private void btnRegistrarPagoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseEntered
         btnRegistrarPago.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnRegistrarPagoMouseEntered
-
-    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegresarMouseClicked
 
     private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
         btnRegresar.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnRegresarMouseEntered
 
-    private void btnGuardarInformacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarInformacionMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarInformacionMouseClicked
-
     private void btnGuardarInformacionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarInformacionMouseEntered
         btnGuardarInformacion.setBackground(new Color(78, 90, 126));
     }//GEN-LAST:event_btnGuardarInformacionMouseEntered
 
-    private void btnAnularMatriculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAnularMatriculaMouseClicked
-
     private void btnAnularMatriculaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnularMatriculaMouseEntered
         btnAnularMatricula.setBackground(new Color(201, 119, 119));
     }//GEN-LAST:event_btnAnularMatriculaMouseEntered
-
-    private void btnEliminarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPagoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarPagoMouseClicked
 
     private void btnEliminarPagoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPagoMouseEntered
         btnEliminarPago.setBackground(new Color(201, 119, 119));
@@ -616,39 +618,6 @@ public class VerEditarEstudiante extends javax.swing.JFrame implements Mensajes,
     private void btnEliminarPagoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPagoMouseExited
         btnEliminarPago.setBackground(new Color(165, 80, 80));
     }//GEN-LAST:event_btnEliminarPagoMouseExited
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        listadoEstudiantesAula.cargarTablaEstudiantes();
-    }
-
-    public final void cargarDatos() {
-        txtCedula.setText("0" + String.valueOf(control.leerEstudiante(idEstudiante).getId()));
-        txtEdad.setText(String.valueOf(control.leerEstudiante(idEstudiante).getEdad()));
-        LocalDate fechaNacimiento = control.leerEstudiante(idEstudiante).getFecha_nacimiento();
-        LocalDate fechaMatriculacion = control.leerEstudiante(idEstudiante).getMatricula().getFecha_matriculacion();
-        LocalDate fechaVencimientoMatricula = control.leerEstudiante(idEstudiante).getMatricula().getFecha_vencimiento();
-        txtFechaNacimiento.setText(fechaNacimiento.getDayOfMonth() + " - " + fechaNacimiento.getMonth() + " - " + fechaNacimiento.getYear());
-        txtNombresCompletos.setText(control.leerEstudiante(idEstudiante).getNombre());
-        txtFechaMatriculacion.setText(fechaMatriculacion.getDayOfMonth() + " - " + fechaMatriculacion.getMonth() + " - " + fechaMatriculacion.getYear());
-        txtFechaVencimiento.setText(fechaVencimientoMatricula.getDayOfMonth() + " - " + fechaVencimientoMatricula.getMonth() + " - " + fechaVencimientoMatricula.getYear());
-        if(control.leerEstudiante(idEstudiante).getListPago_colegiaturas().isEmpty()) {
-            txtEstadoMatricula.setText(control.obtenerEstadoMatricula(control.leerEstudiante(idEstudiante)) + "(Sin pagos)");
-        } else {
-            txtEstadoMatricula.setText(control.obtenerEstadoMatricula(control.leerEstudiante(idEstudiante)) + "(Con pagos)");
-        }
-        modelValor.setValue(Integer.valueOf(control.leerEstudiante(idEstudiante).getMatricula().getValor_pagado()));
-        spnValorPagado.setModel(modelValor);
-
-        tblColegiatura.setModel(obtenerModeloTablaBasico(TITULOS_PAGOS));
-        if (!control.leerEstudiante(idEstudiante).getListPago_colegiaturas().isEmpty()) {
-            tblColegiatura.setModel(obtenerModeloTablaPagos(TITULOS_PAGOS, control.leerEstudiante(idEstudiante).getListPago_colegiaturas()));
-        } else {
-            mostrarInformacion(this, "No existen pagos para mostrar", "Aviso");
-        }
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnularMatricula;

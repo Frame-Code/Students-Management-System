@@ -77,7 +77,7 @@ public interface ModeloTabla {
         DefaultTableModel modeloTabla = modeloTablaBasico();
         modeloTabla.setColumnIdentifiers(titulos);
         for (Materia materia : listMaterias) {
-            Object object[] = {false, materia.getId(), materia.getNombre()};
+            Object object[] = {materia.getId(), materia.getNombre()};
             modeloTabla.addRow(object);
         }
         return modeloTabla;

@@ -7,7 +7,7 @@ import javax.swing.SpinnerNumberModel;
 
 /**
  *
- * @author artist-code
+ * @author Frame-Code
  */
 public class VerEstudianteAnulado extends javax.swing.JFrame implements Mensajes, ModeloTabla {
 
@@ -260,9 +260,6 @@ public class VerEstudianteAnulado extends javax.swing.JFrame implements Mensajes
         btnRegresar.setText("<-- Regresar");
         btnRegresar.setBorder(null);
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegresarMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRegresarMouseEntered(evt);
             }
@@ -403,14 +400,39 @@ public class VerEstudianteAnulado extends javax.swing.JFrame implements Mensajes
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //This method is used to upload all the data of the student selected from the data base 
+    public final void cargarDatos() {
+        txtCedula.setText("0" + String.valueOf(control.getEstudianteI().leerEntidad(idEstudiante).getId()));
+        txtEdad.setText(String.valueOf(control.getEstudianteI().leerEntidad(idEstudiante).getEdad()));
+        LocalDate fechaNacimiento = control.getEstudianteI().leerEntidad(idEstudiante).getFecha_nacimiento();
+        LocalDate fechaMatriculacion = control.getEstudianteI().leerEntidad(idEstudiante).getMatricula().getFecha_matriculacion();
+        LocalDate fechaVencimientoMatricula = control.getEstudianteI().leerEntidad(idEstudiante).getMatricula().getFecha_vencimiento();
+        txtFechaNacimiento.setText(fechaNacimiento.getDayOfMonth() + " - " + fechaNacimiento.getMonth() + " - " + fechaNacimiento.getYear());
+        txtNombresCompletos.setText(control.getEstudianteI().leerEntidad(idEstudiante).getNombre());
+        txtFechaMatriculacion.setText(fechaMatriculacion.getDayOfMonth() + " - " + fechaMatriculacion.getMonth() + " - " + fechaMatriculacion.getYear());
+        txtFechaVencimiento.setText(fechaVencimientoMatricula.getDayOfMonth() + " - " + fechaVencimientoMatricula.getMonth() + " - " + fechaVencimientoMatricula.getYear());
+        txtEstadoMatricula.setText(control.getEstudianteI().obtenerEstadoMatricula(control.getEstudianteI().leerEntidad(idEstudiante)));
+        modelValor.setValue(Integer.valueOf(control.getEstudianteI().leerEntidad(idEstudiante).getMatricula().getValor_pagado()));
+        spnValorPagado.setModel(modelValor);
+
+        tblColegiatura.setModel(obtenerModeloTablaBasico(TITULOS_PAGOS));
+        if (!control.getEstudianteI().leerEntidad(idEstudiante).getListPago_colegiaturas().isEmpty()) {
+            tblColegiatura.setModel(obtenerModeloTablaPagos(TITULOS_PAGOS, control.getEstudianteI().leerEntidad(idEstudiante).getListPago_colegiaturas()));
+        } else {
+            mostrarInformacion(this, "No existen pagos para mostrar", "Aviso");
+        }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        listAnulados.cargarTablaEstudiantes();
+    }
+
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
         listAnulados.cargarTablaEstudiantes();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
-    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegresarMouseClicked
 
     private void btnRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseEntered
         btnRegresar.setBackground(new Color(78, 90, 126));
@@ -419,35 +441,6 @@ public class VerEstudianteAnulado extends javax.swing.JFrame implements Mensajes
     private void btnRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseExited
         btnRegresar.setBackground(new Color(63, 72, 100));
     }//GEN-LAST:event_btnRegresarMouseExited
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        listAnulados.cargarTablaEstudiantes();
-    }
-
-    public final void cargarDatos() {
-        txtCedula.setText("0" + String.valueOf(control.leerEstudiante(idEstudiante).getId()));
-        txtEdad.setText(String.valueOf(control.leerEstudiante(idEstudiante).getEdad()));
-        LocalDate fechaNacimiento = control.leerEstudiante(idEstudiante).getFecha_nacimiento();
-        LocalDate fechaMatriculacion = control.leerEstudiante(idEstudiante).getMatricula().getFecha_matriculacion();
-        LocalDate fechaVencimientoMatricula = control.leerEstudiante(idEstudiante).getMatricula().getFecha_vencimiento();
-        txtFechaNacimiento.setText(fechaNacimiento.getDayOfMonth() + " - " + fechaNacimiento.getMonth() + " - " + fechaNacimiento.getYear());
-        txtNombresCompletos.setText(control.leerEstudiante(idEstudiante).getNombre());
-        txtFechaMatriculacion.setText(fechaMatriculacion.getDayOfMonth() + " - " + fechaMatriculacion.getMonth() + " - " + fechaMatriculacion.getYear());
-        txtFechaVencimiento.setText(fechaVencimientoMatricula.getDayOfMonth() + " - " + fechaVencimientoMatricula.getMonth() + " - " + fechaVencimientoMatricula.getYear());
-        txtEstadoMatricula.setText(control.obtenerEstadoMatricula(control.leerEstudiante(idEstudiante)));
-        modelValor.setValue(Integer.valueOf(control.leerEstudiante(idEstudiante).getMatricula().getValor_pagado()));
-        spnValorPagado.setModel(modelValor);
-
-        tblColegiatura.setModel(obtenerModeloTablaBasico(TITULOS_PAGOS));
-        if (!control.leerEstudiante(idEstudiante).getListPago_colegiaturas().isEmpty()) {
-            tblColegiatura.setModel(obtenerModeloTablaPagos(TITULOS_PAGOS, control.leerEstudiante(idEstudiante).getListPago_colegiaturas()));
-        } else {
-            mostrarInformacion(this, "No existen pagos para mostrar", "Aviso");
-        }
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;

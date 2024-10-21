@@ -510,6 +510,7 @@ public class VerEditarCursos extends javax.swing.JFrame implements ModeloTabla, 
         CrearAula crearAula = new CrearAula(control, idCurso, this);
         crearAula.setVisible(true);
         crearAula.setResizable(false);
+        crearAula.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         crearAula.setLocationRelativeTo(null);
         cargarTablaAulas();
         consultarCursos.recargarDatos();

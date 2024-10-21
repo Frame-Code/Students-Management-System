@@ -24,6 +24,7 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
         this.idCurso = idCurso;
         this.verEditarCurso = verEditarCurso;
         this.setResizable(false);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.initComponents();
         if (!control.getCursoI().leerListEntidad().isEmpty()) {
             this.cargarNombre();
@@ -259,8 +260,13 @@ public class CrearAula extends javax.swing.JFrame implements ModeloTabla, Mensaj
     private void cargarNombre() {
         lblCursoNombre.setText(control.getCursoI().leerEntidad(idCurso).getNombre());
     }
-
-    //-----------Listeners---------//
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        verEditarCurso.cargarTablaAulas();
+    }
+//-----------Listeners---------//
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
         verEditarCurso.cargarTablaAulas();
