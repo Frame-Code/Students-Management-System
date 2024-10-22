@@ -16,7 +16,9 @@ public class JPAUtil {
     private final Map<String, String> properties;
 
     public JPAUtil() {
-        this.dotenv = Dotenv.configure().load();
+        this.dotenv = Dotenv.configure()
+	.filename(".env")
+	.load();
         this.properties = new HashMap<>();
         rellenarPropiedades();
         this.emf = Persistence.createEntityManagerFactory("administradorPU", properties);
