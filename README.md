@@ -2,6 +2,9 @@
 A personal project that tries to simulate a system to manage the enrolment, registration and pensions of students in a private educational institution.
 The program would be mainly intended for the staff of a certain institution in charge of enrolling students at the beginning of each new cycle in the educational institution. 
 
+**Is necessary a java version 17.0.6 2023-01-17 or later**
+Install it in this [link](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+
 ### Features
 
 - Enrolling new students entering the educational institution and storing all their information in the data base;
