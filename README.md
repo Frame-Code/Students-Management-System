@@ -31,12 +31,19 @@ cd Downloads/
 ```bash
 java -jar  Gestion_Alumnos-1.0.jar
 ```
-**Note: ** To run the file on windows without the terminal **you only need to double click on the .jar file.**
+**Note:** To run the file on windows without the terminal **you only need to double click on the .jar file.**
 
-####You should see a window like this:
+#### You should see a window like this:
 ![The principal page of the app](Principal_page.png)
 
 
-
-
-
+**if you need to test it with a database of yours, follow these steps**
+1. Open the file with a file archiver or manager as winrar, 7zip or the archive manager to default Ubuntu
+2. In the root folder there is the file .env, open it and modify the data base access predefined with you credentials access, for example:
+```bash
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME='name of the database without inverted commas'
+DB_USER='name of the user without inverted commas'
+DB_PASSWORD='password of the user without inverted commas'
+```
