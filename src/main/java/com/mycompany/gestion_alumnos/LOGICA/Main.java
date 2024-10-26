@@ -11,7 +11,6 @@ public class Main {
         control.inicializar();
         
         Principal principal = new Principal(control);
-        principal.setResizable(false);
         principal.setSize(1080, 720);
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);
